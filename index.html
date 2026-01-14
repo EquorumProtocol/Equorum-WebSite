@@ -414,6 +414,35 @@
             }
         }
 
+        /* Language Selector */
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .lang-btn:hover {
+            color: var(--orange);
+        }
+
+        .lang-btn.active {
+            color: var(--orange);
+        }
+
         /* Footer expandido */
         .footer-grid {
             display: grid;
@@ -477,11 +506,16 @@
                 <span>Equorum</span>
             </a>
             <div class="nav-links">
-                <a href="#home">Home</a>
+                <a href="#home" data-i18n="nav.home">Home</a>
                 <a href="https://app.equorumprotocol.org" target="_blank">Revenue Bonds</a>
-                <a href="#how-it-works">Como Funciona</a>
-                <a href="#community">Comunidade</a>
+                <a href="#how-it-works" data-i18n="nav.how">How it Works</a>
+                <a href="#community" data-i18n="nav.community">Community</a>
                 <a href="WHITEPAPER.pdf" download>Whitepaper</a>
+                <div class="language-selector">
+                    <button onclick="setLanguage('en')" class="lang-btn active" id="lang-en">EN</button>
+                    <span style="color: #ccc;">|</span>
+                    <button onclick="setLanguage('pt')" class="lang-btn" id="lang-pt">PT</button>
+                </div>
             </div>
         </div>
     </nav>
@@ -493,18 +527,10 @@
             <div class="hero-content">
                 <img src="logo-white.svg" alt="Equorum" style="width: 150px; height: 150px; margin-bottom: 2rem; filter: drop-shadow(0 10px 30px rgba(0, 10, 33, 0.2));">
                 <span class="badge">REVENUE BONDS</span>
-                <h1>Compartilhe Receita com sua Comunidade</h1>
-                <p>Revenue Bonds Protocol permite que protocolos DeFi compartilhem receita com sua comunidade através de bonds tokenizados ERC-20.</p>
-                <p>Crie séries de revenue bonds que distribuem automaticamente uma porcentagem da sua receita para os holders.</p>
-                <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap;">
-                    <a href="https://app.equorumprotocol.org" class="btn">Acessar Aplicação →</a>
-                    <a href="WHITEPAPER.pdf" download class="btn btn-outline" style="background: white; color: var(--orange); border: 2px solid var(--orange); box-shadow: 0 4px 15px rgba(255, 98, 36, 0.15);">
-                        <svg style="width: 20px; height: 20px; vertical-align: middle; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                        Download Whitepaper
-                    </a>
-                </div>
+                <h1 data-i18n="hero.title">Share Revenue with Your Community</h1>
+                <p data-i18n="hero.subtitle">Revenue Bonds Protocol allows DeFi protocols to share revenue with their community through tokenized ERC-20 bonds.</p>
+                <p data-i18n="hero.description">Create revenue bond series that automatically distribute a percentage of your revenue to holders.</p>
+                <a href="https://app.equorumprotocol.org" class="btn" data-i18n="hero.cta">Launch App →</a>
             </div>
         </div>
     </section>
@@ -512,29 +538,29 @@
     <!-- Products Section -->
     <section class="products" id="how-it-works">
         <div class="container">
-            <h2 class="section-title">Como funciona?</h2>
-            <p class="section-subtitle">Três passos simples para compartilhar receita</p>
+            <h2 class="section-title" data-i18n="how.title">How it Works?</h2>
+            <p class="section-subtitle" data-i18n="how.subtitle">Three simple steps to share revenue</p>
             
             <div class="cards">
                 <div class="card">
                     <div class="card-number">1</div>
-                    <h3>Crie uma Série</h3>
-                    <p>Defina nome, símbolo, % de receita e duração da série.</p>
-                    <a href="https://github.com/EquorumProtocol/Equorum-Revenue-Bonds" target="_blank">Ver Documentação →</a>
+                    <h3 data-i18n="how.step1.title">Create a Series</h3>
+                    <p data-i18n="how.step1.desc">Define name, symbol, revenue % and series duration.</p>
+                    <a href="https://github.com/EquorumProtocol/Equorum-Revenue-Bonds" target="_blank" data-i18n="how.step1.link">View Documentation →</a>
                 </div>
 
                 <div class="card">
                     <div class="card-number">2</div>
-                    <h3>Distribua Tokens</h3>
-                    <p>Envie os tokens da série para sua comunidade.</p>
-                    <a href="https://app.equorumprotocol.org" target="_blank">Acessar App →</a>
+                    <h3 data-i18n="how.step2.title">Distribute Tokens</h3>
+                    <p data-i18n="how.step2.desc">Send series tokens to your community.</p>
+                    <a href="https://app.equorumprotocol.org" target="_blank" data-i18n="how.step2.link">Launch App →</a>
                 </div>
 
                 <div class="card">
                     <div class="card-number">3</div>
-                    <h3>Compartilhe Receita</h3>
-                    <p>Envie receita e holders fazem claim automaticamente.</p>
-                    <a href="https://arbiscan.io/address/0x8afA0318363FfBc29Cc28B3C98d9139C08Af737b" target="_blank">Ver Contratos →</a>
+                    <h3 data-i18n="how.step3.title">Share Revenue</h3>
+                    <p data-i18n="how.step3.desc">Send revenue and holders claim automatically.</p>
+                    <a href="https://arbiscan.io/address/0x8afA0318363FfBc29Cc28B3C98d9139C08Af737b" target="_blank" data-i18n="how.step3.link">View Contracts →</a>
                 </div>
             </div>
         </div>
@@ -545,8 +571,8 @@
         <div class="container">
             <div class="hero-content">
                 <span class="badge">ON-CHAIN</span>
-                <h2 class="section-title" style="color: white;">Distribuição Automática</h2>
-                <p style="max-width: 700px; margin: 0 auto 2rem;">Revenue é distribuída proporcionalmente aos holders de forma totalmente on-chain. Cada holder pode fazer claim da sua parte a qualquer momento.</p>
+                <h2 class="section-title" style="color: white;" data-i18n="distribution.title">Automatic Distribution</h2>
+                <p style="max-width: 700px; margin: 0 auto 2rem;" data-i18n="distribution.desc">Revenue is distributed proportionally to holders in a fully on-chain manner. Each holder can claim their share at any time.</p>
             </div>
         </div>
     </section>
@@ -554,9 +580,9 @@
     <!-- CTA Section -->
     <section class="cta">
         <div class="container">
-            <h2>Pronto para começar?</h2>
-            <p>Crie sua primeira série de revenue bonds</p>
-            <a href="https://app.equorumprotocol.org" class="btn btn-white">Acessar Aplicação →</a>
+            <h2 data-i18n="cta.title">Ready to Start?</h2>
+            <p data-i18n="cta.desc">Create your first revenue bond series</p>
+            <a href="https://app.equorumprotocol.org" class="btn btn-white" data-i18n="cta.button">Launch App →</a>
         </div>
     </section>
 
@@ -567,21 +593,21 @@
                 <div class="footer-section footer-brand">
                     <img src="logo-white.svg" alt="Equorum" style="width: 80px; height: 80px; margin-bottom: 1rem; filter: brightness(0) invert(1);">
                     <p><strong>Equorum Protocol</strong></p>
-                    <p>Revenue sharing on-chain na Arbitrum One. Compartilhe receita com sua comunidade através de bonds tokenizados.</p>
+                    <p data-i18n="footer.desc">On-chain revenue sharing on Arbitrum One. Share revenue with your community through tokenized bonds.</p>
                 </div>
 
                 <div class="footer-section">
-                    <h4>Protocolo</h4>
+                    <h4 data-i18n="footer.protocol.title">Protocol</h4>
                     <ul>
-                        <li><a href="#how-it-works">Como Funciona</a></li>
+                        <li><a href="#how-it-works" data-i18n="footer.protocol.how">How it Works</a></li>
                         <li><a href="WHITEPAPER.pdf" download>📄 Whitepaper (PDF)</a></li>
-                        <li><a href="https://github.com/EquorumProtocol/Equorum-Revenue-Bonds" target="_blank">Documentação</a></li>
-                        <li><a href="https://app.equorumprotocol.org" target="_blank">Aplicação</a></li>
+                        <li><a href="https://github.com/EquorumProtocol/Equorum-Revenue-Bonds" target="_blank" data-i18n="footer.protocol.docs">Documentation</a></li>
+                        <li><a href="https://app.equorumprotocol.org" target="_blank" data-i18n="footer.protocol.app">Application</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-section">
-                    <h4>Comunidade</h4>
+                    <h4 data-i18n="footer.community.title">Community</h4>
                     <ul>
                         <li><a href="https://discord.gg/qAzseSwY" target="_blank">Discord</a></li>
                         <li><a href="https://twitter.com/EquorumProtocol" target="_blank">Twitter</a></li>
@@ -590,7 +616,7 @@
                 </div>
 
                 <div class="footer-section">
-                    <h4>Contratos</h4>
+                    <h4 data-i18n="footer.contracts.title">Contracts</h4>
                     <ul>
                         <li><a href="https://arbiscan.io/address/0x8afA0318363FfBc29Cc28B3C98d9139C08Af737b" target="_blank">Factory</a></li>
                         <li><a href="https://arbiscan.io/address/0xBa69aEd75E8562f9D23064aEBb21683202c5279B" target="_blank">Treasury</a></li>
@@ -599,9 +625,104 @@
             </div>
 
             <div class="footer-bottom">
-                <p>© 2025 Equorum Protocol. Construído na <strong>Arbitrum One</strong></p>
+                <p data-i18n="footer.copyright">© 2025 Equorum Protocol. Built on <strong>Arbitrum One</strong></p>
             </div>
         </div>
     </footer>
+
+    <script>
+        // Translation system
+        const translations = {
+            en: {
+                'nav.home': 'Home',
+                'nav.how': 'How it Works',
+                'nav.community': 'Community',
+                'hero.title': 'Share Revenue with Your Community',
+                'hero.subtitle': 'Revenue Bonds Protocol allows DeFi protocols to share revenue with their community through tokenized ERC-20 bonds.',
+                'hero.description': 'Create revenue bond series that automatically distribute a percentage of your revenue to holders.',
+                'hero.cta': 'Launch App →',
+                'how.title': 'How it Works?',
+                'how.subtitle': 'Three simple steps to share revenue',
+                'how.step1.title': 'Create a Series',
+                'how.step1.desc': 'Define name, symbol, revenue % and series duration.',
+                'how.step1.link': 'View Documentation →',
+                'how.step2.title': 'Distribute Tokens',
+                'how.step2.desc': 'Send series tokens to your community.',
+                'how.step2.link': 'Launch App →',
+                'how.step3.title': 'Share Revenue',
+                'how.step3.desc': 'Send revenue and holders claim automatically.',
+                'how.step3.link': 'View Contracts →',
+                'distribution.title': 'Automatic Distribution',
+                'distribution.desc': 'Revenue is distributed proportionally to holders in a fully on-chain manner. Each holder can claim their share at any time.',
+                'cta.title': 'Ready to Start?',
+                'cta.desc': 'Create your first revenue bond series',
+                'cta.button': 'Launch App →',
+                'footer.desc': 'On-chain revenue sharing on Arbitrum One. Share revenue with your community through tokenized bonds.',
+                'footer.protocol.title': 'Protocol',
+                'footer.protocol.how': 'How it Works',
+                'footer.protocol.docs': 'Documentation',
+                'footer.protocol.app': 'Application',
+                'footer.community.title': 'Community',
+                'footer.contracts.title': 'Contracts',
+                'footer.copyright': '© 2025 Equorum Protocol. Built on <strong>Arbitrum One</strong>'
+            },
+            pt: {
+                'nav.home': 'Home',
+                'nav.how': 'Como Funciona',
+                'nav.community': 'Comunidade',
+                'hero.title': 'Compartilhe Receita com sua Comunidade',
+                'hero.subtitle': 'Revenue Bonds Protocol permite que protocolos DeFi compartilhem receita com sua comunidade através de bonds tokenizados ERC-20.',
+                'hero.description': 'Crie séries de revenue bonds que distribuem automaticamente uma porcentagem da sua receita para os holders.',
+                'hero.cta': 'Acessar Aplicação →',
+                'how.title': 'Como funciona?',
+                'how.subtitle': 'Três passos simples para compartilhar receita',
+                'how.step1.title': 'Crie uma Série',
+                'how.step1.desc': 'Defina nome, símbolo, % de receita e duração da série.',
+                'how.step1.link': 'Ver Documentação →',
+                'how.step2.title': 'Distribua Tokens',
+                'how.step2.desc': 'Envie os tokens da série para sua comunidade.',
+                'how.step2.link': 'Acessar App →',
+                'how.step3.title': 'Compartilhe Receita',
+                'how.step3.desc': 'Envie receita e holders fazem claim automaticamente.',
+                'how.step3.link': 'Ver Contratos →',
+                'distribution.title': 'Distribuição Automática',
+                'distribution.desc': 'Revenue é distribuída proporcionalmente aos holders de forma totalmente on-chain. Cada holder pode fazer claim da sua parte a qualquer momento.',
+                'cta.title': 'Pronto para começar?',
+                'cta.desc': 'Crie sua primeira série de revenue bonds',
+                'cta.button': 'Acessar Aplicação →',
+                'footer.desc': 'Revenue sharing on-chain na Arbitrum One. Compartilhe receita com sua comunidade através de bonds tokenizados.',
+                'footer.protocol.title': 'Protocolo',
+                'footer.protocol.how': 'Como Funciona',
+                'footer.protocol.docs': 'Documentação',
+                'footer.protocol.app': 'Aplicação',
+                'footer.community.title': 'Comunidade',
+                'footer.contracts.title': 'Contratos',
+                'footer.copyright': '© 2025 Equorum Protocol. Construído na <strong>Arbitrum One</strong>'
+            }
+        };
+
+        function setLanguage(lang) {
+            // Save preference
+            localStorage.setItem('language', lang);
+            
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('lang-' + lang).classList.add('active');
+        }
+
+        // Load saved language or default to English
+        const savedLang = localStorage.getItem('language') || 'en';
+        setLanguage(savedLang);
+    </script>
 </body>
 </html>
