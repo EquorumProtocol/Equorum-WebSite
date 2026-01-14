@@ -1,9 +1,47 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equorum - Revenue Bonds Protocol</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Equorum Protocol - Share Revenue with Your Community | DeFi Revenue Bonds</title>
+    <meta name="title" content="Equorum Protocol - Share Revenue with Your Community | DeFi Revenue Bonds">
+    <meta name="description" content="Revenue Bonds Protocol enables DeFi protocols to share revenue with their community through tokenized ERC-20 bonds on Arbitrum One. Create revenue bond series that automatically distribute earnings to holders.">
+    <meta name="keywords" content="DeFi, Revenue Bonds, Arbitrum, ERC-20, Revenue Sharing, Tokenized Bonds, Blockchain, Cryptocurrency, Web3, Smart Contracts, Equorum">
+    <meta name="author" content="Equorum Protocol">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://equorumprotocol.org">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="logo-favicon.svg">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://equorumprotocol.org">
+    <meta property="og:title" content="Equorum Protocol - Share Revenue with Your Community">
+    <meta property="og:description" content="Revenue Bonds Protocol enables DeFi protocols to share revenue with their community through tokenized ERC-20 bonds on Arbitrum One.">
+    <meta property="og:image" content="https://equorumprotocol.org/logo.png">
+    <meta property="og:site_name" content="Equorum Protocol">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://equorumprotocol.org">
+    <meta property="twitter:title" content="Equorum Protocol - Share Revenue with Your Community">
+    <meta property="twitter:description" content="Revenue Bonds Protocol enables DeFi protocols to share revenue with their community through tokenized ERC-20 bonds on Arbitrum One.">
+    <meta property="twitter:image" content="https://equorumprotocol.org/logo.png">
+    <meta property="twitter:site" content="@EquorumProtocol">
+    <meta property="twitter:creator" content="@EquorumProtocol">
+    
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#FF6224">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
     <style>
         * {
             margin: 0;
@@ -990,6 +1028,9 @@
             // Save preference
             localStorage.setItem('language', lang);
             
+            // Update HTML lang attribute for SEO
+            document.documentElement.setAttribute('lang', lang);
+            
             // Update all elements with data-i18n
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
@@ -1022,6 +1063,61 @@
         });
         
         setLanguage(savedLang);
+    </script>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Equorum Protocol",
+        "url": "https://equorumprotocol.org",
+        "description": "Revenue Bonds Protocol enables DeFi protocols to share revenue with their community through tokenized ERC-20 bonds on Arbitrum One.",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://equorumprotocol.org/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Equorum Protocol",
+        "url": "https://equorumprotocol.org",
+        "logo": "https://equorumprotocol.org/logo.png",
+        "description": "DeFi Revenue Bonds Protocol on Arbitrum One",
+        "sameAs": [
+            "https://twitter.com/EquorumProtocol",
+            "https://github.com/EquorumProtocol",
+            "https://discord.gg/qAzseSwY"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Support",
+            "url": "https://discord.gg/qAzseSwY"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Revenue Bonds Protocol",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "description": "Create revenue bond series that automatically distribute a percentage of your revenue to holders on Arbitrum One.",
+        "url": "https://app.equorumprotocol.org",
+        "screenshot": "https://equorumprotocol.org/logo.png"
+    }
     </script>
 </body>
 </html>
