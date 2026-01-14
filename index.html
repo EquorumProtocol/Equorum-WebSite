@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equorum - Revenue Bonds Protocol</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orange: #FF6224;
+            --orange-light: #FF8C5A;
+            --navy: #000A21;
+            --navy-dark: #001a3d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            color: #1A1A1A;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section com efeitos visuais */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(to br, #fff5f0 0%, #ffe8dc 50%, #ffd4c4 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Padrão de dots */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 2px 2px, rgba(255, 98, 36, 0.08) 1px, transparent 0);
+            background-size: 40px 40px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* Orb flutuante 1 */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 98, 36, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Orb flutuante 2 */
+        .orb-2 {
+            position: absolute;
+            bottom: -15%;
+            right: -5%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 140, 90, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: float 10s ease-in-out infinite reverse;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 98, 36, 0.15);
+            color: var(--orange);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #FF6224 0%, #FF8C5A 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.0625rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 98, 36, 0.3);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #FF8C5A 0%, #FF6224 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 98, 36, 0.5);
+        }
+
+        .btn-outline {
+            background: white !important;
+            color: var(--orange) !important;
+            border: 2px solid var(--orange) !important;
+            box-shadow: 0 4px 15px rgba(255, 98, 36, 0.15) !important;
+        }
+
+        .btn-outline:hover {
+            background: var(--orange) !important;
+            color: white !important;
+            border-color: var(--orange) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 98, 36, 0.4) !important;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 6rem 2rem;
+            background: linear-gradient(to bottom, white 0%, #fff9f6 100%);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--navy);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.125rem;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 98, 36, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 98, 36, 0.2);
+            border-color: rgba(255, 98, 36, 0.3);
+        }
+
+        .card-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF6224 0%, #FF8C5A 100%);
+            box-shadow: 0 4px 15px rgba(255, 98, 36, 0.3);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--navy);
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .card a {
+            color: var(--orange);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .card a:hover {
+            color: var(--orange-light);
+        }
+
+        /* Distribution Section */
+        .distribution {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #000A21 0%, #001a3d 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .distribution::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 98, 36, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(100px);
+        }
+
+        .distribution h2 {
+            position: relative;
+            z-index: 1;
+        }
+
+        .distribution p {
+            position: relative;
+            z-index: 1;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #FF6224 0%, #FF8C5A 50%, #FF6224 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--orange);
+        }
+
+        .btn-white:hover {
+            background: var(--navy);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #000A21 0%, #001a3d 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 98, 36, 0.5) 50%, transparent 100%);
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 1rem;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 98, 36, 0.1);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .nav-brand img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-brand span {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .nav-links {
+            display: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--orange);
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+        /* Footer expandido */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 2fr 1fr 1fr 1fr;
+            }
+        }
+
+        .footer-section h4 {
+            color: var(--orange);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--orange);
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            margin-top: 1rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-brand">
+                <img src="logo-white.svg" alt="Equorum">
+                <span>Equorum</span>
+            </a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="https://app.equorumprotocol.org" target="_blank">Revenue Bonds</a>
+                <a href="#how-it-works">Como Funciona</a>
+                <a href="#community">Comunidade</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="orb-2"></div>
+        <div class="container">
+            <div class="hero-content">
+                <img src="logo-white.svg" alt="Equorum" style="width: 150px; height: 150px; margin-bottom: 2rem; filter: drop-shadow(0 10px 30px rgba(0, 10, 33, 0.2));">
+                <span class="badge">REVENUE BONDS</span>
+                <h1>Compartilhe Receita com sua Comunidade</h1>
+                <p>Revenue Bonds Protocol permite que protocolos DeFi compartilhem receita com sua comunidade através de bonds tokenizados ERC-20.</p>
+                <p>Crie séries de revenue bonds que distribuem automaticamente uma porcentagem da sua receita para os holders.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap;">
+                    <a href="https://app.equorumprotocol.org" class="btn">Acessar Aplicação →</a>
+                    <a href="WHITEPAPER.pdf" download class="btn btn-outline" style="background: white; color: var(--orange); border: 2px solid var(--orange); box-shadow: 0 4px 15px rgba(255, 98, 36, 0.15);">
+                        <svg style="width: 20px; height: 20px; vertical-align: middle; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        Download Whitepaper
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Como funciona?</h2>
+            <p class="section-subtitle">Três passos simples para compartilhar receita</p>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card-number">1</div>
+                    <h3>Crie uma Série</h3>
+                    <p>Defina nome, símbolo, % de receita e duração da série.</p>
+                    <a href="https://github.com/EquorumProtocol/Equorum-Revenue-Bonds" target="_blank">Ver Documentação →</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">2</div>
+                    <h3>Distribua Tokens</h3>
+                    <p>Envie os tokens da série para sua comunidade.</p>
+                    <a href="https://app.equorumprotocol.org" target="_blank">Acessar App →</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">3</div>
+                    <h3>Compartilhe Receita</h3>
+                    <p>Envie receita e holders fazem claim automaticamente.</p>
+                    <a href="https://arbiscan.io/address/0x8afA0318363FfBc29Cc28B3C98d9139C08Af737b" target="_blank">Ver Contratos →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Distribution Section -->
+    <section class="distribution">
+        <div class="container">
+            <div class="hero-content">
+                <span class="badge">ON-CHAIN</span>
+                <h2 class="section-title" style="color: white;">Distribuição Automática</h2>
+                <p style="max-width: 700px; margin: 0 auto 2rem;">Revenue é distribuída proporcionalmente aos holders de forma totalmente on-chain. Cada holder pode fazer claim da sua parte a qualquer momento.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto para começar?</h2>
+            <p>Crie sua primeira série de revenue bonds</p>
+            <a href="https://app.equorumprotocol.org" class="btn btn-white">Acessar Aplicação →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="community">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section footer-brand">
+                    <img src="logo-white.svg" alt="Equorum" style="width: 80px; height: 80px; margin-bottom: 1rem; filter: brightness(0) invert(1);">
+                    <p><strong>Equorum Protocol</strong></p>
+                    <p>Revenue sharing on-chain na Arbitrum One. Compartilhe receita com sua comunidade através de bonds tokenizados.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Protocolo</h4>
+                    <ul>
+                        <li><a href="#how-it-works">Como Funciona</a></li>
+                        <li><a href="WHITEPAPER.pdf" download>📄 Whitepaper (PDF)</a></li>
+                        <li><a href="https://github.com/EquorumProtocol/Equorum-Revenue-Bonds" target="_blank">Documentação</a></li>
+                        <li><a href="https://app.equorumprotocol.org" target="_blank">Aplicação</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Comunidade</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/qAzseSwY" target="_blank">Discord</a></li>
+                        <li><a href="https://twitter.com/EquorumProtocol" target="_blank">Twitter</a></li>
+                        <li><a href="https://github.com/EquorumProtocol" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contratos</h4>
+                    <ul>
+                        <li><a href="https://arbiscan.io/address/0x8afA0318363FfBc29Cc28B3C98d9139C08Af737b" target="_blank">Factory</a></li>
+                        <li><a href="https://arbiscan.io/address/0xBa69aEd75E8562f9D23064aEBb21683202c5279B" target="_blank">Treasury</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Equorum Protocol. Construído na <strong>Arbitrum One</strong></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
