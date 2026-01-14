@@ -25,59 +25,79 @@
             overflow-x: hidden;
         }
 
-        /* Hero Section com efeitos visuais */
+        /* Hero Section com efeitos visuais INTENSIFICADOS */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             padding: 8rem 2rem 4rem;
-            background: linear-gradient(to br, #fff5f0 0%, #ffe8dc 50%, #ffd4c4 100%);
+            background: linear-gradient(135deg, #fff0e6 0%, #ffe4d1 25%, #ffd4b8 50%, #ffc4a0 75%, #ffb88a 100%);
             position: relative;
             overflow: hidden;
         }
 
-        /* Padrão de dots */
+        /* Padrão de dots MAIS DENSO E VISÍVEL */
         .hero::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: radial-gradient(circle at 2px 2px, rgba(255, 98, 36, 0.08) 1px, transparent 0);
-            background-size: 40px 40px;
-            opacity: 0.4;
+            background-image: radial-gradient(circle at 2px 2px, rgba(255, 98, 36, 0.18) 2px, transparent 0);
+            background-size: 30px 30px;
+            opacity: 0.7;
             pointer-events: none;
         }
 
-        /* Orb flutuante 1 */
+        /* Orb flutuante 1 MAIOR E MAIS INTENSO */
         .hero::after {
             content: '';
             position: absolute;
-            top: -10%;
-            left: -5%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255, 98, 36, 0.2) 0%, transparent 70%);
+            top: -15%;
+            left: -8%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(255, 98, 36, 0.35) 0%, rgba(255, 140, 90, 0.2) 50%, transparent 70%);
             border-radius: 50%;
-            filter: blur(80px);
+            filter: blur(60px);
             animation: float 8s ease-in-out infinite;
         }
 
-        /* Orb flutuante 2 */
+        /* Orb flutuante 2 MAIOR E MAIS INTENSO */
         .orb-2 {
             position: absolute;
-            bottom: -15%;
-            right: -5%;
+            bottom: -20%;
+            right: -8%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 140, 90, 0.3) 0%, rgba(255, 98, 36, 0.15) 50%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(70px);
+            animation: float 10s ease-in-out infinite reverse;
+            pointer-events: none;
+        }
+
+        /* Orb flutuante 3 ADICIONAL */
+        .orb-3 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(255, 140, 90, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 180, 120, 0.2) 0%, transparent 60%);
             border-radius: 50%;
-            filter: blur(100px);
-            animation: float 10s ease-in-out infinite reverse;
+            filter: blur(90px);
+            animation: pulse 6s ease-in-out infinite;
             pointer-events: none;
         }
 
         @keyframes float {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, -30px) scale(1.1); }
+            50% { transform: translate(50px, -50px) scale(1.15); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
         }
 
         .container {
@@ -414,33 +434,93 @@
             }
         }
 
-        /* Language Selector */
+        /* Language Selector Dropdown */
         .language-selector {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            position: relative;
             margin-left: 1rem;
             padding-left: 1rem;
             border-left: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        .lang-btn {
+        .lang-current {
             background: none;
             border: none;
-            color: #999;
+            color: #666;
             font-size: 0.875rem;
             font-weight: 600;
             cursor: pointer;
-            padding: 0.25rem 0.5rem;
-            transition: color 0.2s;
+            padding: 0.5rem 2rem 0.5rem 0.75rem;
+            transition: all 0.2s;
+            position: relative;
+            border-radius: 4px;
         }
 
-        .lang-btn:hover {
+        .lang-current:hover {
+            background: rgba(255, 98, 36, 0.05);
             color: var(--orange);
         }
 
-        .lang-btn.active {
+        .lang-current::after {
+            content: '▼';
+            position: absolute;
+            right: 0.5rem;
+            font-size: 0.6rem;
+            transition: transform 0.2s;
+        }
+
+        .lang-current.active::after {
+            transform: rotate(180deg);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            min-width: 180px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .lang-dropdown.show {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        .lang-option {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 1px solid #f6f8fa;
+        }
+
+        .lang-option:last-child {
+            border-bottom: none;
+        }
+
+        .lang-option:hover {
+            background: rgba(255, 98, 36, 0.05);
             color: var(--orange);
+        }
+
+        .lang-option.active {
+            background: rgba(255, 98, 36, 0.1);
+            color: var(--orange);
+            font-weight: 600;
         }
 
         /* Footer expandido */
@@ -512,15 +592,14 @@
                 <a href="#community" data-i18n="nav.community">Community</a>
                 <a href="WHITEPAPER.pdf" download>Whitepaper</a>
                 <div class="language-selector">
-                    <button onclick="setLanguage('en')" class="lang-btn active" id="lang-en">EN</button>
-                    <span style="color: #ccc;">|</span>
-                    <button onclick="setLanguage('pt')" class="lang-btn" id="lang-pt">PT</button>
-                    <span style="color: #ccc;">|</span>
-                    <button onclick="setLanguage('es')" class="lang-btn" id="lang-es">ES</button>
-                    <span style="color: #ccc;">|</span>
-                    <button onclick="setLanguage('ja')" class="lang-btn" id="lang-ja">JA</button>
-                    <span style="color: #ccc;">|</span>
-                    <button onclick="setLanguage('zh')" class="lang-btn" id="lang-zh">ZH</button>
+                    <button class="lang-current" onclick="toggleLanguageDropdown()" id="current-lang">English</button>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <button class="lang-option active" onclick="selectLanguage('en', 'English')">English</button>
+                        <button class="lang-option" onclick="selectLanguage('pt', 'Português')">Português</button>
+                        <button class="lang-option" onclick="selectLanguage('es', 'Español')">Español</button>
+                        <button class="lang-option" onclick="selectLanguage('ja', '日本語')">日本語</button>
+                        <button class="lang-option" onclick="selectLanguage('zh', '中文')">中文</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -529,6 +608,7 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="orb-2"></div>
+        <div class="orb-3"></div>
         <div class="container">
             <div class="hero-content">
                 <img src="logo-white.svg" alt="Equorum" style="width: 150px; height: 150px; margin-bottom: 2rem; filter: drop-shadow(0 10px 30px rgba(0, 10, 33, 0.2));">
@@ -872,6 +952,40 @@
             }
         };
 
+        // Language names mapping
+        const languageNames = {
+            'en': 'English',
+            'pt': 'Português',
+            'es': 'Español',
+            'ja': '日本語',
+            'zh': '中文'
+        };
+
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('lang-dropdown');
+            const currentBtn = document.getElementById('current-lang');
+            dropdown.classList.toggle('show');
+            currentBtn.classList.toggle('active');
+        }
+
+        function selectLanguage(lang, name) {
+            // Update current language display
+            document.getElementById('current-lang').textContent = name;
+            
+            // Close dropdown
+            document.getElementById('lang-dropdown').classList.remove('show');
+            document.getElementById('current-lang').classList.remove('active');
+            
+            // Update active state
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Apply translations
+            setLanguage(lang);
+        }
+
         function setLanguage(lang) {
             // Save preference
             localStorage.setItem('language', lang);
@@ -883,16 +997,30 @@
                     element.innerHTML = translations[lang][key];
                 }
             });
-            
-            // Update active button
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById('lang-' + lang).classList.add('active');
         }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const selector = document.querySelector('.language-selector');
+            if (selector && !selector.contains(event.target)) {
+                document.getElementById('lang-dropdown').classList.remove('show');
+                document.getElementById('current-lang').classList.remove('active');
+            }
+        });
 
         // Load saved language or default to English
         const savedLang = localStorage.getItem('language') || 'en';
+        const savedLangName = languageNames[savedLang] || 'English';
+        document.getElementById('current-lang').textContent = savedLangName;
+        
+        // Set active option
+        document.querySelectorAll('.lang-option').forEach(opt => {
+            const langCode = opt.getAttribute('onclick').match(/'([^']+)'/)[1];
+            if (langCode === savedLang) {
+                opt.classList.add('active');
+            }
+        });
+        
         setLanguage(savedLang);
     </script>
 </body>
