@@ -88,27 +88,239 @@ async function fetchGraphQL(query, variables = {}) {
   try {
     const response = await fetch(SUBGRAPH_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables,
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, variables }),
     });
-
     const result = await response.json();
-    
-    if (result.errors) {
-      console.error('GraphQL Errors:', result.errors);
-      throw new Error(result.errors[0].message);
-    }
-
+    if (result.errors) throw new Error(result.errors[0].message);
     return result.data;
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.warn('Subgraph unavailable, falling back to on-chain data');
     throw error;
   }
+}
+
+// ============================================
+// ON-CHAIN FALLBACK (reads V1 + V2 factories via public RPC)
+// ============================================
+
+async function fetchAllSeriesOnChain() {
+  const rpcProvider = new ethers.providers.JsonRpcProvider(ARBITRUM_RPC);
+
+  const factoryAbi = [
+    'function getAllSeries() view returns (address[])',
+    'function getTotalSeries() view returns (uint256)',
+    'function getRouterForSeries(address) view returns (address)',
+  ];
+
+  const seriesAbi = [
+    'function name() view returns (string)',
+    'function symbol() view returns (string)',
+    'function totalSupply() view returns (uint256)',
+    'function totalRevenueReceived() view returns (uint256)',
+    'function revenueShareBPS() view returns (uint256)',
+    'function maturityDate() view returns (uint256)',
+    'function protocol() view returns (address)',
+    'function router() view returns (address)',
+    'function active() view returns (bool)',
+  ];
+
+  const allSeriesData = [];
+
+  // Fetch from V1 Factory
+  try {
+    const v1Factory = new ethers.Contract(V1_FACTORY_ADDRESS, factoryAbi, rpcProvider);
+    const v1Addresses = await v1Factory.getAllSeries();
+    console.log(`V1 Factory: ${v1Addresses.length} series found`);
+
+    for (const addr of v1Addresses) {
+      try {
+        const series = new ethers.Contract(addr, seriesAbi, rpcProvider);
+        const [name, symbol, totalSupply, totalRevenue, shareBPS, maturity, protocol, router, active] =
+          await Promise.all([
+            series.name(), series.symbol(), series.totalSupply(),
+            series.totalRevenueReceived(), series.revenueShareBPS(),
+            series.maturityDate(), series.protocol(), series.router(), series.active(),
+          ]);
+
+        const now = Math.floor(Date.now() / 1000);
+        const isMatured = now >= maturity.toNumber();
+
+        allSeriesData.push({
+          id: addr,
+          name, symbol,
+          bondType: 'SOFT',
+          version: 'V1',
+          protocol: {
+            address: protocol,
+            reputationScore: '0',
+            deliveryRate: '0.0',
+            blacklisted: false,
+          },
+          revenueSharePercentage: (shareBPS.toNumber() / 100).toFixed(1),
+          totalSupply: ethers.utils.formatEther(totalSupply),
+          totalRevenueReceived: ethers.utils.formatEther(totalRevenue),
+          totalRevenueDistributed: ethers.utils.formatEther(totalRevenue),
+          distributionCount: '0',
+          holderCount: '1',
+          maturityDate: maturity.toString(),
+          createdAt: '0',
+          estimatedAPY: '0.0',
+          escrow: null,
+          isActive: active && !isMatured,
+          isMatured,
+        });
+      } catch (err) {
+        console.warn(`Failed to load V1 series ${addr}:`, err.message);
+      }
+    }
+  } catch (err) {
+    console.warn('V1 Factory read failed:', err.message);
+  }
+
+  // Fetch from V2 Soft Bond Factory
+  try {
+    const v2Factory = new ethers.Contract(FACTORY_ADDRESS, factoryAbi, rpcProvider);
+    const v2Addresses = await v2Factory.getAllSeries();
+    console.log(`V2 Soft Factory: ${v2Addresses.length} series found`);
+
+    for (const addr of v2Addresses) {
+      try {
+        const series = new ethers.Contract(addr, seriesAbi, rpcProvider);
+        const [name, symbol, totalSupply, totalRevenue, shareBPS, maturity, protocol, router, active] =
+          await Promise.all([
+            series.name(), series.symbol(), series.totalSupply(),
+            series.totalRevenueReceived(), series.revenueShareBPS(),
+            series.maturityDate(), series.protocol(), series.router(), series.active(),
+          ]);
+
+        const now = Math.floor(Date.now() / 1000);
+        const isMatured = now >= maturity.toNumber();
+
+        allSeriesData.push({
+          id: addr,
+          name, symbol,
+          bondType: 'SOFT',
+          version: 'V2',
+          protocol: {
+            address: protocol,
+            reputationScore: '0',
+            deliveryRate: '0.0',
+            blacklisted: false,
+          },
+          revenueSharePercentage: (shareBPS.toNumber() / 100).toFixed(1),
+          totalSupply: ethers.utils.formatEther(totalSupply),
+          totalRevenueReceived: ethers.utils.formatEther(totalRevenue),
+          totalRevenueDistributed: ethers.utils.formatEther(totalRevenue),
+          distributionCount: '0',
+          holderCount: '1',
+          maturityDate: maturity.toString(),
+          createdAt: '0',
+          estimatedAPY: '0.0',
+          escrow: null,
+          isActive: active && !isMatured,
+          isMatured,
+        });
+      } catch (err) {
+        console.warn(`Failed to load V2 soft series ${addr}:`, err.message);
+      }
+    }
+  } catch (err) {
+    console.warn('V2 Soft Factory read failed:', err.message);
+  }
+
+  // Fetch from V2 Escrow Factory
+  try {
+    const escrowFactoryAbi = [
+      'function getAllSeries() view returns (address[])',
+      'function getTotalSeries() view returns (uint256)',
+    ];
+    const escrowSeriesAbi = [
+      'function name() view returns (string)',
+      'function symbol() view returns (string)',
+      'function totalSupply() view returns (uint256)',
+      'function totalRevenueReceived() view returns (uint256)',
+      'function revenueShareBPS() view returns (uint256)',
+      'function maturityDate() view returns (uint256)',
+      'function protocol() view returns (address)',
+      'function router() view returns (address)',
+      'function state() view returns (uint8)',
+      'function principalAmount() view returns (uint256)',
+    ];
+
+    const escrowFactory = new ethers.Contract(ESCROW_FACTORY_ADDRESS, escrowFactoryAbi, rpcProvider);
+    const escrowAddresses = await escrowFactory.getAllSeries();
+    console.log(`V2 Escrow Factory: ${escrowAddresses.length} series found`);
+
+    for (const addr of escrowAddresses) {
+      try {
+        const series = new ethers.Contract(addr, escrowSeriesAbi, rpcProvider);
+        const [name, symbol, totalSupply, totalRevenue, shareBPS, maturity, protocol, router, state, principal] =
+          await Promise.all([
+            series.name(), series.symbol(), series.totalSupply(),
+            series.totalRevenueReceived(), series.revenueShareBPS(),
+            series.maturityDate(), series.protocol(), series.router(),
+            series.state(), series.principalAmount(),
+          ]);
+
+        const now = Math.floor(Date.now() / 1000);
+        const isMatured = now >= maturity.toNumber();
+        const stateNames = ['PendingPrincipal', 'Active', 'Matured', 'Defaulted'];
+
+        allSeriesData.push({
+          id: addr,
+          name, symbol,
+          bondType: 'GUARANTEED',
+          version: 'V2',
+          protocol: {
+            address: protocol,
+            reputationScore: '0',
+            deliveryRate: '0.0',
+            blacklisted: false,
+          },
+          revenueSharePercentage: (shareBPS.toNumber() / 100).toFixed(1),
+          totalSupply: ethers.utils.formatEther(totalSupply),
+          totalRevenueReceived: ethers.utils.formatEther(totalRevenue),
+          totalRevenueDistributed: ethers.utils.formatEther(totalRevenue),
+          distributionCount: '0',
+          holderCount: '1',
+          maturityDate: maturity.toString(),
+          createdAt: '0',
+          estimatedAPY: '0.0',
+          escrow: {
+            principalAmount: ethers.utils.formatEther(principal),
+            state: stateNames[state] || 'Unknown',
+          },
+          isActive: state === 1 && !isMatured,
+          isMatured,
+        });
+      } catch (err) {
+        console.warn(`Failed to load V2 escrow series ${addr}:`, err.message);
+      }
+    }
+  } catch (err) {
+    console.warn('V2 Escrow Factory read failed:', err.message);
+  }
+
+  return allSeriesData;
+}
+
+function buildStatsFromSeries(seriesList) {
+  const totalBonds = seriesList.length;
+  const activeSeries = seriesList.filter(s => s.isActive).length;
+  const maturedSeries = seriesList.filter(s => s.isMatured).length;
+  const totalRevenue = seriesList.reduce((sum, s) => sum + parseFloat(s.totalRevenueReceived || 0), 0);
+  const protocols = new Set(seriesList.map(s => s.protocol.address)).size;
+
+  return {
+    totalRevenueBondsCreated: totalBonds.toString(),
+    totalCapitalRaised: '0.0',
+    totalRevenueDistributed: totalRevenue.toFixed(4),
+    totalActiveSeries: activeSeries.toString(),
+    totalMaturedSeries: maturedSeries.toString(),
+    totalProtocolsFunded: protocols.toString(),
+    averageDeliveryRate: '0.0',
+  };
 }
 
 // ============================================
@@ -412,31 +624,42 @@ function handleSort(column) {
 
 async function initDashboard() {
   try {
-    // Fetch global stats
-    const statsData = await fetchGraphQL(GLOBAL_STATS_QUERY);
-    if (statsData.protocolStats) {
-      renderHeroStats(statsData.protocolStats);
-      renderKPIs(statsData.protocolStats);
+    let seriesList = [];
+    let stats = null;
+
+    // Try subgraph first, fallback to on-chain
+    try {
+      const statsData = await fetchGraphQL(GLOBAL_STATS_QUERY);
+      const seriesData = await fetchGraphQL(ACTIVE_SERIES_QUERY, {
+        first: 100, skip: 0,
+        orderBy: 'totalRevenueReceived', orderDirection: 'desc',
+      });
+      stats = statsData.protocolStats;
+      seriesList = seriesData.revenueSeries || [];
+    } catch (subgraphError) {
+      console.log('Using on-chain fallback (V1 + V2 factories)...');
+      seriesList = await fetchAllSeriesOnChain();
+      stats = buildStatsFromSeries(seriesList);
     }
 
-    // Fetch active series
-    const seriesData = await fetchGraphQL(ACTIVE_SERIES_QUERY, {
-      first: 100,
-      skip: 0,
-      orderBy: 'totalRevenueReceived',
-      orderDirection: 'desc',
-    });
-    
-    if (seriesData.revenueSeries) {
-      currentSeries = seriesData.revenueSeries;
-      filteredSeries = [...currentSeries];
-      renderSeriesTable(filteredSeries);
+    // Render stats
+    if (stats) {
+      renderHeroStats(stats);
+      renderKPIs(stats);
     }
+
+    // Render series table
+    currentSeries = seriesList;
+    filteredSeries = [...currentSeries];
+    renderSeriesTable(filteredSeries);
 
     // Setup event listeners
-    document.getElementById('search-input').addEventListener('input', applyFilters);
-    document.getElementById('type-filter').addEventListener('change', applyFilters);
-    document.getElementById('sort-filter').addEventListener('change', applySorting);
+    const searchInput = document.getElementById('search-input');
+    const typeFilter = document.getElementById('type-filter');
+    const sortFilter = document.getElementById('sort-filter');
+    if (searchInput) searchInput.addEventListener('input', applyFilters);
+    if (typeFilter) typeFilter.addEventListener('change', applyFilters);
+    if (sortFilter) sortFilter.addEventListener('change', applySorting);
 
   } catch (error) {
     console.error('Error initializing dashboard:', error);
@@ -454,30 +677,32 @@ async function initDashboard() {
 // ============================================
 
 function startAutoRefresh() {
-  // Refresh data every 30 seconds
+  // Refresh data every 60 seconds
   setInterval(async () => {
     try {
-      const statsData = await fetchGraphQL(GLOBAL_STATS_QUERY);
-      if (statsData.protocolStats) {
-        renderHeroStats(statsData.protocolStats);
-        renderKPIs(statsData.protocolStats);
+      let seriesList, stats;
+      try {
+        const statsData = await fetchGraphQL(GLOBAL_STATS_QUERY);
+        const seriesData = await fetchGraphQL(ACTIVE_SERIES_QUERY, {
+          first: 100, skip: 0,
+          orderBy: 'totalRevenueReceived', orderDirection: 'desc',
+        });
+        stats = statsData.protocolStats;
+        seriesList = seriesData.revenueSeries || [];
+      } catch (e) {
+        seriesList = await fetchAllSeriesOnChain();
+        stats = buildStatsFromSeries(seriesList);
       }
-
-      const seriesData = await fetchGraphQL(ACTIVE_SERIES_QUERY, {
-        first: 100,
-        skip: 0,
-        orderBy: 'totalRevenueReceived',
-        orderDirection: 'desc',
-      });
-      
-      if (seriesData.revenueSeries) {
-        currentSeries = seriesData.revenueSeries;
-        applyFilters();
+      if (stats) {
+        renderHeroStats(stats);
+        renderKPIs(stats);
       }
+      currentSeries = seriesList;
+      applyFilters();
     } catch (error) {
       console.error('Error refreshing data:', error);
     }
-  }, 30000); // 30 seconds
+  }, 60000); // 60 seconds (on-chain calls are heavier)
 }
 
 // ============================================

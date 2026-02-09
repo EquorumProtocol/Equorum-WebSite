@@ -5,7 +5,10 @@
 const ARBITRUM_CHAIN_ID = '0xa4b1'; // 42161 in hex (Arbitrum One)
 const ARBITRUM_RPC = 'https://arb1.arbitrum.io/rpc';
 
-// Contract addresses
+// Contract addresses - V1 (legacy)
+const V1_FACTORY_ADDRESS = '0x8afA0318363FfBc29Cc28B3C98d9139C08Af737b'; // V1 Revenue Series Factory (Arbitrum One)
+
+// Contract addresses - V2 (current)
 const FACTORY_ADDRESS = '0x280E83c47E243267753B7E2f322f55c52d4D2C3a'; // V2 Revenue Series Factory (Arbitrum One)
 const ESCROW_FACTORY_ADDRESS = '0x2CfE9a33050EB77fC124ec3eAac4fA4D687bE650'; // V2 Escrow Factory (Arbitrum One)
 
