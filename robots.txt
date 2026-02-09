@@ -1,0 +1,16 @@
+# Robots.txt for Equorum Protocol
+# https://equorumprotocol.org
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://equorumprotocol.org/sitemap.xml
+
+# Crawl-delay (optional, be nice to servers)
+Crawl-delay: 1
+
+# Disallow admin/internal paths (if any)
+Disallow: /src/
+Disallow: /*.js$
+Disallow: /*.css$

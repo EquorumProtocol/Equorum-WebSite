@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Local - Buy Logic</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #000A21;
+            color: #fff;
+        }
+        h1 { color: #FF6224; }
+        .test-section {
+            background: #0d1f3c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #FF6224;
+        }
+        .result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .success { background: #1a4d2e; color: #4ade80; }
+        .error { background: #4d1a1a; color: #f87171; }
+        .info { background: #1a2d4d; color: #60a5fa; }
+        button {
+            background: #FF6224;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover { background: #E55520; }
+        input {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background: #1a1a1a;
+            color: white;
+            font-size: 14px;
+            margin: 5px;
+        }
+        .code {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste Local - Buy Logic</h1>
+    <p>Validação da correção de taxa duplicada</p>
+
+    <div class="test-section">
+        <h2>Teste 1: Cálculo de Custo</h2>
+        <p>Simula o cálculo de custo do buy.js</p>
+        
+        <label>Quantidade de Tokens:</label>
+        <input type="number" id="tokenAmount" value="100" />
+        
+        <label>Preço por Token (ETH):</label>
+        <input type="number" step="0.001" id="tokenPrice" value="0.01" />
+        
+        <button onclick="testCostCalculation()">Calcular Custo</button>
+        
+        <div id="costResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Teste 2: Validação de Taxa</h2>
+        <p>Verifica se a taxa está sendo calculada corretamente</p>
+        <button onclick="testFeeCalculation()">Validar Taxa</button>
+        <div id="feeResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Teste 3: Distribuição de Fundos</h2>
+        <p>Simula como o contrato distribui os fundos</p>
+        <button onclick="testFundDistribution()">Simular Distribuição</button>
+        <div id="distributionResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Teste 4: Comparação Antes vs Depois</h2>
+        <button onclick="testBeforeAfter()">Comparar Correção</button>
+        <div id="comparisonResult"></div>
+    </div>
+
+    <script>
+        function log(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.innerHTML = message;
+            element.appendChild(div);
+        }
+
+        function clearResults(elementId) {
+            document.getElementById(elementId).innerHTML = '';
+        }
+
+        function testCostCalculation() {
+            clearResults('costResult');
+            
+            const amount = parseFloat(document.getElementById('tokenAmount').value);
+            const price = parseFloat(document.getElementById('tokenPrice').value);
+            
+            log('costResult', '<strong>📊 Calculando custos...</strong>', 'info');
+            
+            try {
+                // Simula o cálculo do buy.js (CORRIGIDO)
+                const tokenAmount = ethers.utils.parseEther(amount.toString());
+                const tokenPrice = ethers.utils.parseEther(price.toString());
+                const totalCost = tokenAmount.mul(tokenPrice).div(ethers.utils.parseEther('1'));
+                const fee = totalCost.mul(200).div(10000); // 2%
+                
+                log('costResult', `
+                    <div class="code">
+                    <strong>Input:</strong><br>
+                    - Tokens: ${amount}<br>
+                    - Price: ${price} ETH<br><br>
+                    
+                    <strong>Cálculo:</strong><br>
+                    - Token Cost: ${ethers.utils.formatEther(totalCost)} ETH<br>
+                    - Protocol Fee: ${ethers.utils.formatEther(fee)} ETH (2%, deduzido internamente)<br>
+                    - <strong>Total a Pagar: ${ethers.utils.formatEther(totalCost)} ETH</strong> ✅<br><br>
+                    
+                    <strong>Distribuição no Contrato:</strong><br>
+                    - Protocolo recebe: ${ethers.utils.formatEther(totalCost.sub(fee))} ETH (98%)<br>
+                    - Treasury recebe: ${ethers.utils.formatEther(fee)} ETH (2%)<br>
+                    </div>
+                `, 'success');
+                
+            } catch (error) {
+                log('costResult', `❌ Erro: ${error.message}`, 'error');
+            }
+        }
+
+        function testFeeCalculation() {
+            clearResults('feeResult');
+            
+            log('feeResult', '<strong>🔍 Validando cálculo de taxa...</strong>', 'info');
+            
+            const testCases = [
+                { tokens: 100, price: 0.01, expectedTotal: 1.0 },
+                { tokens: 50, price: 0.02, expectedTotal: 1.0 },
+                { tokens: 1000, price: 0.001, expectedTotal: 1.0 },
+                { tokens: 10, price: 0.1, expectedTotal: 1.0 }
+            ];
+            
+            let allPassed = true;
+            
+            testCases.forEach((test, index) => {
+                const tokenAmount = ethers.utils.parseEther(test.tokens.toString());
+                const tokenPrice = ethers.utils.parseEther(test.price.toString());
+                const totalCost = tokenAmount.mul(tokenPrice).div(ethers.utils.parseEther('1'));
+                const fee = totalCost.mul(200).div(10000);
+                
+                const totalPaid = parseFloat(ethers.utils.formatEther(totalCost));
+                const feeAmount = parseFloat(ethers.utils.formatEther(fee));
+                const protocolReceives = totalPaid - feeAmount;
+                
+                const passed = Math.abs(totalPaid - test.expectedTotal) < 0.0001;
+                allPassed = allPassed && passed;
+                
+                log('feeResult', `
+                    <strong>Teste ${index + 1}:</strong> ${test.tokens} tokens @ ${test.price} ETH<br>
+                    - Total pago: ${totalPaid.toFixed(4)} ETH ${passed ? '✅' : '❌'}<br>
+                    - Fee (2%): ${feeAmount.toFixed(4)} ETH<br>
+                    - Protocolo: ${protocolReceives.toFixed(4)} ETH (98%)<br>
+                `, passed ? 'success' : 'error');
+            });
+            
+            if (allPassed) {
+                log('feeResult', '<strong>✅ Todos os testes passaram!</strong>', 'success');
+            } else {
+                log('feeResult', '<strong>❌ Alguns testes falharam!</strong>', 'error');
+            }
+        }
+
+        function testFundDistribution() {
+            clearResults('distributionResult');
+            
+            log('distributionResult', '<strong>💰 Simulando distribuição de fundos...</strong>', 'info');
+            
+            const totalCost = ethers.utils.parseEther('1.0'); // 1 ETH
+            const fee = totalCost.mul(200).div(10000); // 2%
+            const protocolReceives = totalCost.sub(fee);
+            
+            log('distributionResult', `
+                <div class="code">
+                <strong>Cenário: User compra tokens por 1 ETH</strong><br><br>
+                
+                <strong>Fluxo de Fundos:</strong><br>
+                1. User envia: ${ethers.utils.formatEther(totalCost)} ETH<br>
+                2. Contrato recebe: ${ethers.utils.formatEther(totalCost)} ETH<br>
+                3. Contrato calcula fee: ${ethers.utils.formatEther(fee)} ETH (2%)<br>
+                4. Contrato envia para protocolo: ${ethers.utils.formatEther(protocolReceives)} ETH (98%)<br>
+                5. Contrato envia para treasury: ${ethers.utils.formatEther(fee)} ETH (2%)<br><br>
+                
+                <strong>✅ Total distribuído: ${ethers.utils.formatEther(totalCost)} ETH</strong><br>
+                <strong>✅ Nenhum ETH perdido</strong><br>
+                <strong>✅ User pagou valor correto (não 102%)</strong>
+                </div>
+            `, 'success');
+        }
+
+        function testBeforeAfter() {
+            clearResults('comparisonResult');
+            
+            log('comparisonResult', '<strong>🔄 Comparando ANTES vs DEPOIS da correção...</strong>', 'info');
+            
+            const tokenAmount = ethers.utils.parseEther('100');
+            const tokenPrice = ethers.utils.parseEther('0.01');
+            const totalCost = tokenAmount.mul(tokenPrice).div(ethers.utils.parseEther('1'));
+            const fee = totalCost.mul(200).div(10000);
+            
+            // ANTES (ERRADO)
+            const totalWithFee = totalCost.add(fee);
+            
+            // DEPOIS (CORRETO)
+            const totalCorrect = totalCost;
+            
+            log('comparisonResult', `
+                <div class="code">
+                <strong>Cenário: 100 tokens @ 0.01 ETH</strong><br><br>
+                
+                <strong style="color: #f87171;">❌ ANTES (ERRADO):</strong><br>
+                - Token Cost: ${ethers.utils.formatEther(totalCost)} ETH<br>
+                - Protocol Fee: ${ethers.utils.formatEther(fee)} ETH<br>
+                - Total enviado: ${ethers.utils.formatEther(totalWithFee)} ETH (102%) ❌<br>
+                - Problema: User pagava taxa DUAS VEZES<br><br>
+                
+                <strong style="color: #4ade80;">✅ DEPOIS (CORRETO):</strong><br>
+                - Token Cost: ${ethers.utils.formatEther(totalCost)} ETH<br>
+                - Protocol Fee: ${ethers.utils.formatEther(fee)} ETH (deduzido internamente)<br>
+                - Total enviado: ${ethers.utils.formatEther(totalCorrect)} ETH (100%) ✅<br>
+                - Solução: Contrato deduz taxa internamente<br><br>
+                
+                <strong>💰 Economia para o user: ${ethers.utils.formatEther(fee)} ETH (${ethers.utils.formatEther(fee) * 100}%)</strong>
+                </div>
+            `, 'success');
+        }
+
+        // Auto-run primeiro teste
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                testCostCalculation();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,20 +1,16 @@
-# Equorum Protocol - Apache Configuration
+# Equorum Protocol - Revenue Bonds Platform
+# Apache Configuration for Hostgator/cPanel
 
 # Enable Rewrite Engine
 RewriteEngine On
 
-# Force HTTPS
+# Force HTTPS (SSL)
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Force www to non-www (or vice-versa if you prefer www)
+# Force non-www (remove www. do domínio)
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
-
-# Redirect app.equorumprotocol.org to /app directory
-RewriteCond %{HTTP_HOST} ^app\.equorumprotocol\.org$ [NC]
-RewriteCond %{REQUEST_URI} !^/app/
-RewriteRule ^(.*)$ /app/$1 [L]
 
 # Default Document
 DirectoryIndex index.html
