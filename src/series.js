@@ -179,13 +179,44 @@ async function loadSeriesData() {
 }
 
 async function fetchSeriesData(address) {
-  // Try to get from Web3 if connected
+  // Try wallet provider first, then public RPC fallback
   if (typeof Web3Manager !== 'undefined' && Web3Manager.isConnected()) {
     return await fetchFromContract(address);
   }
 
-  // If not connected, prompt user to connect wallet
-  throw new Error('Please connect your wallet to view series data');
+  // Fallback: read via public RPC (no wallet needed)
+  return await fetchFromPublicRPC(address);
+}
+
+async function fetchFromPublicRPC(address) {
+  const rpcProvider = new ethers.providers.JsonRpcProvider(ARBITRUM_RPC);
+  const contract = new ethers.Contract(address, SERIES_ABI, rpcProvider);
+
+  const [name, symbol, totalSupply, totalRevenueReceived, maturityDate, revenueShareBPS, protocolAddress, routerAddress, active] =
+    await Promise.all([
+      contract.name(), contract.symbol(), contract.totalSupply(),
+      contract.totalRevenueReceived(), contract.maturityDate(),
+      contract.revenueShareBPS(), contract.protocol(), contract.router(), contract.active(),
+    ]);
+
+  const now = Math.floor(Date.now() / 1000);
+  const isMatured = now >= maturityDate.toNumber();
+  const isActive = active && !isMatured;
+
+  return {
+    address,
+    name, symbol,
+    totalSupply: ethers.utils.formatEther(totalSupply),
+    totalRevenueReceived: ethers.utils.formatEther(totalRevenueReceived),
+    totalRevenueDistributed: ethers.utils.formatEther(totalRevenueReceived),
+    distributionCount: '0',
+    maturityDate: maturityDate.toNumber(),
+    revenueShareBPS: revenueShareBPS.toNumber(),
+    protocolAddress, routerAddress,
+    isActive, isMatured,
+    bondType: 'SOFT',
+    reputationScore: 0,
+  };
 }
 
 async function fetchFromContract(address) {
