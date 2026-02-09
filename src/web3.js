@@ -326,13 +326,7 @@ async function claimAll() {
 // ============================================
 
 async function getAllSeries() {
-  // This should fetch from subgraph or contract
-  // For now, return mock data
-  if (USE_MOCK_DATA) {
-    return getMockData('revenueSeries').revenueSeries;
-  }
-  
-  // TODO: Fetch from subgraph when deployed
+  // Fetch from subgraph when deployed
   const data = await fetchGraphQL(ACTIVE_SERIES_QUERY, {
     first: 100,
     skip: 0,

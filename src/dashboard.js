@@ -6,8 +6,7 @@
 // TheGraph API Endpoint (será atualizado após deploy do subgraph)
 const SUBGRAPH_URL = 'https://api.studio.thegraph.com/query/<SUBGRAPH_ID>/equorum-protocol/version/latest';
 
-// Fallback para desenvolvimento (dados mockados)
-const USE_MOCK_DATA = true; // Mudar para false após deploy do subgraph
+// Subgraph not yet deployed - dashboard will show real data when available
 
 // ============================================
 // GRAPHQL QUERIES
@@ -86,10 +85,6 @@ const DAILY_SNAPSHOTS_QUERY = `
 // ============================================
 
 async function fetchGraphQL(query, variables = {}) {
-  if (USE_MOCK_DATA) {
-    return getMockData(query);
-  }
-
   try {
     const response = await fetch(SUBGRAPH_URL, {
       method: 'POST',
@@ -114,76 +109,6 @@ async function fetchGraphQL(query, variables = {}) {
     console.error('Error fetching data:', error);
     throw error;
   }
-}
-
-// ============================================
-// MOCK DATA (para desenvolvimento)
-// ============================================
-
-function getMockData(query) {
-  if (query.includes('protocolStats')) {
-    return {
-      protocolStats: {
-        totalRevenueBondsCreated: '1',
-        totalCapitalRaised: '0.0', // Ainda não teve capital levantado
-        totalRevenueDistributed: '0.0', // Ainda não teve distribuição
-        totalActiveSeries: '1',
-        totalMaturedSeries: '0',
-        totalProtocolsFunded: '1',
-        averageDeliveryRate: '0.0', // Sem dados ainda
-      },
-    };
-  }
-
-  if (query.includes('revenueSeries')) {
-    return {
-      revenueSeries: [
-        {
-          id: '0x88122C5805281bAbF3B172fA212a6F6300Bb1EF3',
-          name: 'Revenue Bonds Genesis - Built for the underdogs',
-          symbol: 'UNDERDOG-RB',
-          bondType: 'SOFT',
-          protocol: {
-            address: '0x48CF80F950E52d6D55537a2A7de0Dbd7e1532f77',
-            reputationScore: '0',
-            deliveryRate: '0.0',
-            blacklisted: false,
-          },
-          revenueSharePercentage: '20.0',
-          totalSupply: '100000.0',
-          totalRevenueReceived: '0.0',
-          totalRevenueDistributed: '0.0',
-          distributionCount: '0',
-          holderCount: '1',
-          maturityDate: '1753027200', // ~180 days from Jan 19 2026
-          createdAt: '1737331200', // Jan 19 2026
-          estimatedAPY: '0.0',
-          escrow: null,
-        },
-      ],
-    };
-  }
-
-  if (query.includes('dailySnapshots')) {
-    const snapshots = [];
-    const now = Math.floor(Date.now() / 1000);
-    const dayInSeconds = 86400;
-    
-    for (let i = 29; i >= 0; i--) {
-      const date = now - (i * dayInSeconds);
-      snapshots.push({
-        date: date.toString(),
-        totalRevenueDistributed: (10000 + (29 - i) * 500).toString(),
-        totalCapitalRaised: '100000.0',
-        revenueDistributedToday: (Math.random() * 1000 + 200).toFixed(2),
-        newSeriesCreated: i === 29 ? '1' : '0',
-      });
-    }
-    
-    return { dailySnapshots: snapshots };
-  }
-
-  return {};
 }
 
 // ============================================

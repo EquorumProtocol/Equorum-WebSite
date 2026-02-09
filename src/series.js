@@ -181,16 +181,11 @@ async function loadSeriesData() {
 async function fetchSeriesData(address) {
   // Try to get from Web3 if connected
   if (typeof Web3Manager !== 'undefined' && Web3Manager.isConnected()) {
-    try {
-      return await fetchFromContract(address);
-    } catch (error) {
-      console.warn('Failed to fetch from contract, using mock data:', error);
-      return getMockSeriesData(address);
-    }
+    return await fetchFromContract(address);
   }
 
-  // Otherwise use mock data or subgraph
-  return getMockSeriesData(address);
+  // If not connected, prompt user to connect wallet
+  throw new Error('Please connect your wallet to view series data');
 }
 
 async function fetchFromContract(address) {
@@ -243,28 +238,6 @@ async function fetchFromContract(address) {
   };
 }
 
-function getMockSeriesData(address) {
-  // Return mock data for Genesis series (deployed Jan 19 2026 on Arbitrum One)
-  return {
-    address: '0x88122C5805281bAbF3B172fA212a6F6300Bb1EF3',
-    name: 'Revenue Bonds Genesis - Built for the underdogs',
-    symbol: 'UNDERDOG-RB',
-    bondType: 'SOFT',
-    totalSupply: '100000.0',
-    totalRevenueReceived: '0.0',
-    totalRevenueDistributed: '0.0',
-    distributionCount: '0',
-    maturityDate: 1753027200, // ~180 days from Jan 19 2026
-    revenueShareBPS: 2000,
-    protocolAddress: '0x48CF80F950E52d6D55537a2A7de0Dbd7e1532f77',
-    routerAddress: '0x8a4796F943Ed862671115fefAB860AC12B2772eE',
-    isActive: true,
-    isMatured: false,
-    reputationScore: 0,
-    holderCount: 1,
-    createdAt: 1737331200, // Jan 19 2026
-  };
-}
 
 // ============================================
 // RENDER FUNCTIONS
@@ -333,7 +306,7 @@ function renderMetrics(data) {
   document.getElementById('metric-share').textContent = (data.revenueShareBPS / 100).toFixed(1) + '%';
   document.getElementById('metric-distributions').textContent = data.distributionCount;
 
-  // APY (mock calculation)
+  // APY calculation
   const apy = calculateAPY(data);
   document.getElementById('metric-apy').textContent = apy ? apy.toFixed(1) + '%' : 'N/A';
 
