@@ -916,12 +916,9 @@
             table {
                 min-width: 800px;
             }
-
-            .nav-links {
-                display: none;
-            }
         }
     </style>
+    <link rel="stylesheet" href="/src/mobile-menu.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -931,7 +928,10 @@
                 <img src="logo-dark.svg?v=20260130" alt="Equorum" style="height: 32px;">
                 <span>Equorum</span>
             </a>
-            <div class="nav-links">
+            <button class="nav-hamburger" onclick="toggleMobileMenu()" id="hamburger-btn">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
                 <a href="/dashboard.html" class="active" data-i18n="nav.dashboard">Explore</a>
                 <a href="/buy.html">Buy Bonds</a>
                 <a href="/create.html">Create Series</a>
@@ -967,6 +967,7 @@
             </div>
         </div>
     </nav>
+    <div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -1382,5 +1383,6 @@
             }
         });
     </script>
+    <script src="/src/mobile-menu.js"></script>
 </body>
 </html>

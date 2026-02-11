@@ -594,8 +594,17 @@
                 grid-template-columns: 1fr;
             }
 
-            .nav-links a:not(:first-child):not(:nth-child(2)) {
+            .nav-links {
                 display: none;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(10,22,40,0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 1.5rem;
+                z-index: 1050;
+                padding: 2rem;
             }
 
             .example-header {
@@ -611,7 +620,28 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .nav-hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1100;
+        }
+        .nav-hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: white;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        .nav-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
     </style>
+    <link rel="stylesheet" href="/src/mobile-menu.css">
 </head>
 <body>
     <header class="header">
@@ -620,7 +650,10 @@
                 <img src="/logo-white.svg" alt="Equorum" style="height: 32px; margin-right: 0.5rem; filter: brightness(0) invert(1);">
                 <span>Equorum</span>
             </a>
-            <nav class="nav-links">
+            <button class="nav-hamburger" onclick="toggleMobileMenu()" id="hamburger-btn">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-links" id="nav-links">
                 <a href="/" data-i18n="nav.home">Home</a>
                 <div class="nav-dropdown">
                     <a href="#">FAQ</a>
@@ -643,6 +676,7 @@
                     </div>
                 </div>
             </nav>
+    <div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
         </div>
     </header>
 
@@ -1532,5 +1566,6 @@
         // Calculate on load
         calculate();
     </script>
+    <script src="/src/mobile-menu.js"></script>
 </body>
 </html>

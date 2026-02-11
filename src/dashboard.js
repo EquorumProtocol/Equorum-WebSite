@@ -105,7 +105,7 @@ async function fetchGraphQL(query, variables = {}) {
 // ============================================
 
 async function fetchAllSeriesOnChain() {
-  const rpcProvider = new ethers.providers.JsonRpcProvider(ARBITRUM_RPC);
+  const rpcProvider = await getBrowserProvider();
 
   const factoryAbi = [
     'function getAllSeries() view returns (address[])',
@@ -324,46 +324,8 @@ function buildStatsFromSeries(seriesList) {
 }
 
 // ============================================
-// FORMATTING UTILITIES
+// FORMATTING UTILITIES (formatETH, formatUSD, formatNumber, formatAddress are in web3.js)
 // ============================================
-
-// ETH price (update this periodically or fetch from API)
-const ETH_PRICE_USD = 3150; // Approximate ETH price in USD
-
-function formatETH(value) {
-  const num = parseFloat(value);
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(2) + 'M ETH';
-  } else if (num >= 1000) {
-    return (num / 1000).toFixed(2) + 'K ETH';
-  } else {
-    return num.toFixed(2) + ' ETH';
-  }
-}
-
-function formatUSD(ethValue) {
-  const num = parseFloat(ethValue) * ETH_PRICE_USD;
-  if (num >= 1000000000) {
-    return '≈ $' + (num / 1000000000).toFixed(2) + 'B USD';
-  } else if (num >= 1000000) {
-    return '≈ $' + (num / 1000000).toFixed(1) + 'M USD';
-  } else if (num >= 1000) {
-    return '≈ $' + (num / 1000).toFixed(1) + 'K USD';
-  } else {
-    return '≈ $' + num.toFixed(0) + ' USD';
-  }
-}
-
-function formatNumber(value) {
-  const num = parseFloat(value);
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(2) + 'M';
-  } else if (num >= 1000) {
-    return (num / 1000).toFixed(2) + 'K';
-  } else {
-    return num.toFixed(0);
-  }
-}
 
 function formatPercentage(value) {
   return parseFloat(value).toFixed(1) + '%';
@@ -376,11 +338,6 @@ function formatDate(timestamp) {
     month: 'short',
     day: 'numeric'
   });
-}
-
-function formatAddress(address) {
-  if (!address) return '';
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
 
 function createAddressLink(address, label = null) {
@@ -444,9 +401,9 @@ function renderKPIs(stats) {
   document.getElementById('kpi-delivery-rate').textContent = formatPercentage(stats.averageDeliveryRate);
   document.getElementById('kpi-delivery-change').textContent = 'protocol avg';
   
-  // Calculate 24h revenue from snapshots (would come from actual data)
-  document.getElementById('kpi-24h-revenue').textContent = formatETH('1250.75');
-  document.getElementById('kpi-24h-change').textContent = '+12.5%';
+  // 24h revenue (from subgraph when available)
+  document.getElementById('kpi-24h-revenue').textContent = formatETH('0');
+  document.getElementById('kpi-24h-change').textContent = '-';
   
   // Total holders (would be aggregated from series)
   document.getElementById('kpi-holders').textContent = '1';
@@ -627,20 +584,10 @@ async function initDashboard() {
     let seriesList = [];
     let stats = null;
 
-    // Try subgraph first, fallback to on-chain
-    try {
-      const statsData = await fetchGraphQL(GLOBAL_STATS_QUERY);
-      const seriesData = await fetchGraphQL(ACTIVE_SERIES_QUERY, {
-        first: 100, skip: 0,
-        orderBy: 'totalRevenueReceived', orderDirection: 'desc',
-      });
-      stats = statsData.protocolStats;
-      seriesList = seriesData.revenueSeries || [];
-    } catch (subgraphError) {
-      console.log('Using on-chain fallback (V1 + V2 factories)...');
-      seriesList = await fetchAllSeriesOnChain();
-      stats = buildStatsFromSeries(seriesList);
-    }
+    // Fetch directly from on-chain (V1 + V2 factories via RPC)
+    console.log('Fetching on-chain data (V1 + V2 factories)...');
+    seriesList = await fetchAllSeriesOnChain();
+    stats = buildStatsFromSeries(seriesList);
 
     // Render stats
     if (stats) {
@@ -680,19 +627,8 @@ function startAutoRefresh() {
   // Refresh data every 60 seconds
   setInterval(async () => {
     try {
-      let seriesList, stats;
-      try {
-        const statsData = await fetchGraphQL(GLOBAL_STATS_QUERY);
-        const seriesData = await fetchGraphQL(ACTIVE_SERIES_QUERY, {
-          first: 100, skip: 0,
-          orderBy: 'totalRevenueReceived', orderDirection: 'desc',
-        });
-        stats = statsData.protocolStats;
-        seriesList = seriesData.revenueSeries || [];
-      } catch (e) {
-        seriesList = await fetchAllSeriesOnChain();
-        stats = buildStatsFromSeries(seriesList);
-      }
+      const seriesList = await fetchAllSeriesOnChain();
+      const stats = buildStatsFromSeries(seriesList);
       if (stats) {
         renderHeroStats(stats);
         renderKPIs(stats);

@@ -871,8 +871,9 @@
         }
 
         .nav-links {
-            display: none;
+            display: flex;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
@@ -885,12 +886,6 @@
 
         .nav-links a:hover {
             color: var(--orange);
-        }
-
-        @media (min-width: 768px) {
-            .nav-links {
-                display: flex;
-            }
         }
 
         /* Language Selector Dropdown */
@@ -1129,7 +1124,64 @@
         .dropdown-menu a:last-child {
             border-radius: 0 0 8px 8px;
         }
+
+        /* ========== MOBILE RESPONSIVENESS ========== */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: auto;
+                padding: 6rem 0 3rem;
+            }
+            .hero-content {
+                gap: 2rem;
+                padding: 0 1rem;
+            }
+            h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .cta-buttons {
+                flex-direction: row;
+                gap: 0.75rem;
+            }
+            .cta-buttons a {
+                padding: 0.875rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+            }
+            .stat-number { font-size: 1.5rem; }
+            .stat-label { font-size: 0.75rem; }
+            .stat-card { padding: 1rem; }
+            .container { padding: 0 1rem; }
+            section { padding: 3rem 0; }
+            .section-title { font-size: 1.75rem; }
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            nav { padding: 0.5rem 0; }
+            .nav-container { padding: 0 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.75rem; }
+            .hero p { font-size: 0.9rem; }
+            .badge { font-size: 0.65rem; }
+            .stat-number { font-size: 1.25rem; }
+            .cta-buttons {
+                flex-direction: column;
+            }
+            .cta-buttons a {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
+    <link rel="stylesheet" href="/src/mobile-menu.css">
 </head>
 <body>
     <!-- Navbar -->
@@ -1139,7 +1191,10 @@
                 <img src="logo-dark.svg?v=20260130" alt="Equorum" style="height: 32px;">
                 <span>Equorum</span>
             </a>
-            <div class="nav-links">
+            <button class="nav-hamburger" onclick="toggleMobileMenu()" id="hamburger-btn">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
                 <a href="/dashboard.html">Explore</a>
                 <a href="/buy.html">Buy Bonds</a>
                 <a href="/create.html">Create Series</a>
@@ -1152,6 +1207,7 @@
                     </div>
                 </div>
                 <a href="WHITEPAPER.pdf" download>Whitepaper</a>
+                <a href="/buy.html" class="mobile-menu-cta">Buy Bonds Now</a>
                 <div class="language-selector">
                     <button class="lang-current" onclick="toggleLanguageDropdown()" id="current-lang">English</button>
                     <div class="lang-dropdown" id="lang-dropdown">
@@ -1165,6 +1221,8 @@
             </div>
         </div>
     </nav>
+    <div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
+    <script src="/src/mobile-menu.js"></script>
 
     <!-- Hero Section -->
     <section class="hero" id="home">

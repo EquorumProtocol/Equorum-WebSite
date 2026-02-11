@@ -5,6 +5,36 @@
 const ARBITRUM_CHAIN_ID = '0xa4b1'; // 42161 in hex (Arbitrum One)
 const ARBITRUM_RPC = 'https://arb1.arbitrum.io/rpc';
 
+// Multiple RPCs for browser fallback (CORS issues vary by provider)
+const ARBITRUM_RPC_LIST = [
+  'https://arb1.arbitrum.io/rpc',
+  'https://arbitrum-one-rpc.publicnode.com',
+  'https://1rpc.io/arb',
+  'https://arbitrum.drpc.org',
+];
+
+async function getWorkingProvider() {
+  for (const rpc of ARBITRUM_RPC_LIST) {
+    try {
+      const p = new ethers.providers.JsonRpcProvider(rpc);
+      await p.getBlockNumber();
+      console.log('RPC connected:', rpc);
+      return p;
+    } catch (e) {
+      console.warn('RPC failed:', rpc, e.message);
+    }
+  }
+  throw new Error('All RPC providers failed');
+}
+
+// Cached provider
+let _cachedBrowserProvider = null;
+async function getBrowserProvider() {
+  if (_cachedBrowserProvider) return _cachedBrowserProvider;
+  _cachedBrowserProvider = await getWorkingProvider();
+  return _cachedBrowserProvider;
+}
+
 // Contract addresses - V1 (legacy)
 const V1_FACTORY_ADDRESS = '0x8afA0318363FfBc29Cc28B3C98d9139C08Af737b'; // V1 Revenue Series Factory (Arbitrum One)
 
@@ -112,6 +142,41 @@ let userAddress = null;
 let chainId = null;
 
 // ============================================
+// EIP-6963: Multi-Wallet Discovery
+// ============================================
+const detectedProviders = [];
+
+window.addEventListener('eip6963:announceProvider', (event) => {
+  const { info, provider: walletProvider } = event.detail;
+  detectedProviders.push({ info, provider: walletProvider });
+  console.log('EIP-6963 wallet detected:', info.name);
+});
+
+// Request providers to announce themselves
+window.dispatchEvent(new Event('eip6963:requestProvider'));
+
+// Get the best available wallet provider (prefers MetaMask via EIP-6963, falls back to window.ethereum)
+function getInjectedProvider() {
+  // Try EIP-6963 first — prefer MetaMask
+  const metamask = detectedProviders.find(p => p.info.rdns === 'io.metamask' || p.info.name.toLowerCase().includes('metamask'));
+  if (metamask) {
+    console.log('Using EIP-6963 provider:', metamask.info.name);
+    return metamask.provider;
+  }
+  // Fallback: first EIP-6963 provider
+  if (detectedProviders.length > 0) {
+    console.log('Using EIP-6963 provider:', detectedProviders[0].info.name);
+    return detectedProviders[0].provider;
+  }
+  // Final fallback: window.ethereum (may cause conflict warning but still works)
+  if (window.ethereum) {
+    console.log('Using window.ethereum fallback');
+    return window.ethereum;
+  }
+  return null;
+}
+
+// ============================================
 // WALLET CONNECTION
 // ============================================
 
@@ -122,12 +187,13 @@ async function connectWallet() {
       throw new Error('Ethers.js library not loaded. Please refresh the page.');
     }
 
-    if (!window.ethereum) {
+    const injected = getInjectedProvider();
+    if (!injected) {
       throw new Error('No wallet detected. Please install MetaMask or Rabby.');
     }
 
     // Request account access
-    const accounts = await window.ethereum.request({
+    const accounts = await injected.request({
       method: 'eth_requestAccounts',
     });
 
@@ -136,7 +202,7 @@ async function connectWallet() {
     }
 
     // Initialize provider
-    provider = new ethers.providers.Web3Provider(window.ethereum);
+    provider = new ethers.providers.Web3Provider(injected);
     signer = provider.getSigner();
     userAddress = accounts[0];
 
@@ -146,11 +212,14 @@ async function connectWallet() {
 
     // Check if on Arbitrum
     if (chainId !== ARBITRUM_CHAIN_ID) {
-      await switchToArbitrum();
+      await switchToArbitrum(injected);
     }
 
     // Setup listeners
-    setupWalletListeners();
+    setupWalletListeners(injected);
+
+    // Persist connection
+    localStorage.setItem('walletConnected', 'true');
 
     // Update UI
     updateWalletUI();
@@ -169,13 +238,48 @@ async function disconnectWallet() {
   signer = null;
   userAddress = null;
   chainId = null;
+  localStorage.removeItem('walletConnected');
   updateWalletUI();
   hideUserPosition();
 }
 
-async function switchToArbitrum() {
+// Auto-reconnect wallet on page load if previously connected
+async function autoReconnectWallet() {
+  const injected = getInjectedProvider();
+  if (localStorage.getItem('walletConnected') === 'true' && injected) {
+    try {
+      const accounts = await injected.request({ method: 'eth_accounts' });
+      if (accounts && accounts.length > 0) {
+        provider = new ethers.providers.Web3Provider(injected);
+        signer = provider.getSigner();
+        userAddress = accounts[0];
+        const network = await provider.getNetwork();
+        chainId = '0x' + network.chainId.toString(16);
+        setupWalletListeners(injected);
+        updateWalletUI();
+        await loadUserPosition();
+        console.log('Wallet auto-reconnected:', userAddress);
+      }
+    } catch (err) {
+      console.warn('Auto-reconnect failed:', err.message);
+    }
+  }
+}
+
+// Run auto-reconnect when DOM is ready (small delay to let EIP-6963 providers announce)
+function scheduleAutoReconnect() {
+  setTimeout(autoReconnectWallet, 100);
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', scheduleAutoReconnect);
+} else {
+  scheduleAutoReconnect();
+}
+
+async function switchToArbitrum(injected) {
+  const wallet = injected || getInjectedProvider();
   try {
-    await window.ethereum.request({
+    await wallet.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: ARBITRUM_CHAIN_ID }],
     });
@@ -183,7 +287,7 @@ async function switchToArbitrum() {
     // Chain not added, try to add it
     if (switchError.code === 4902) {
       try {
-        await window.ethereum.request({
+        await wallet.request({
           method: 'wallet_addEthereumChain',
           params: [
             {
@@ -208,10 +312,11 @@ async function switchToArbitrum() {
   }
 }
 
-function setupWalletListeners() {
-  if (!window.ethereum) return;
+function setupWalletListeners(injected) {
+  const wallet = injected || getInjectedProvider();
+  if (!wallet || !wallet.on) return;
 
-  window.ethereum.on('accountsChanged', (accounts) => {
+  wallet.on('accountsChanged', (accounts) => {
     if (accounts.length === 0) {
       disconnectWallet();
     } else {
@@ -221,7 +326,7 @@ function setupWalletListeners() {
     }
   });
 
-  window.ethereum.on('chainChanged', (newChainId) => {
+  wallet.on('chainChanged', (newChainId) => {
     chainId = newChainId;
     if (chainId !== ARBITRUM_CHAIN_ID) {
       showNetworkWarning();
@@ -329,15 +434,44 @@ async function claimAll() {
 // ============================================
 
 async function getAllSeries() {
-  // Fetch from subgraph when deployed
-  const data = await fetchGraphQL(ACTIVE_SERIES_QUERY, {
-    first: 100,
-    skip: 0,
-    orderBy: 'createdAt',
-    orderDirection: 'desc',
-  });
-  
-  return data.revenueSeries || [];
+  // Fetch all series from V1 + V2 factories via RPC
+  try {
+    const rpcProvider = await getBrowserProvider();
+    const factoryAbi = ['function getAllSeries() view returns (address[])'];
+    const seriesAbi = ['function name() view returns (string)'];
+    const results = [];
+
+    // V1 Factory
+    try {
+      const f1 = new ethers.Contract(V1_FACTORY_ADDRESS, factoryAbi, rpcProvider);
+      const addrs = await f1.getAllSeries();
+      for (const addr of addrs) {
+        try {
+          const s = new ethers.Contract(addr, seriesAbi, rpcProvider);
+          const name = await s.name();
+          results.push({ id: addr, name });
+        } catch (e) { results.push({ id: addr, name: 'Unknown' }); }
+      }
+    } catch (e) { console.warn('V1 getAllSeries failed:', e.message); }
+
+    // V2 Soft Factory
+    try {
+      const f2 = new ethers.Contract(FACTORY_ADDRESS, factoryAbi, rpcProvider);
+      const addrs = await f2.getAllSeries();
+      for (const addr of addrs) {
+        try {
+          const s = new ethers.Contract(addr, seriesAbi, rpcProvider);
+          const name = await s.name();
+          results.push({ id: addr, name });
+        } catch (e) { results.push({ id: addr, name: 'Unknown' }); }
+      }
+    } catch (e) { console.warn('V2 Soft getAllSeries failed:', e.message); }
+
+    return results;
+  } catch (e) {
+    console.warn('getAllSeries failed:', e.message);
+    return [];
+  }
 }
 
 function getContract(address, abi) {
@@ -424,6 +558,28 @@ function hideNetworkWarning() {
 function formatAddress(address) {
   if (!address) return '';
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
+}
+
+function formatETH(value) {
+  const num = parseFloat(value);
+  if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M ETH';
+  if (num >= 1000) return (num / 1000).toFixed(2) + 'K ETH';
+  return num.toFixed(4) + ' ETH';
+}
+
+function formatUSD(ethValue) {
+  const num = parseFloat(ethValue) * 3150;
+  if (num >= 1000000000) return '≈ $' + (num / 1000000000).toFixed(2) + 'B USD';
+  if (num >= 1000000) return '≈ $' + (num / 1000000).toFixed(1) + 'M USD';
+  if (num >= 1000) return '≈ $' + (num / 1000).toFixed(1) + 'K USD';
+  return '≈ $' + num.toFixed(0) + ' USD';
+}
+
+function formatNumber(value) {
+  const num = parseFloat(value);
+  if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
+  if (num >= 1000) return (num / 1000).toFixed(2) + 'K';
+  return num.toFixed(2);
 }
 
 function showError(message) {

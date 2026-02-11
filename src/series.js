@@ -1,50 +1,15 @@
 // ============================================
 // SERIES DETAIL PAGE
 // ============================================
+// NOTE: web3.js is loaded before this script and provides:
+//   ARBITRUM_RPC_BROWSER, REVENUE_SERIES_ABI, ROUTER_ABI,
+//   userAddress, formatAddress, formatETH, formatNumber, etc.
 
-const ETH_PRICE_USD = 3150;
 let seriesAddress = null;
 let seriesData = null;
-let userAddress = null;
 
-// Extended ABI for series page - ALIGNED WITH V2 DEPLOYED CONTRACT
-const SERIES_ABI = [
-  // ERC-20 Standard
-  'function balanceOf(address) view returns (uint256)',
-  'function totalSupply() view returns (uint256)',
-  'function name() view returns (string)',
-  'function symbol() view returns (string)',
-  
-  // Revenue Bonds V2 - Public immutable variables (accessed directly, not as functions)
-  'function protocol() view returns (address)',
-  'function router() view returns (address)',
-  'function revenueShareBPS() view returns (uint256)',
-  'function maturityDate() view returns (uint256)',
-  'function totalTokenSupply() view returns (uint256)',
-  
-  // Revenue Bonds V2 - Public mutable variables
-  'function totalRevenueReceived() view returns (uint256)',
-  'function revenuePerTokenStored() view returns (uint256)',
-  'function active() view returns (bool)',
-  
-  // Revenue Bonds V2 - Functions
-  'function calculateClaimable(address) view returns (uint256)',
-  'function claimRevenue() external',
-  'function claimFor(address) external',
-  'function distributeRevenue() external payable',
-  'function getSeriesInfo() view returns (address,uint256,uint256,uint256,uint256,bool,uint256)',
-];
-
-const ROUTER_ABI = [
-  'function getRouterStatus() view returns (uint256,uint256,uint256,uint256,uint256,uint256,bool)',
-  'function routeRevenue() external',
-  'function withdrawToProtocol(uint256) external',
-  'function withdrawAllToProtocol() external',
-  'function pendingToRoute() view returns (uint256)',
-  'function protocol() view returns (address)',
-  'function revenueSeries() view returns (address)',
-  'function revenueShareBPS() view returns (uint256)',
-];
+// Use REVENUE_SERIES_ABI from web3.js as SERIES_ABI locally
+const SERIES_ABI = REVENUE_SERIES_ABI;
 
 // ============================================
 // INITIALIZATION
@@ -100,10 +65,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Load series data
+  // Load series data with timeout
   console.log('Loading series data...');
   try {
-    await loadSeriesData();
+    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out. The RPC may be slow. Please try again.')), 15000));
+    await Promise.race([loadSeriesData(), timeout]);
     console.log('Series data loaded successfully');
   } catch (error) {
     console.error('Failed to load series data:', error);
@@ -189,7 +155,7 @@ async function fetchSeriesData(address) {
 }
 
 async function fetchFromPublicRPC(address) {
-  const rpcProvider = new ethers.providers.JsonRpcProvider(ARBITRUM_RPC);
+  const rpcProvider = await getBrowserProvider();
   const contract = new ethers.Contract(address, SERIES_ABI, rpcProvider);
 
   const [name, symbol, totalSupply, totalRevenueReceived, maturityDate, revenueShareBPS, protocolAddress, routerAddress, active] =
@@ -533,48 +499,8 @@ function updateCountdown() {
 }
 
 // ============================================
-// UTILITIES
+// UTILITIES (formatAddress, formatETH, formatUSD, formatNumber are in web3.js)
 // ============================================
-
-function formatAddress(address) {
-  if (!address) return '';
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
-}
-
-function formatETH(value) {
-  const num = parseFloat(value);
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(2) + 'M ETH';
-  } else if (num >= 1000) {
-    return (num / 1000).toFixed(2) + 'K ETH';
-  } else {
-    return num.toFixed(4) + ' ETH';
-  }
-}
-
-function formatUSD(ethValue) {
-  const num = parseFloat(ethValue) * ETH_PRICE_USD;
-  if (num >= 1000000000) {
-    return '≈ $' + (num / 1000000000).toFixed(2) + 'B USD';
-  } else if (num >= 1000000) {
-    return '≈ $' + (num / 1000000).toFixed(1) + 'M USD';
-  } else if (num >= 1000) {
-    return '≈ $' + (num / 1000).toFixed(1) + 'K USD';
-  } else {
-    return '≈ $' + num.toFixed(0) + ' USD';
-  }
-}
-
-function formatNumber(value) {
-  const num = parseFloat(value);
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(2) + 'M';
-  } else if (num >= 1000) {
-    return (num / 1000).toFixed(2) + 'K';
-  } else {
-    return num.toFixed(2);
-  }
-}
 
 function calculateAPY(data) {
   // Simple APY calculation based on revenue and supply
