@@ -1,1571 +1,195 @@
 <!DOCTYPE html>
-<html lang="en" id="html-root">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">For Investors - Equorum Protocol | Revenue Bonds ROI Calculator</title>
-    <meta name="description" content="Understand how Revenue Bonds work for investors. Calculate potential returns, see real examples, and learn how to earn passive income from DeFi protocol revenue." id="meta-description">
+
+    <title>For investors — Equorum Protocol</title>
+    <meta name="description" content="What an Equorum revenue bond pays, what happens when an issuer stops paying, and how to read a bond's terms before you buy.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://equorumprotocol.org/investors.html">
+
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://equorumprotocol.org/investors.html">
+    <meta property="og:title" content="For investors — Equorum Protocol">
+    <meta property="og:description" content="Fixed schedule, escrowed capital, and a default path that pays you back what the issuer never drew.">
+    <meta property="og:image" content="https://equorumprotocol.org/og-image.png">
+
+    <link rel="stylesheet" href="/css/equorum.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --orange: #FF6224;
-            --orange-light: #FF8C5A;
-            --navy: #000A21;
-            --green: #10B981;
-            --red: #EF4444;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            color: #1A1A1A;
-            line-height: 1.6;
-            background: #fafafa;
-        }
-
-        .header {
-            background: var(--navy);
-            padding: 1.5rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            opacity: 0.9;
-            transition: opacity 0.3s;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            opacity: 1;
-        }
-
-        .language-selector {
-            position: relative;
-        }
-
-        .lang-current {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .lang-current:hover {
-            background: rgba(255,255,255,0.15);
-        }
-
-        .lang-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 0.5rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            min-width: 150px;
-            display: none;
-            overflow: hidden;
-        }
-
-        .lang-dropdown.show {
-            display: block;
-        }
-
-        .lang-option {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: none;
-            background: none;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .lang-option:last-child {
-            border-bottom: none;
-        }
-
-        .lang-option:hover {
-            background: rgba(255, 98, 36, 0.05);
-            color: var(--orange);
-        }
-
-        .lang-option.active {
-            background: rgba(255, 98, 36, 0.1);
-            color: var(--orange);
-            font-weight: 600;
-        }
-
-        .hero {
-            background: linear-gradient(135deg, var(--navy) 0%, #001a3d 100%);
-            color: white;
-            padding: 8rem 2rem 4rem;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            font-weight: 800;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .section {
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--navy);
-            font-weight: 700;
-        }
-
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 2rem;
-        }
-
-        .how-it-works {
-            background: white;
-            border-radius: 16px;
-            padding: 3rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-bottom: 3rem;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .step {
-            text-align: center;
-        }
-
-        .step-number {
-            background: var(--orange);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 auto 1rem;
-        }
-
-        .step h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--navy);
-        }
-
-        .step p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        .examples {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .example-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border-left: 5px solid var(--orange);
-        }
-
-        .example-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .example-title {
-            font-size: 1.5rem;
-            color: var(--navy);
-            font-weight: 700;
-        }
-
-        .roi-badge {
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .roi-positive {
-            background: #D1FAE5;
-            color: var(--green);
-        }
-
-        .roi-negative {
-            background: #FEE2E2;
-            color: var(--red);
-        }
-
-        .example-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .detail {
-            background: #f9fafb;
-            padding: 1rem;
-            border-radius: 8px;
-        }
-
-        .detail-label {
-            font-size: 0.85rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.3rem;
-        }
-
-        .detail-value {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--navy);
-        }
-
-        .calculation {
-            background: #FFF7ED;
-            border-left: 4px solid var(--orange);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-        }
-
-        .calculation h4 {
-            color: var(--navy);
-            margin-bottom: 1rem;
-        }
-
-        .calc-line {
-            font-family: 'Courier New', monospace;
-            margin: 0.5rem 0;
-            color: #666;
-        }
-
-        .calc-result {
-            font-weight: 700;
-            color: var(--navy);
-            font-size: 1.1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 2px solid var(--orange);
-        }
-
-        .calculator {
-            background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
-            border-radius: 16px;
-            padding: 3rem;
-            color: white;
-            box-shadow: 0 10px 40px rgba(255, 98, 36, 0.3);
-        }
-
-        .calculator h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .calculator-subtitle {
-            opacity: 0.9;
-            margin-bottom: 2rem;
-        }
-
-        .calculator-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-            align-items: start;
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .input-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: rgba(255,255,255,0.95);
-        }
-
-        .input-field:focus {
-            outline: 3px solid rgba(255,255,255,0.5);
-            background: white;
-        }
-
-        .calc-button {
-            background: var(--navy);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.2s;
-        }
-
-        .calc-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .results {
-            background: white;
-            color: var(--navy);
-            border-radius: 12px;
-            padding: 2rem;
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem 0;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-        }
-
-        .result-label {
-            font-weight: 600;
-        }
-
-        .result-value {
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .key-points {
-            background: white;
-            border-radius: 16px;
-            padding: 3rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .points-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .point {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .point-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--orange);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .point-content h3 {
-            color: var(--navy);
-            margin-bottom: 0.5rem;
-        }
-
-        .point-content p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        .cta {
-            background: var(--navy);
-            color: white;
-            text-align: center;
-            padding: 4rem 2rem;
-            border-radius: 16px;
-            margin-top: 4rem;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: transform 0.2s;
-            display: inline-block;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            background: var(--orange);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: white;
-            color: var(--navy);
-        }
-
-        /* FAQ Dropdown Menu */
-        .nav-dropdown {
-            position: relative;
-        }
-
-        .nav-dropdown > a {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            color: white;
-            text-decoration: none;
-            opacity: 0.9;
-            font-size: 0.9375rem;
-            font-weight: 500;
-        }
-
-        .nav-dropdown > a::after {
-            content: '▼';
-            font-size: 0.6rem;
-            transition: transform 0.2s;
-        }
-
-        .nav-dropdown:hover > a {
-            opacity: 1;
-        }
-
-        .nav-dropdown:hover > a::after {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            margin-top: 0.5rem;
-        }
-
-        .nav-dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 0.75rem 1.25rem;
-            color: var(--navy);
-            text-decoration: none;
-            transition: all 0.2s;
-            border-bottom: 1px solid #f0f0f0;
-            font-weight: 500;
-        }
-
-        .dropdown-menu a:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: #f9fafb;
-            color: var(--orange);
-            padding-left: 1.5rem;
-        }
-
-        .dropdown-menu a:first-child {
-            border-radius: 8px 8px 0 0;
-        }
-
-        .dropdown-menu a:last-child {
-            border-radius: 0 0 8px 8px;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .calculator-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-                position: fixed;
-                top: 0; left: 0; right: 0; bottom: 0;
-                background: rgba(10,22,40,0.98);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 1.5rem;
-                z-index: 1050;
-                padding: 2rem;
-            }
-
-            .example-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .example-details {
-                grid-template-columns: 1fr;
-            }
-
-            .points-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .nav-hamburger {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-            z-index: 1100;
-        }
-        .nav-hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: white;
-            margin: 5px 0;
-            transition: all 0.3s;
-        }
-        .nav-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .nav-hamburger.active span:nth-child(2) { opacity: 0; }
-        .nav-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+        .scenario { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+        .scenario-head { padding: 16px 22px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+        .scenario-good { background: rgba(16,185,129,0.09); color: var(--green-light); border-bottom: 1px solid rgba(16,185,129,0.25); }
+        .scenario-bad { background: rgba(255,98,36,0.09); color: var(--orange-light); border-bottom: 1px solid rgba(255,98,36,0.25); }
+        .scenario-body { padding: 24px; }
+        .checklist li { margin-bottom: 14px; }
+        @media (max-width: 760px) { .flow { grid-template-columns: minmax(0, 1fr); } }
     </style>
-    <link rel="stylesheet" href="/src/mobile-menu.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <a href="/" class="logo">
-                <img src="/logo-white.svg" alt="Equorum" style="height: 32px; margin-right: 0.5rem; filter: brightness(0) invert(1);">
-                <span>Equorum</span>
-            </a>
-            <button class="nav-hamburger" onclick="toggleMobileMenu()" id="hamburger-btn">
-                <span></span><span></span><span></span>
-            </button>
-            <nav class="nav-links" id="nav-links">
-                <a href="/" data-i18n="nav.home">Home</a>
-                <div class="nav-dropdown">
-                    <a href="#">FAQ</a>
-                    <div class="dropdown-menu">
-                        <a href="/faq-investors.html">For Investors</a>
-                        <a href="/faq-protocols.html">For Protocols</a>
-                        <a href="/faq-help.html">Help</a>
-                    </div>
-                </div>
-                <a href="/buy.html">Buy Bonds</a>
-                <a href="/WHITEPAPER.pdf" download>Whitepaper</a>
-                <div class="language-selector">
-                    <button class="lang-current" onclick="toggleLanguageDropdown()" id="current-lang">English</button>
-                    <div class="lang-dropdown" id="lang-dropdown">
-                        <button class="lang-option active" onclick="selectLanguage('en', 'English')">English</button>
-                        <button class="lang-option" onclick="selectLanguage('pt', 'Português')">Português</button>
-                        <button class="lang-option" onclick="selectLanguage('es', 'Español')">Español</button>
-                        <button class="lang-option" onclick="selectLanguage('ja', '日本語')">日本語</button>
-                        <button class="lang-option" onclick="selectLanguage('zh', '中文')">中文</button>
-                    </div>
-                </div>
-            </nav>
-    <div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+        <div class="nav-links" id="nav-links">
+            <a href="/#how-it-works">How it works</a>
+            <a href="/investors.html" class="active">For investors</a>
+            <a href="/dashboard.html">Explore bonds</a>
+            <a href="/development.html">Status</a>
+            <a href="/contact.html">Contact</a>
         </div>
-    </header>
+        <div class="row">
+            <a href="https://github.com/EquorumProtocol" class="btn btn-secondary btn-sm btn-inline" target="_blank" rel="noopener">GitHub</a>
+            <a href="/dashboard.html" class="btn btn-primary btn-sm btn-inline">Explore bonds</a>
+            <button class="nav-hamburger" id="hamburger-btn" aria-label="Menu" onclick="toggleMobileMenu()">
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+        </div>
+    </div>
+</nav>
 
-    <section class="hero">
-        <h1 data-i18n="investors.hero.title">Revenue Bonds for Investors</h1>
-        <p data-i18n="investors.hero.subtitle">Participate in DeFi protocol revenue distribution. Transparent, on-chain, and liquid.</p>
-    </section>
-
+<header class="hero">
     <div class="container">
-        <section class="section">
-            <div class="how-it-works">
-                <h2 class="section-title" data-i18n="investors.how.title">How It Works</h2>
-                <p class="section-subtitle" data-i18n="investors.how.subtitle">Simple 4-step process to participate in revenue sharing</p>
-                
-                <div class="steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <h3 data-i18n="investors.how.step1.title">Protocol Creates Bond</h3>
-                        <p data-i18n="investors.how.step1.desc">DeFi protocol creates revenue bond series with fixed terms (revenue share %, duration)</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <h3 data-i18n="investors.how.step2.title">You Buy Tokens</h3>
-                        <p data-i18n="investors.how.step2.desc">Purchase bond tokens at a price set by the protocol (on Uniswap or OTC)</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <h3 data-i18n="investors.how.step3.title">Protocol Distributes</h3>
-                        <p data-i18n="investors.how.step3.desc">Protocol deposits revenue (in ETH) monthly or as agreed</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <h3 data-i18n="investors.how.step4.title">You Claim Earnings</h3>
-                        <p data-i18n="investors.how.step4.desc">Claim your proportional share of revenue anytime. Sell tokens on secondary market if needed.</p>
-                    </div>
-                </div>
+        <span class="eyebrow">For investors</span>
+        <h1 style="max-width: 800px;">You are lending to a protocol, one tranche at a time.</h1>
+        <p class="muted" style="font-size: 19px; max-width: 640px;">
+            A revenue bond pays you a fixed minimum on a fixed schedule, plus a share of revenue when
+            the issuer routes it. What makes it different from a promise is where the money sits while
+            you wait.
+        </p>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+        <h2>What you own</h2>
+        <div class="flow" style="margin-top: 28px;">
+            <div class="card">
+                <span class="eyebrow">The instrument</span>
+                <h3>An ERC-20 bond</h3>
+                <p class="muted">Transferable, divisible, and yours to sell to anyone. Your claim travels with the token.</p>
             </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title" data-i18n="investors.examples.title">Real Examples</h2>
-            <p class="section-subtitle" data-i18n="investors.examples.subtitle">See how different structures affect your returns</p>
-            
-            <div class="disclaimer" style="background: #FFF3CD; border-left: 4px solid #FF6224; padding: 1rem 1.5rem; margin-bottom: 2rem; border-radius: 8px;">
-                <p style="margin: 0; color: #856404;" data-i18n="investors.examples.disclaimer">⚠️ The examples below are educational simulations based on hypothetical revenues. Actual results may be higher, lower, or negative depending on protocol performance.</p>
+            <div class="card">
+                <span class="eyebrow">The payments</span>
+                <h3>A minimum coupon</h3>
+                <p class="muted">Set at issuance and never changed. Across the full term the minimum adds up to at least 100% of what the bond raised.</p>
             </div>
-            
-            <div class="examples">
-                <!-- Example 1: Good ROI -->
-                <div class="example-card">
-                    <div class="example-header">
-                        <div class="example-title" data-i18n="investors.example1.title">Example 1: Conservative DEX</div>
-                        <div class="roi-badge roi-positive">+44% ROI</div>
-                    </div>
-                    
-                    <div class="example-details">
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.protocol_revenue">Protocol Revenue</div>
-                            <div class="detail-value">$50k/month</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.revenue_share">Revenue Share</div>
-                            <div class="detail-value">40%</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.duration">Duration</div>
-                            <div class="detail-value">18 months</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.token_price">Token Price</div>
-                            <div class="detail-value">$0.50</div>
-                        </div>
-                    </div>
-
-                    <div class="calculation">
-                        <h4 data-i18n="investors.example1.investment">Your Investment (10,000 tokens = 2%):</h4>
-                        <div class="calc-line" data-i18n="investors.example1.you_pay">You Pay: 10,000 tokens × $0.50 = $5,000</div>
-                        <div class="calc-line" data-i18n="investors.example1.total_dist">Total Distributed: $50k × 40% × 18 months = $360,000</div>
-                        <div class="calc-line" data-i18n="investors.example1.your_share">Your Share: 2% of $360k = $7,200</div>
-                        <div class="calc-result" data-i18n="investors.example1.profit">Profit: $2,200 | ROI: 44% in 18 months (~29% per year)</div>
-                    </div>
-                </div>
-
-                <!-- Example 2: High Growth -->
-                <div class="example-card">
-                    <div class="example-header">
-                        <div class="example-title" data-i18n="investors.example2.title">Example 2: Growing NFT Marketplace</div>
-                        <div class="roi-badge roi-positive">+200% ROI</div>
-                    </div>
-                    
-                    <div class="example-details">
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.starting_revenue">Starting Revenue</div>
-                            <div class="detail-value">$30k/month</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.growth_rate">Growth Rate</div>
-                            <div class="detail-value">+10%/month</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.revenue_share">Revenue Share</div>
-                            <div class="detail-value">25%</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.duration">Duration</div>
-                            <div class="detail-value">24 months</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.token_price">Token Price</div>
-                            <div class="detail-value">$0.40</div>
-                        </div>
-                    </div>
-
-                    <div class="calculation">
-                        <h4 data-i18n="investors.example2.investment">Your Investment (50,000 tokens = 5%):</h4>
-                        <div class="calc-line" data-i18n="investors.example2.you_pay">You Pay: 50,000 tokens × $0.40 = $20,000</div>
-                        <div class="calc-line" data-i18n="investors.example2.month1">Month 1: $30k × 25% = $7.5k</div>
-                        <div class="calc-line" data-i18n="investors.example2.month12">Month 12: $94k × 25% = $23.5k</div>
-                        <div class="calc-line" data-i18n="investors.example2.month24">Month 24: $266k × 25% = $66.5k</div>
-                        <div class="calc-line" data-i18n="investors.example2.total24">Total 24 months: ~$1,200,000 distributed</div>
-                        <div class="calc-line" data-i18n="investors.example2.your_share">Your Share: 5% of $1.2M = $60,000</div>
-                        <div class="calc-result" data-i18n="investors.example2.profit">Profit: $40,000 | ROI: 200% in 24 months (100% per year)</div>
-                    </div>
-                </div>
-
-                <!-- Example 3: Bad ROI (Warning) -->
-                <div class="example-card">
-                    <div class="example-header">
-                        <div class="example-title" data-i18n="investors.example3.title">Example 3: Overpriced Bond ⚠️</div>
-                        <div class="roi-badge roi-negative">-40% ROI</div>
-                    </div>
-                    
-                    <div class="example-details">
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.protocol_revenue">Protocol Revenue</div>
-                            <div class="detail-value">$50k/month</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.revenue_share">Revenue Share</div>
-                            <div class="detail-value">30%</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.duration">Duration</div>
-                            <div class="detail-value">12 months</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label" data-i18n="investors.example.token_price">Token Price</div>
-                            <div class="detail-value">$0.30 ❌</div>
-                        </div>
-                    </div>
-
-                    <div class="calculation">
-                        <h4 data-i18n="investors.example3.investment">Your Investment (10,000 tokens = 1%):</h4>
-                        <div class="calc-line" data-i18n="investors.example3.you_pay">You Pay: 10,000 tokens × $0.30 = $3,000</div>
-                        <div class="calc-line" data-i18n="investors.example3.total_dist">Total Distributed: $50k × 30% × 12 = $180,000</div>
-                        <div class="calc-line" data-i18n="investors.example3.your_share">Your Share: 1% of $180k = $1,800</div>
-                        <div class="calc-result" style="color: var(--red);" data-i18n="investors.example3.loss">Loss: -$1,200 | ROI: -40% ⚠️ DON'T BUY!</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="what-not" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 3rem 2rem; border-radius: 16px; margin-bottom: 4rem;">
-                <h2 class="section-title" style="margin-bottom: 2rem;" data-i18n="investors.whatnot.title">What This Is & What This Is NOT</h2>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1000px; margin: 0 auto;">
-                    <div style="background: white; padding: 2rem; border-radius: 12px; border: 2px solid #dc3545;">
-                        <h3 style="color: #dc3545; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 1.5rem;">❌</span>
-                            <span data-i18n="investors.whatnot.not_title">This is NOT</span>
-                        </h3>
-                        <ul style="list-style: none; padding: 0; margin: 0;">
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;" data-i18n="investors.whatnot.not1">• A trading product</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;" data-i18n="investors.whatnot.not2">• A guaranteed yield promise</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;" data-i18n="investors.whatnot.not3">• A protected investment</li>
-                            <li style="padding: 0.5rem 0;" data-i18n="investors.whatnot.not4">• A substitute for traditional fixed income</li>
-                        </ul>
-                    </div>
-                    
-                    <div style="background: white; padding: 2rem; border-radius: 12px; border: 2px solid #28a745;">
-                        <h3 style="color: #28a745; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 1.5rem;">✅</span>
-                            <span data-i18n="investors.whatnot.is_title">This IS</span>
-                        </h3>
-                        <ul style="list-style: none; padding: 0; margin: 0;">
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;" data-i18n="investors.whatnot.is1">• A revenue-sharing structure</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;" data-i18n="investors.whatnot.is2">• Fully dependent on protocol performance</li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;" data-i18n="investors.whatnot.is3">• Transparent and on-chain</li>
-                            <li style="padding: 0.5rem 0;" data-i18n="investors.whatnot.is4">• Exposure to protocol revenue flows</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="calculator">
-                <h2 data-i18n="investors.calculator.title">ROI Calculator</h2>
-                <p class="calculator-subtitle" data-i18n="investors.calculator.subtitle">Calculate your potential returns before investing</p>
-                
-                <div class="calculator-grid">
-                    <div>
-                        <div class="input-group">
-                            <label class="input-label" data-i18n="investors.calculator.revenue">Protocol Monthly Revenue ($)</label>
-                            <input type="number" id="revenue" class="input-field" placeholder="50000" value="50000">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label class="input-label" data-i18n="investors.calculator.share">Revenue Share (%)</label>
-                            <input type="number" id="share" class="input-field" placeholder="30" value="30" min="1" max="100">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label class="input-label" data-i18n="investors.calculator.duration">Duration (months)</label>
-                            <input type="number" id="duration" class="input-field" placeholder="12" value="12" min="1">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label class="input-label" data-i18n="investors.calculator.price">Token Price ($)</label>
-                            <input type="number" id="price" class="input-field" placeholder="0.15" value="0.15" step="0.01">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label class="input-label" data-i18n="investors.calculator.tokens">Tokens You'll Buy</label>
-                            <input type="number" id="tokens" class="input-field" placeholder="10000" value="10000">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label class="input-label" data-i18n="investors.calculator.supply">Total Token Supply</label>
-                            <input type="number" id="supply" class="input-field" placeholder="1000000" value="1000000">
-                        </div>
-                        
-                        <button class="calc-button" onclick="calculate()" data-i18n="investors.calculator.button">Calculate ROI</button>
-                    </div>
-                    
-                    <div class="results" id="results">
-                        <h3 style="margin-bottom: 1rem;" data-i18n="investors.calculator.results">Your Results</h3>
-                        <div class="result-item">
-                            <span class="result-label" data-i18n="investors.calculator.label_youpay">You Pay:</span>
-                            <span class="result-value" id="youPay">-</span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label" data-i18n="investors.calculator.label_yourshare">Your Share:</span>
-                            <span class="result-value" id="yourShare">-</span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label" data-i18n="investors.calculator.label_totaldist">Total Distributed:</span>
-                            <span class="result-value" id="totalDist">-</span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label" data-i18n="investors.calculator.label_youreceive">You Receive:</span>
-                            <span class="result-value" id="youReceive">-</span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label" data-i18n="investors.calculator.label_profitloss">Profit/Loss:</span>
-                            <span class="result-value" id="profit">-</span>
-                        </div>
-                        <div class="result-item" style="border-top: 2px solid var(--orange); padding-top: 1rem; margin-top: 1rem;">
-                            <span class="result-label" style="font-size: 1.2rem;" data-i18n="investors.calculator.label_roi">ROI:</span>
-                            <span class="result-value" id="roi" style="font-size: 1.5rem;">-</span>
-                        </div>
-                        <div id="breakeven" style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; display: none;">
-                            <p style="margin: 0; font-size: 0.9rem; color: #6c757d;"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="key-points">
-                <h2 class="section-title" data-i18n="investors.keypoints.title">Key Points for Investors</h2>
-                
-                <div class="points-grid">
-                    <div class="point">
-                        <div class="point-icon">✓</div>
-                        <div class="point-content">
-                            <h3 data-i18n="investors.keypoint1.title">Always Check ROI</h3>
-                            <p data-i18n="investors.keypoint1.desc">Calculate if total revenue distributed exceeds what you pay. Aim for minimum 20% ROI.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="point">
-                        <div class="point-icon">📊</div>
-                        <div class="point-content">
-                            <h3 data-i18n="investors.keypoint2.title">Verify Revenue On-Chain</h3>
-                            <p data-i18n="investors.keypoint2.desc">Check protocol's historical revenue on Arbiscan. Don't trust projections alone.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="point">
-                        <div class="point-icon">💧</div>
-                        <div class="point-content">
-                            <h3 data-i18n="investors.keypoint3.title">Liquidity Matters</h3>
-                            <p data-i18n="investors.keypoint3.desc">Bonds are ERC-20 tokens. Can be sold on Uniswap anytime. Check liquidity before buying.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="point">
-                        <div class="point-icon">⏱️</div>
-                        <div class="point-content">
-                            <h3 data-i18n="investors.keypoint4.title">No Lock-up Period</h3>
-                            <p data-i18n="investors.keypoint4.desc">Claim revenue anytime. Sell tokens anytime. Full flexibility.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="point">
-                        <div class="point-icon">🔒</div>
-                        <div class="point-content">
-                            <h3 data-i18n="investors.keypoint5.title">Smart Contract Risk</h3>
-                            <p data-i18n="investors.keypoint5.desc">Protocol controls distributions. If protocol stops paying, you can't force them (yet).</p>
-                        </div>
-                    </div>
-                    
-                    <div class="point">
-                        <div class="point-icon">📈</div>
-                        <div class="point-content">
-                            <h3 data-i18n="investors.keypoint6.title">Growth Potential</h3>
-                            <p data-i18n="investors.keypoint6.desc">If protocol grows, your returns grow. Revenue share is percentage-based.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="cta">
-            <h2 data-i18n="investors.cta.title">Ready to Participate?</h2>
-            <p style="opacity: 0.9; margin-bottom: 2rem;" data-i18n="investors.cta.subtitle">Browse active revenue bond series and participate in protocol revenue distribution</p>
-            <div class="cta-buttons">
-                <a href="/buy.html" class="btn btn-primary" data-i18n="investors.cta.button1">Browse Active Bonds</a>
-                <a href="/WHITEPAPER.pdf" class="btn btn-secondary" target="_blank" data-i18n="investors.cta.button2">Read Whitepaper</a>
+            <div class="card">
+                <span class="eyebrow">The upside</span>
+                <h3>A revenue share</h3>
+                <p class="muted">Anything the issuer routes above the minimum is distributed pro-rata, and counts toward the schedule.</p>
             </div>
         </div>
     </div>
+</section>
 
-    <script>
-        function calculate() {
-            const revenue = parseFloat(document.getElementById('revenue').value);
-            const share = parseFloat(document.getElementById('share').value) / 100;
-            const duration = parseFloat(document.getElementById('duration').value);
-            const price = parseFloat(document.getElementById('price').value);
-            const tokens = parseFloat(document.getElementById('tokens').value);
-            const supply = parseFloat(document.getElementById('supply').value);
+<section class="section section-alt">
+    <div class="container">
+        <h2>The two endings</h2>
+        <p class="muted" style="max-width: 720px;">Every bond finishes one of two ways. Both are settled by the contract, not by a conversation.</p>
+        <div class="grid grid-2" style="margin-top: 28px;">
+            <div class="scenario">
+                <div class="scenario-head scenario-good">The issuer pays through the term</div>
+                <div class="scenario-body">
+                    <p class="muted">You received every coupon on schedule plus any revenue share on top. The bond matures, and the issuer takes the escrow it had already earned the right to draw.</p>
+                    <p class="muted"><strong>Your return:</strong> at least 100% of what you paid, plus whatever the terms priced above that.</p>
+                </div>
+            </div>
+            <div class="scenario">
+                <div class="scenario-head scenario-bad">The issuer misses a coupon</div>
+                <div class="scenario-body">
+                    <p class="muted">Past the grace period, anyone — including you — can trigger the default. The tap closes permanently.</p>
+                    <p class="muted"><strong>Your recovery:</strong> the coupons already paid, plus your pro-rata share of the capital the issuer never drew, plus the collateral it posted. You burn your bonds to claim it.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-            const youPay = tokens * price;
-            const yourSharePercent = (tokens / supply) * 100;
-            const totalDistributed = revenue * share * duration;
-            const youReceive = totalDistributed * (tokens / supply);
-            const profitLoss = youReceive - youPay;
-            const roi = ((youReceive / youPay) - 1) * 100;
+<section class="section">
+    <div class="container grid grid-2" style="gap: 56px;">
+        <div>
+            <h2>Read this before you buy</h2>
+            <ul class="checklist muted" style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Initial release.</strong> How much the issuer draws on day one. That is your unprotected exposure from the start.</li>
+                <li><strong>Coupon size and period.</strong> Can this protocol cover it from a bad month, not a good one?</li>
+                <li><strong>Collateral.</strong> Extra ETH the issuer locked. On default it is distributed with the undrawn capital.</li>
+                <li><strong>Payment history.</strong> The registry records every raise, every payment and every default, permanently.</li>
+                <li><strong>Who the issuer is.</strong> A contract cannot tell you whether a team will still be around in nine months.</li>
+            </ul>
+        </div>
+        <div class="highlight-box">
+            <h2>Risks, plainly</h2>
+            <div class="stack" style="gap: 16px; margin-top: 16px;">
+                <p><strong>Credit risk.</strong> Capital the issuer has already drawn is not protected beyond the collateral. A default can still lose you money.</p>
+                <p><strong>Revenue risk.</strong> The share above the minimum is only as good as the protocol's revenue, and the issuer decides what flows through the router until Locked Revenue ships.</p>
+                <p><strong>Smart contract risk.</strong> V3 has 82 tests and no external audit yet. The first audit is scheduled for <span class="keyword">[AUDIT DATE]</span>.</p>
+                <p><strong>Liquidity risk.</strong> Bonds are transferable, but there may be no one to sell to before maturity.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-            document.getElementById('youPay').textContent = '$' + youPay.toLocaleString('en-US', {maximumFractionDigits: 0});
-            document.getElementById('yourShare').textContent = yourSharePercent.toFixed(2) + '%';
-            document.getElementById('totalDist').textContent = '$' + totalDistributed.toLocaleString('en-US', {maximumFractionDigits: 0});
-            document.getElementById('youReceive').textContent = '$' + youReceive.toLocaleString('en-US', {maximumFractionDigits: 0});
-            
-            const profitEl = document.getElementById('profit');
-            profitEl.textContent = (profitLoss >= 0 ? '+' : '') + '$' + profitLoss.toLocaleString('en-US', {maximumFractionDigits: 0});
-            profitEl.style.color = profitLoss >= 0 ? '#10B981' : '#EF4444';
-            
-            const roiEl = document.getElementById('roi');
-            roiEl.textContent = (roi >= 0 ? '+' : '') + roi.toFixed(1) + '%';
-            roiEl.style.color = roi >= 0 ? '#10B981' : '#EF4444';
+<section class="cta-section">
+    <div class="container">
+        <h2 style="font-size: clamp(28px, 3.6vw, 40px);">See what is live right now</h2>
+        <p class="muted" style="max-width: 560px; margin: 0 auto 24px auto;">
+            The explorer reads the contracts directly. Today it shows V2 series; V3 bonds appear there
+            as soon as they are deployed.
+        </p>
+        <div class="cta-buttons" style="justify-content: center;">
+            <a href="/dashboard.html" class="btn btn-primary">Explore bonds</a>
+            <a href="/faq-investors.html" class="btn btn-secondary">Investor FAQ</a>
+        </div>
+    </div>
+</section>
 
-            // Calculate break-even point
-            const breakevenDiv = document.getElementById('breakeven');
-            const minRevenue = youPay / (share * duration * (tokens / supply));
-            
-            if (roi < 0) {
-                breakevenDiv.style.display = 'block';
-                breakevenDiv.style.background = '#fff3cd';
-                breakevenDiv.style.borderLeft = '4px solid #ffc107';
-                breakevenDiv.querySelector('p').innerHTML = getBreakevenMessage('negative', minRevenue, revenue, roi);
-            } else if (roi < 20) {
-                breakevenDiv.style.display = 'block';
-                breakevenDiv.style.background = '#fff3cd';
-                breakevenDiv.style.borderLeft = '4px solid #ffc107';
-                breakevenDiv.querySelector('p').innerHTML = getBreakevenMessage('low', minRevenue, revenue, roi);
-            } else {
-                breakevenDiv.style.display = 'block';
-                breakevenDiv.style.background = '#d1e7dd';
-                breakevenDiv.style.borderLeft = '4px solid #198754';
-                breakevenDiv.querySelector('p').innerHTML = getBreakevenMessage('good', minRevenue, revenue, roi);
-            }
-        }
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+                <p class="dim" style="font-size: 13.5px; max-width: 300px;">Revenue bonds for protocols that earn. Built on Arbitrum One.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Protocol</h4>
+                <a href="/#how-it-works">How it works</a>
+                <a href="/development.html">Status &amp; roadmap</a>
+                <a href="/versions.html">V2 (legacy)</a>
+                <a href="/WHITEPAPER.pdf">Whitepaper (PDF)</a>
+            </div>
+            <div class="footer-section">
+                <h4>Learn</h4>
+                <a href="/investors.html">For investors</a>
+                <a href="/faq-protocols.html">FAQ for protocols</a>
+                <a href="/faq-investors.html">FAQ for investors</a>
+                <a href="/blog.html">Blog</a>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <a href="https://github.com/EquorumProtocol" target="_blank" rel="noopener">GitHub</a>
+                <a href="/faq-help.html">Help</a>
+                <a href="/dashboard.html">Explore bonds</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <a href="mailto:leonardomondaine@gmail.com" class="mono" style="font-size: 13px;">leonardomondaine@gmail.com</a>
+                <a href="mailto:suport@equorumprotocol.org" class="mono" style="font-size: 13px;">suport@equorumprotocol.org</a>
+            </div>
+        </div>
+        <div class="footer-text">
+            <span>© 2026 Equorum Protocol</span>
+            <span style="max-width: 720px;">Revenue-linked tokens may be regulated as securities in your jurisdiction. Nothing here is investment advice.</span>
+        </div>
+    </div>
+</footer>
 
-        function getBreakevenMessage(type, minRevenue, currentRevenue, roi) {
-            const lang = window.currentLang || 'en';
-            const minRev = '$' + minRevenue.toLocaleString('en-US', {maximumFractionDigits: 0});
-            const currRev = '$' + currentRevenue.toLocaleString('en-US', {maximumFractionDigits: 0});
-            const roiStr = roi.toFixed(1);
-            
-            const messages = {
-                en: {
-                    negative: `⚠️ <strong>Break-even:</strong> This bond only becomes profitable if monthly revenue exceeds <strong>${minRev}</strong>. Current revenue: ${currRev}/month.`,
-                    low: `⚠️ <strong>Low ROI Warning:</strong> This bond is barely profitable. Consider if ${roiStr}% return justifies the risk.`,
-                    good: `✅ <strong>Good ROI:</strong> This bond becomes unprofitable only if monthly revenue drops below <strong>${minRev}</strong>.`
-                },
-                pt: {
-                    negative: `⚠️ <strong>Ponto de Equilíbrio:</strong> Este bond só se torna lucrativo se a receita mensal exceder <strong>${minRev}</strong>. Receita atual: ${currRev}/mês.`,
-                    low: `⚠️ <strong>Aviso de ROI Baixo:</strong> Este bond é pouco lucrativo. Considere se ${roiStr}% de retorno justifica o risco.`,
-                    good: `✅ <strong>Bom ROI:</strong> Este bond só se torna não lucrativo se a receita mensal cair abaixo de <strong>${minRev}</strong>.`
-                },
-                es: {
-                    negative: `⚠️ <strong>Punto de Equilibrio:</strong> Este bond solo se vuelve rentable si los ingresos mensuales superan <strong>${minRev}</strong>. Ingresos actuales: ${currRev}/mes.`,
-                    low: `⚠️ <strong>Advertencia de ROI Bajo:</strong> Este bond es apenas rentable. Considera si ${roiStr}% de retorno justifica el riesgo.`,
-                    good: `✅ <strong>Buen ROI:</strong> Este bond solo se vuelve no rentable si los ingresos mensuales caen por debajo de <strong>${minRev}</strong>.`
-                },
-                ja: {
-                    negative: `⚠️ <strong>損益分岐点:</strong> このボンドは月次収益が<strong>${minRev}</strong>を超えた場合にのみ利益が出ます。現在の収益: ${currRev}/月。`,
-                    low: `⚠️ <strong>低ROI警告:</strong> このボンドはほとんど利益が出ません。${roiStr}%のリターンがリスクに見合うか検討してください。`,
-                    good: `✅ <strong>良好なROI:</strong> このボンドは月次収益が<strong>${minRev}</strong>を下回った場合にのみ不採算になります。`
-                },
-                zh: {
-                    negative: `⚠️ <strong>盈亏平衡点:</strong> 只有当月收入超过<strong>${minRev}</strong>时，此债券才会盈利。当前收入: ${currRev}/月。`,
-                    low: `⚠️ <strong>低ROI警告:</strong> 此债券几乎不盈利。请考虑${roiStr}%的回报是否值得冒险。`,
-                    good: `✅ <strong>良好的ROI:</strong> 只有当月收入降至<strong>${minRev}</strong>以下时，此债券才会亏损。`
-                }
-            };
-            
-            return messages[lang][type];
-        }
-
-        // Translation system
-        window.currentLang = 'en';
-        
-        const translations = {
-            en: {
-                'nav.home': 'Home',
-                'nav.investors': 'For Investors',
-                'investors.hero.title': 'Revenue Bonds for Investors',
-                'investors.hero.subtitle': 'Participate in DeFi protocol revenue distribution. Transparent, on-chain, and liquid.',
-                'investors.how.title': 'How It Works',
-                'investors.how.subtitle': 'Simple 4-step process to participate in revenue sharing',
-                'investors.examples.disclaimer': '⚠️ The examples below are educational simulations based on hypothetical revenues. Actual results may be higher, lower, or negative depending on protocol performance.',
-                'investors.whatnot.title': 'What This Is & What This Is NOT',
-                'investors.whatnot.not_title': 'This is NOT',
-                'investors.whatnot.not1': '• A trading product',
-                'investors.whatnot.not2': '• A guaranteed yield promise',
-                'investors.whatnot.not3': '• A protected investment',
-                'investors.whatnot.not4': '• A substitute for traditional fixed income',
-                'investors.whatnot.is_title': 'This IS',
-                'investors.whatnot.is1': '• A revenue-sharing structure',
-                'investors.whatnot.is2': '• Fully dependent on protocol performance',
-                'investors.whatnot.is3': '• Transparent and on-chain',
-                'investors.whatnot.is4': '• Exposure to protocol revenue flows',
-                'investors.how.step1.title': 'Protocol Creates Bond',
-                'investors.how.step1.desc': 'DeFi protocol creates revenue bond series with fixed terms (revenue share %, duration)',
-                'investors.how.step2.title': 'You Buy Tokens',
-                'investors.how.step2.desc': 'Purchase bond tokens at a price set by the protocol (on Uniswap or OTC)',
-                'investors.how.step3.title': 'Protocol Distributes',
-                'investors.how.step3.desc': 'Protocol deposits revenue (in ETH) monthly or as agreed',
-                'investors.how.step4.title': 'You Claim Earnings',
-                'investors.how.step4.desc': 'Claim your proportional share of revenue anytime. Sell tokens on secondary market if needed.',
-                'investors.examples.title': 'Real Examples',
-                'investors.examples.subtitle': 'See how different structures affect your returns',
-                'investors.calculator.title': 'ROI Calculator',
-                'investors.calculator.subtitle': 'Calculate your potential returns before investing',
-                'investors.calculator.revenue': 'Protocol Monthly Revenue ($)',
-                'investors.calculator.share': 'Revenue Share (%)',
-                'investors.calculator.duration': 'Duration (months)',
-                'investors.calculator.price': 'Token Price ($)',
-                'investors.calculator.tokens': 'Tokens You\'ll Buy',
-                'investors.calculator.supply': 'Total Token Supply',
-                'investors.calculator.button': 'Calculate ROI',
-                'investors.calculator.results': 'Your Results',
-                'investors.calculator.label_youpay': 'You Pay:',
-                'investors.calculator.label_yourshare': 'Your Share:',
-                'investors.calculator.label_totaldist': 'Total Distributed:',
-                'investors.calculator.label_youreceive': 'You Receive:',
-                'investors.calculator.label_profitloss': 'Profit/Loss:',
-                'investors.calculator.label_roi': 'ROI:',
-                'investors.keypoints.title': 'Key Points for Investors',
-                'investors.cta.title': 'Ready to Invest?',
-                'investors.cta.subtitle': 'Browse active revenue bond series and start earning passive income',
-                'investors.cta.button1': 'Browse Active Bonds',
-                'investors.cta.button2': 'Read Whitepaper'
-            },
-            pt: {
-                'nav.home': 'Home',
-                'nav.investors': 'Para Investidores',
-                'investors.hero.title': 'Revenue Bonds para Investidores',
-                'investors.hero.subtitle': 'Ganhe renda passiva com receita de protocolos DeFi. Transparente, on-chain e líquido.',
-                'investors.how.title': 'Como Funciona',
-                'investors.how.subtitle': 'Processo simples de 4 passos para ganhar renda passiva',
-                'investors.how.step1.title': 'Protocolo Cria Bond',
-                'investors.how.step1.desc': 'Protocolo DeFi cria série de revenue bonds com termos fixos (% de receita, duração)',
-                'investors.how.step2.title': 'Você Compra Tokens',
-                'investors.how.step2.desc': 'Compre tokens do bond pelo preço definido pelo protocolo (no Uniswap ou OTC)',
-                'investors.how.step3.title': 'Protocolo Distribui',
-                'investors.how.step3.desc': 'Protocolo deposita receita (em ETH) mensalmente ou conforme acordado',
-                'investors.how.step4.title': 'Você Reivindica Ganhos',
-                'investors.how.step4.desc': 'Reivindique sua parte proporcional da receita a qualquer momento. Venda tokens no mercado secundário se necessário.',
-                'investors.examples.title': 'Exemplos Reais',
-                'investors.examples.subtitle': 'Veja como diferentes estruturas afetam seus retornos',
-                'investors.calculator.title': 'Calculadora de ROI',
-                'investors.calculator.subtitle': 'Calcule seus retornos potenciais antes de investir',
-                'investors.calculator.revenue': 'Receita Mensal do Protocolo ($)',
-                'investors.calculator.share': 'Compartilhamento de Receita (%)',
-                'investors.calculator.duration': 'Duração (meses)',
-                'investors.calculator.price': 'Preço do Token ($)',
-                'investors.calculator.tokens': 'Tokens que Você Vai Comprar',
-                'investors.calculator.supply': 'Fornecimento Total de Tokens',
-                'investors.calculator.button': 'Calcular ROI',
-                'investors.calculator.results': 'Seus Resultados',
-                'investors.calculator.label_youpay': 'Você Paga:',
-                'investors.calculator.label_yourshare': 'Sua Parte:',
-                'investors.calculator.label_totaldist': 'Total Distribuído:',
-                'investors.calculator.label_youreceive': 'Você Recebe:',
-                'investors.calculator.label_profitloss': 'Lucro/Prejuízo:',
-                'investors.calculator.label_roi': 'ROI:',
-                'investors.keypoints.title': 'Pontos-Chave para Investidores',
-                'investors.cta.title': 'Pronto para Participar?',
-                'investors.cta.subtitle': 'Navegue pelas séries de revenue bonds ativas e participe da distribuição de receita de protocolos',
-                'investors.hero.subtitle': 'Participe da distribuição de receita de protocolos DeFi. Transparente, on-chain e líquido.',
-                'investors.how.subtitle': 'Processo simples de 4 passos para participar do compartilhamento de receita',
-                'investors.examples.disclaimer': '⚠️ Os exemplos abaixo são simulações educacionais baseadas em receitas hipotéticas. Resultados reais podem ser maiores, menores ou negativos dependendo da performance do protocolo.',
-                'investors.whatnot.title': 'O Que Isto É & O Que Isto NÃO É',
-                'investors.whatnot.not_title': 'Isto NÃO é',
-                'investors.whatnot.not1': '• Um produto de trading',
-                'investors.whatnot.not2': '• Uma promessa de rendimento garantido',
-                'investors.whatnot.not3': '• Um investimento protegido',
-                'investors.whatnot.not4': '• Um substituto para renda fixa tradicional',
-                'investors.whatnot.is_title': 'Isto É',
-                'investors.whatnot.is1': '• Uma estrutura de compartilhamento de receita',
-                'investors.whatnot.is2': '• Totalmente dependente da performance do protocolo',
-                'investors.whatnot.is3': '• Transparente e on-chain',
-                'investors.whatnot.is4': '• Exposição a fluxos de receita de protocolos',
-                'investors.cta.button1': 'Ver Bonds Ativos',
-                'investors.cta.button2': 'Ler Whitepaper',
-                'investors.example1.title': 'Exemplo 1: DEX Conservadora',
-                'investors.example2.title': 'Exemplo 2: NFT Marketplace em Crescimento',
-                'investors.example3.title': 'Exemplo 3: Bond Superfaturado ⚠️',
-                'investors.example.protocol_revenue': 'Receita do Protocolo',
-                'investors.example.starting_revenue': 'Receita Inicial',
-                'investors.example.growth_rate': 'Taxa de Crescimento',
-                'investors.example.revenue_share': 'Compartilhamento de Receita',
-                'investors.example.duration': 'Duração',
-                'investors.example.token_price': 'Preço do Token',
-                'investors.example1.investment': 'Seu Investimento (10.000 tokens = 2%):',
-                'investors.example1.you_pay': 'Você Paga: 10.000 tokens × $0,50 = $5.000',
-                'investors.example1.total_dist': 'Total Distribuído: $50k × 40% × 18 meses = $360.000',
-                'investors.example1.your_share': 'Sua Parte: 2% de $360k = $7.200',
-                'investors.example1.profit': 'Lucro: $2.200 | ROI: 44% em 18 meses (~29% ao ano)',
-                'investors.example2.investment': 'Seu Investimento (50.000 tokens = 5%):',
-                'investors.example2.you_pay': 'Você Paga: 50.000 tokens × $0,40 = $20.000',
-                'investors.example2.month1': 'Mês 1: $30k × 25% = $7,5k',
-                'investors.example2.month12': 'Mês 12: $94k × 25% = $23,5k',
-                'investors.example2.month24': 'Mês 24: $266k × 25% = $66,5k',
-                'investors.example2.total24': 'Total 24 meses: ~$1.200.000 distribuídos',
-                'investors.example2.your_share': 'Sua Parte: 5% de $1,2M = $60.000',
-                'investors.example2.profit': 'Lucro: $40.000 | ROI: 200% em 24 meses (100% ao ano)',
-                'investors.example3.investment': 'Seu Investimento (10.000 tokens = 1%):',
-                'investors.example3.you_pay': 'Você Paga: 10.000 tokens × $0,30 = $3.000',
-                'investors.example3.total_dist': 'Total Distribuído: $50k × 30% × 12 = $180.000',
-                'investors.example3.your_share': 'Sua Parte: 1% de $180k = $1.800',
-                'investors.example3.loss': 'Prejuízo: -$1.200 | ROI: -40% ⚠️ NÃO COMPRE!',
-                'investors.keypoint1.title': 'Sempre Verifique o ROI',
-                'investors.keypoint1.desc': 'Calcule se a receita total distribuída excede o que você paga. Busque no mínimo 20% de ROI.',
-                'investors.keypoint2.title': 'Verifique Receita On-Chain',
-                'investors.keypoint2.desc': 'Confira o histórico de receita do protocolo no Arbiscan. Não confie apenas em projeções.',
-                'investors.keypoint3.title': 'Liquidez Importa',
-                'investors.keypoint3.desc': 'Bonds são tokens ERC-20. Podem ser vendidos no Uniswap a qualquer momento. Verifique a liquidez antes de comprar.',
-                'investors.keypoint4.title': 'Sem Período de Lock-up',
-                'investors.keypoint4.desc': 'Reivindique receita a qualquer momento. Venda tokens a qualquer momento. Flexibilidade total.',
-                'investors.keypoint5.title': 'Risco de Smart Contract',
-                'investors.keypoint5.desc': 'O protocolo controla as distribuições. Se o protocolo parar de pagar, você não pode forçá-los (ainda).',
-                'investors.keypoint6.title': 'Potencial de Crescimento',
-                'investors.keypoint6.desc': 'Se o protocolo crescer, seus retornos crescem. O compartilhamento de receita é baseado em porcentagem.'
-            },
-            es: {
-                'nav.home': 'Inicio',
-                'nav.investors': 'Para Inversores',
-                'investors.hero.title': 'Revenue Bonds para Inversores',
-                'investors.hero.subtitle': 'Participa en la distribución de ingresos de protocolos DeFi. Transparente, on-chain y líquido.',
-                'investors.how.title': 'Cómo Funciona',
-                'investors.how.subtitle': 'Proceso simple de 4 pasos para participar en el compartir ingresos',
-                'investors.examples.disclaimer': '⚠️ Los ejemplos a continuación son simulaciones educativas basadas en ingresos hipotéticos. Los resultados reales pueden ser mayores, menores o negativos dependiendo del rendimiento del protocolo.',
-                'investors.whatnot.title': 'Qué Es Esto & Qué NO Es Esto',
-                'investors.whatnot.not_title': 'Esto NO es',
-                'investors.whatnot.not1': '• Un producto de trading',
-                'investors.whatnot.not2': '• Una promesa de rendimiento garantizado',
-                'investors.whatnot.not3': '• Una inversión protegida',
-                'investors.whatnot.not4': '• Un sustituto de renta fija tradicional',
-                'investors.whatnot.is_title': 'Esto ES',
-                'investors.whatnot.is1': '• Una estructura de compartir ingresos',
-                'investors.whatnot.is2': '• Totalmente dependiente del rendimiento del protocolo',
-                'investors.whatnot.is3': '• Transparente y on-chain',
-                'investors.whatnot.is4': '• Exposición a flujos de ingresos de protocolos',
-                'investors.how.step1.title': 'Protocolo Crea Bond',
-                'investors.how.step1.desc': 'El protocolo DeFi crea series de revenue bonds con términos fijos (% de ingresos, duración)',
-                'investors.how.step2.title': 'Compras Tokens',
-                'investors.how.step2.desc': 'Compra tokens del bond al precio establecido por el protocolo (en Uniswap o OTC)',
-                'investors.how.step3.title': 'Protocolo Distribuye',
-                'investors.how.step3.desc': 'El protocolo deposita ingresos (en ETH) mensualmente o según lo acordado',
-                'investors.how.step4.title': 'Reclamas Ganancias',
-                'investors.how.step4.desc': 'Reclama tu parte proporcional de ingresos en cualquier momento. Vende tokens en el mercado secundario si es necesario.',
-                'investors.examples.title': 'Ejemplos Reales',
-                'investors.examples.subtitle': 'Ve cómo diferentes estructuras afectan tus retornos',
-                'investors.calculator.title': 'Calculadora de ROI',
-                'investors.calculator.subtitle': 'Calcula tus retornos potenciales antes de invertir',
-                'investors.calculator.revenue': 'Ingresos Mensuales del Protocolo ($)',
-                'investors.calculator.share': 'Compartir Ingresos (%)',
-                'investors.calculator.duration': 'Duración (meses)',
-                'investors.calculator.price': 'Precio del Token ($)',
-                'investors.calculator.tokens': 'Tokens que Comprarás',
-                'investors.calculator.supply': 'Suministro Total de Tokens',
-                'investors.calculator.button': 'Calcular ROI',
-                'investors.calculator.results': 'Tus Resultados',
-                'investors.calculator.label_youpay': 'Pagas:',
-                'investors.calculator.label_yourshare': 'Tu Parte:',
-                'investors.calculator.label_totaldist': 'Total Distribuido:',
-                'investors.calculator.label_youreceive': 'Recibes:',
-                'investors.calculator.label_profitloss': 'Ganancia/Pérdida:',
-                'investors.calculator.label_roi': 'ROI:',
-                'investors.keypoints.title': 'Puntos Clave para Inversores',
-                'investors.cta.title': '¿Listo para Participar?',
-                'investors.cta.subtitle': 'Explora series de revenue bonds activas y participa en la distribución de ingresos de protocolos',
-                'investors.cta.button1': 'Ver Bonds Activos',
-                'investors.cta.button2': 'Leer Whitepaper',
-                'investors.example1.title': 'Ejemplo 1: DEX Conservadora',
-                'investors.example2.title': 'Ejemplo 2: NFT Marketplace en Crecimiento',
-                'investors.example3.title': 'Ejemplo 3: Bond Sobrevalorado ⚠️',
-                'investors.example.protocol_revenue': 'Ingresos del Protocolo',
-                'investors.example.starting_revenue': 'Ingresos Iniciales',
-                'investors.example.growth_rate': 'Tasa de Crecimiento',
-                'investors.example.revenue_share': 'Compartir Ingresos',
-                'investors.example.duration': 'Duración',
-                'investors.example.token_price': 'Precio del Token',
-                'investors.example1.investment': 'Tu Inversión (10.000 tokens = 2%):',
-                'investors.example1.you_pay': 'Pagas: 10.000 tokens × $0,50 = $5.000',
-                'investors.example1.total_dist': 'Total Distribuido: $50k × 40% × 18 meses = $360.000',
-                'investors.example1.your_share': 'Tu Parte: 2% de $360k = $7.200',
-                'investors.example1.profit': 'Ganancia: $2.200 | ROI: 44% en 18 meses (~29% anual)',
-                'investors.example2.investment': 'Tu Inversión (50.000 tokens = 5%):',
-                'investors.example2.you_pay': 'Pagas: 50.000 tokens × $0,40 = $20.000',
-                'investors.example2.month1': 'Mes 1: $30k × 25% = $7,5k',
-                'investors.example2.month12': 'Mes 12: $94k × 25% = $23,5k',
-                'investors.example2.month24': 'Mes 24: $266k × 25% = $66,5k',
-                'investors.example2.total24': 'Total 24 meses: ~$1.200.000 distribuidos',
-                'investors.example2.your_share': 'Tu Parte: 5% de $1,2M = $60.000',
-                'investors.example2.profit': 'Ganancia: $40.000 | ROI: 200% en 24 meses (100% anual)',
-                'investors.example3.investment': 'Tu Inversión (10.000 tokens = 1%):',
-                'investors.example3.you_pay': 'Pagas: 10.000 tokens × $0,30 = $3.000',
-                'investors.example3.total_dist': 'Total Distribuido: $50k × 30% × 12 = $180.000',
-                'investors.example3.your_share': 'Tu Parte: 1% de $180k = $1.800',
-                'investors.example3.loss': 'Pérdida: -$1.200 | ROI: -40% ⚠️ ¡NO COMPRES!',
-                'investors.keypoint1.title': 'Siempre Verifica el ROI',
-                'investors.keypoint1.desc': 'Calcula si los ingresos totales distribuidos exceden lo que pagas. Busca un ROI mínimo del 20%.',
-                'investors.keypoint2.title': 'Verifica Ingresos On-Chain',
-                'investors.keypoint2.desc': 'Revisa el historial de ingresos del protocolo en Arbiscan. No confíes solo en proyecciones.',
-                'investors.keypoint3.title': 'La Liquidez Importa',
-                'investors.keypoint3.desc': 'Los bonds son tokens ERC-20. Se pueden vender en Uniswap en cualquier momento. Verifica la liquidez antes de comprar.',
-                'investors.keypoint4.title': 'Sin Período de Bloqueo',
-                'investors.keypoint4.desc': 'Reclama ingresos en cualquier momento. Vende tokens en cualquier momento. Flexibilidad total.',
-                'investors.keypoint5.title': 'Riesgo de Smart Contract',
-                'investors.keypoint5.desc': 'El protocolo controla las distribuciones. Si el protocolo deja de pagar, no puedes forzarlos (todavía).',
-                'investors.keypoint6.title': 'Potencial de Crecimiento',
-                'investors.keypoint6.desc': 'Si el protocolo crece, tus retornos crecen. El compartir ingresos se basa en porcentaje.'
-            },
-            ja: {
-                'nav.home': 'ホーム',
-                'nav.investors': '投資家向け',
-                'investors.hero.title': '投資家向けレベニューボンド',
-                'investors.hero.subtitle': 'DeFiプロトコルの収益分配に参加。透明性があり、オンチェーンで流動的。',
-                'investors.how.title': '使い方',
-                'investors.how.subtitle': '収益共有に参加するための簡単な4ステップ',
-                'investors.examples.disclaimer': '⚠️ 以下の例は仮想的な収益に基づく教育的シミュレーションです。実際の結果はプロトコルのパフォーマンスに応じて、より高く、より低く、またはマイナスになる可能性があります。',
-                'investors.whatnot.title': 'これは何か & これは何でないか',
-                'investors.whatnot.not_title': 'これではない',
-                'investors.whatnot.not1': '• トレーディング商品',
-                'investors.whatnot.not2': '• 保証された利回りの約束',
-                'investors.whatnot.not3': '• 保護された投資',
-                'investors.whatnot.not4': '• 伝統的な固定収入の代替',
-                'investors.whatnot.is_title': 'これである',
-                'investors.whatnot.is1': '• 収益共有構造',
-                'investors.whatnot.is2': '• プロトコルのパフォーマンスに完全依存',
-                'investors.whatnot.is3': '• 透明でオンチェーン',
-                'investors.whatnot.is4': '• プロトコル収益フローへのエクスポージャー',
-                'investors.how.step1.title': 'プロトコルがボンドを作成',
-                'investors.how.step1.desc': 'DeFiプロトコルが固定条件（収益シェア％、期間）でレベニューボンドシリーズを作成',
-                'investors.how.step2.title': 'トークンを購入',
-                'investors.how.step2.desc': 'プロトコルが設定した価格でボンドトークンを購入（UniswapまたはOTC）',
-                'investors.how.step3.title': 'プロトコルが配分',
-                'investors.how.step3.desc': 'プロトコルが月次または合意に従って収益（ETH）を入金',
-                'investors.how.step4.title': '収益を請求',
-                'investors.how.step4.desc': 'いつでも比例配分された収益を請求。必要に応じてセカンダリーマーケットでトークンを売却。',
-                'investors.examples.title': '実例',
-                'investors.examples.subtitle': '異なる構造がリターンにどう影響するかを見る',
-                'investors.calculator.title': 'ROI計算機',
-                'investors.calculator.subtitle': '投資前に潜在的なリターンを計算',
-                'investors.calculator.revenue': 'プロトコル月次収益 ($)',
-                'investors.calculator.share': '収益シェア (%)',
-                'investors.calculator.duration': '期間 (月)',
-                'investors.calculator.price': 'トークン価格 ($)',
-                'investors.calculator.tokens': '購入するトークン数',
-                'investors.calculator.supply': 'トークン総供給量',
-                'investors.calculator.button': 'ROIを計算',
-                'investors.calculator.results': 'あなたの結果',
-                'investors.calculator.label_youpay': '支払額:',
-                'investors.calculator.label_yourshare': 'あなたのシェア:',
-                'investors.calculator.label_totaldist': '総配分額:',
-                'investors.calculator.label_youreceive': '受取額:',
-                'investors.calculator.label_profitloss': '利益/損失:',
-                'investors.calculator.label_roi': 'ROI:',
-                'investors.keypoints.title': '投資家向け重要ポイント',
-                'investors.cta.title': '参加の準備はできましたか？',
-                'investors.cta.subtitle': 'アクティブなレベニューボンドシリーズを閲覧してプロトコル収益分配に参加',
-                'investors.cta.button1': 'アクティブなボンドを見る',
-                'investors.cta.button2': 'ホワイトペーパーを読む',
-                'investors.example1.title': '例1: 保守的なDEX',
-                'investors.example2.title': '例2: 成長中のNFTマーケットプレイス',
-                'investors.example3.title': '例3: 過大評価されたボンド ⚠️',
-                'investors.example.protocol_revenue': 'プロトコル収益',
-                'investors.example.starting_revenue': '初期収益',
-                'investors.example.growth_rate': '成長率',
-                'investors.example.revenue_share': '収益シェア',
-                'investors.example.duration': '期間',
-                'investors.example.token_price': 'トークン価格',
-                'investors.example1.investment': 'あなたの投資 (10,000トークン = 2%):',
-                'investors.example1.you_pay': '支払額: 10,000トークン × $0.50 = $5,000',
-                'investors.example1.total_dist': '総配分額: $50k × 40% × 18ヶ月 = $360,000',
-                'investors.example1.your_share': 'あなたのシェア: $360kの2% = $7,200',
-                'investors.example1.profit': '利益: $2,200 | ROI: 18ヶ月で44% (~年29%)',
-                'investors.example2.investment': 'あなたの投資 (50,000トークン = 5%):',
-                'investors.example2.you_pay': '支払額: 50,000トークン × $0.40 = $20,000',
-                'investors.example2.month1': '月1: $30k × 25% = $7.5k',
-                'investors.example2.month12': '月12: $94k × 25% = $23.5k',
-                'investors.example2.month24': '月24: $266k × 25% = $66.5k',
-                'investors.example2.total24': '24ヶ月合計: ~$1,200,000配分',
-                'investors.example2.your_share': 'あなたのシェア: $1.2Mの5% = $60,000',
-                'investors.example2.profit': '利益: $40,000 | ROI: 24ヶ月で200% (年100%)',
-                'investors.example3.investment': 'あなたの投資 (10,000トークン = 1%):',
-                'investors.example3.you_pay': '支払額: 10,000トークン × $0.30 = $3,000',
-                'investors.example3.total_dist': '総配分額: $50k × 30% × 12 = $180,000',
-                'investors.example3.your_share': 'あなたのシェア: $180kの1% = $1,800',
-                'investors.example3.loss': '損失: -$1,200 | ROI: -40% ⚠️ 購入しないでください！',
-                'investors.keypoint1.title': '常にROIを確認',
-                'investors.keypoint1.desc': '配分される総収益が支払額を超えるか計算。最低20%のROIを目指す。',
-                'investors.keypoint2.title': 'オンチェーンで収益を確認',
-                'investors.keypoint2.desc': 'Arbiscanでプロトコルの過去の収益を確認。予測だけを信じない。',
-                'investors.keypoint3.title': '流動性が重要',
-                'investors.keypoint3.desc': 'ボンドはERC-20トークン。いつでもUniswapで売却可能。購入前に流動性を確認。',
-                'investors.keypoint4.title': 'ロックアップ期間なし',
-                'investors.keypoint4.desc': 'いつでも収益を請求。いつでもトークンを売却。完全な柔軟性。',
-                'investors.keypoint5.title': 'スマートコントラクトリスク',
-                'investors.keypoint5.desc': 'プロトコルが配分を制御。プロトコルが支払いを停止した場合、強制できない（まだ）。',
-                'investors.keypoint6.title': '成長の可能性',
-                'investors.keypoint6.desc': 'プロトコルが成長すれば、リターンも成長。収益シェアはパーセンテージベース。'
-            },
-            zh: {
-                'nav.home': '首页',
-                'nav.investors': '投资者专区',
-                'investors.hero.title': '投资者收入债券',
-                'investors.hero.subtitle': '参与DeFi协议收入分配。透明、链上且流动。',
-                'investors.how.title': '如何运作',
-                'investors.how.subtitle': '参与收入共享的简单4步流程',
-                'investors.examples.disclaimer': '⚠️ 以下示例是基于假设收入的教育模拟。实际结果可能根据协议表现而更高、更低或为负。',
-                'investors.whatnot.title': '这是什么 & 这不是什么',
-                'investors.whatnot.not_title': '这不是',
-                'investors.whatnot.not1': '• 交易产品',
-                'investors.whatnot.not2': '• 保证收益承诺',
-                'investors.whatnot.not3': '• 受保护的投资',
-                'investors.whatnot.not4': '• 传统固定收益的替代品',
-                'investors.whatnot.is_title': '这是',
-                'investors.whatnot.is1': '• 收入共享结构',
-                'investors.whatnot.is2': '• 完全依赖协议表现',
-                'investors.whatnot.is3': '• 透明且链上',
-                'investors.whatnot.is4': '• 协议收入流的敞口',
-                'investors.how.step1.title': '协议创建债券',
-                'investors.how.step1.desc': 'DeFi协议创建具有固定条款（收入份额%、期限）的收入债券系列',
-                'investors.how.step2.title': '购买代币',
-                'investors.how.step2.desc': '以协议设定的价格购买债券代币（在Uniswap或OTC）',
-                'investors.how.step3.title': '协议分配',
-                'investors.how.step3.desc': '协议按月或按约定存入收入（ETH）',
-                'investors.how.step4.title': '领取收益',
-                'investors.how.step4.desc': '随时领取您的按比例分配的收入份额。如需要可在二级市场出售代币。',
-                'investors.examples.title': '真实示例',
-                'investors.examples.subtitle': '了解不同结构如何影响您的回报',
-                'investors.calculator.title': 'ROI计算器',
-                'investors.calculator.subtitle': '投资前计算您的潜在回报',
-                'investors.calculator.revenue': '协议月收入 ($)',
-                'investors.calculator.share': '收入份额 (%)',
-                'investors.calculator.duration': '期限（月）',
-                'investors.calculator.price': '代币价格 ($)',
-                'investors.calculator.tokens': '您将购买的代币',
-                'investors.calculator.supply': '代币总供应量',
-                'investors.calculator.button': '计算ROI',
-                'investors.calculator.results': '您的结果',
-                'investors.calculator.label_youpay': '您支付:',
-                'investors.calculator.label_yourshare': '您的份额:',
-                'investors.calculator.label_totaldist': '总分配:',
-                'investors.calculator.label_youreceive': '您收到:',
-                'investors.calculator.label_profitloss': '利润/亏损:',
-                'investors.calculator.label_roi': 'ROI:',
-                'investors.keypoints.title': '投资者关键要点',
-                'investors.cta.title': '准备参与了吗？',
-                'investors.cta.subtitle': '浏览活跃的收入债券系列并参与协议收入分配',
-                'investors.cta.button1': '浏览活跃债券',
-                'investors.cta.button2': '阅读白皮书',
-                'investors.example1.title': '示例1: 保守型DEX',
-                'investors.example2.title': '示例2: 增长中的NFT市场',
-                'investors.example3.title': '示例3: 定价过高的债券 ⚠️',
-                'investors.example.protocol_revenue': '协议收入',
-                'investors.example.starting_revenue': '初始收入',
-                'investors.example.growth_rate': '增长率',
-                'investors.example.revenue_share': '收入份额',
-                'investors.example.duration': '期限',
-                'investors.example.token_price': '代币价格',
-                'investors.example1.investment': '您的投资 (10,000代币 = 2%):',
-                'investors.example1.you_pay': '您支付: 10,000代币 × $0.50 = $5,000',
-                'investors.example1.total_dist': '总分配: $50k × 40% × 18个月 = $360,000',
-                'investors.example1.your_share': '您的份额: $360k的2% = $7,200',
-                'investors.example1.profit': '利润: $2,200 | ROI: 18个月44% (~年化29%)',
-                'investors.example2.investment': '您的投资 (50,000代币 = 5%):',
-                'investors.example2.you_pay': '您支付: 50,000代币 × $0.40 = $20,000',
-                'investors.example2.month1': '第1个月: $30k × 25% = $7.5k',
-                'investors.example2.month12': '第12个月: $94k × 25% = $23.5k',
-                'investors.example2.month24': '第24个月: $266k × 25% = $66.5k',
-                'investors.example2.total24': '24个月总计: ~$1,200,000分配',
-                'investors.example2.your_share': '您的份额: $1.2M的5% = $60,000',
-                'investors.example2.profit': '利润: $40,000 | ROI: 24个月200% (年化100%)',
-                'investors.example3.investment': '您的投资 (10,000代币 = 1%):',
-                'investors.example3.you_pay': '您支付: 10,000代币 × $0.30 = $3,000',
-                'investors.example3.total_dist': '总分配: $50k × 30% × 12 = $180,000',
-                'investors.example3.your_share': '您的份额: $180k的1% = $1,800',
-                'investors.example3.loss': '亏损: -$1,200 | ROI: -40% ⚠️ 不要购买！',
-                'investors.keypoint1.title': '始终检查ROI',
-                'investors.keypoint1.desc': '计算分配的总收入是否超过您支付的金额。目标至少20%的ROI。',
-                'investors.keypoint2.title': '验证链上收入',
-                'investors.keypoint2.desc': '在Arbiscan上检查协议的历史收入。不要只相信预测。',
-                'investors.keypoint3.title': '流动性很重要',
-                'investors.keypoint3.desc': '债券是ERC-20代币。可以随时在Uniswap上出售。购买前检查流动性。',
-                'investors.keypoint4.title': '无锁定期',
-                'investors.keypoint4.desc': '随时领取收入。随时出售代币。完全灵活。',
-                'investors.keypoint5.title': '智能合约风险',
-                'investors.keypoint5.desc': '协议控制分配。如果协议停止支付，您无法强制他们（目前）。',
-                'investors.keypoint6.title': '增长潜力',
-                'investors.keypoint6.desc': '如果协议增长，您的回报也会增长。收入份额基于百分比。'
-            }
-        };
-
-        function setLanguage(lang) {
-            window.currentLang = lang;
-            document.documentElement.lang = lang;
-            
-            const elements = document.querySelectorAll('[data-i18n]');
-            elements.forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    element.textContent = translations[lang][key];
-                }
-            });
-            
-            // Recalculate to update break-even message in new language
-            calculate();
-        }
-
-        function toggleLanguageDropdown() {
-            const dropdown = document.getElementById('lang-dropdown');
-            dropdown.classList.toggle('show');
-        }
-
-        function selectLanguage(lang, langName) {
-            setLanguage(lang);
-            document.getElementById('current-lang').textContent = langName;
-            
-            const options = document.querySelectorAll('.lang-option');
-            options.forEach(option => option.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            toggleLanguageDropdown();
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const selector = document.querySelector('.language-selector');
-            if (selector && !selector.contains(event.target)) {
-                document.getElementById('lang-dropdown').classList.remove('show');
-            }
-        });
-
-        // Set initial language
-        setLanguage('en');
-        
-        // Calculate on load
-        calculate();
-    </script>
-    <script src="/src/mobile-menu.js"></script>
+<script src="/src/mobile-menu.js"></script>
 </body>
 </html>

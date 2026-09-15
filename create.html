@@ -33,766 +33,22 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     
-    <style>
-        :root {
-            --navy: #0a1628;
-            --navy-dark: #050b14;
-            --orange: #ff6224;
-            --orange-light: #ff8c42;
-            --green: #10b981;
-            --red: #ef4444;
-            --yellow: #f59e0b;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: var(--gray-50);
-            color: var(--gray-900);
-            line-height: 1.6;
-        }
-
-        /* Navigation */
-        nav {
-            background: var(--navy);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: white;
-            font-size: 1.25rem;
-            font-weight: 800;
-        }
-
-        .nav-brand img {
-            height: 32px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--orange-light);
-        }
-
-        /* Language Selector Dropdown */
-        .language-selector {
-            position: relative;
-            margin-left: 1rem;
-        }
-
-        .lang-current {
-            background: white;
-            border: 2px solid #000;
-            color: #000;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 0.5rem 2rem 0.5rem 0.75rem;
-            transition: all 0.2s;
-            position: relative;
-            border-radius: 8px;
-        }
-
-        .lang-current:hover {
-            background: #f5f5f5;
-            border-color: #000;
-        }
-
-        .lang-current::after {
-            content: '▼';
-            position: absolute;
-            right: 0.5rem;
-            font-size: 0.6rem;
-            transition: transform 0.2s;
-        }
-
-        .lang-current.active::after {
-            transform: rotate(180deg);
-        }
-
-        .lang-dropdown {
-            position: absolute;
-            top: calc(100% + 0.5rem);
-            right: 0;
-            background: white;
-            border: 1px solid #e1e4e8;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-            min-width: 180px;
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .lang-dropdown.show {
-            max-height: 400px;
-            opacity: 1;
-        }
-
-        .lang-option {
-            display: block;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            text-align: left;
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border-bottom: 1px solid #f6f8fa;
-        }
-
-        .lang-option:last-child {
-            border-bottom: none;
-        }
-
-        .lang-option:hover {
-            background: var(--orange-light);
-            color: white;
-        }
-
-        .lang-option.active {
-            background: var(--orange);
-            color: white;
-            font-weight: 600;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-icons a {
-            color: rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .social-icons a:hover {
-            color: var(--orange);
-            transform: translateY(-2px);
-        }
-
-        .social-icons svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        /* FAQ Dropdown Menu */
-        .nav-dropdown {
-            position: relative;
-        }
-
-        .nav-dropdown > a {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .nav-dropdown > a::after {
-            content: '▼';
-            font-size: 0.6rem;
-            transition: transform 0.2s;
-        }
-
-        .nav-dropdown:hover > a::after {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            margin-top: 0.5rem;
-        }
-
-        .nav-dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 0.75rem 1.25rem;
-            color: var(--navy);
-            text-decoration: none;
-            transition: all 0.2s;
-            border-bottom: 1px solid #f0f0f0;
-            font-weight: 500;
-        }
-
-        .dropdown-menu a:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: #f9fafb;
-            color: var(--orange);
-            padding-left: 1.5rem;
-        }
-
-        .dropdown-menu a:first-child {
-            border-radius: 8px 8px 0 0;
-        }
-
-        .dropdown-menu a:last-child {
-            border-radius: 0 0 8px 8px;
-        }
-
-        /* Container */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Header */
-        .page-header {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-subtitle {
-            font-size: 1.125rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Wizard */
-        .wizard-container {
-            padding: 3rem 0;
-        }
-
-        .wizard-steps {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .wizard-steps::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--gray-300);
-            z-index: 0;
-        }
-
-        .wizard-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            position: relative;
-            z-index: 1;
-            flex: 1;
-        }
-
-        .wizard-step-number {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--gray-300);
-            color: var(--gray-600);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            transition: all 0.3s;
-        }
-
-        .wizard-step.active .wizard-step-number {
-            background: var(--orange);
-            color: white;
-        }
-
-        .wizard-step.completed .wizard-step-number {
-            background: var(--green);
-            color: white;
-        }
-
-        .wizard-step-label {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            font-weight: 500;
-            text-align: center;
-        }
-
-        .wizard-step.active .wizard-step-label {
-            color: var(--orange);
-            font-weight: 600;
-        }
-
-        /* Card */
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--navy);
-            margin-bottom: 1.5rem;
-        }
-
-        /* Form */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 0.5rem;
-        }
-
-        .form-help {
-            font-size: 0.8125rem;
-            color: var(--gray-500);
-            margin-top: 0.25rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid var(--gray-300);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--orange);
-        }
-
-        .form-input.error {
-            border-color: var(--red);
-        }
-
-        .form-error {
-            color: var(--red);
-            font-size: 0.8125rem;
-            margin-top: 0.25rem;
-        }
-
-        /* Slider */
-        .slider-container {
-            margin-top: 1rem;
-        }
-
-        .slider-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--orange);
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .slider {
-            width: 100%;
-            height: 8px;
-            border-radius: 4px;
-            background: var(--gray-200);
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--orange);
-            cursor: pointer;
-        }
-
-        .slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--orange);
-            cursor: pointer;
-            border: none;
-        }
-
-        /* Validation */
-        .validation-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .validation-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem;
-            margin-bottom: 0.5rem;
-            border-radius: 8px;
-            font-size: 0.875rem;
-        }
-
-        .validation-item.valid {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--green);
-        }
-
-        .validation-item.invalid {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--red);
-        }
-
-        /* Summary */
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .summary-item {
-            padding: 1rem;
-            background: var(--gray-50);
-            border-radius: 8px;
-        }
-
-        .summary-label {
-            font-size: 0.8125rem;
-            color: var(--gray-600);
-            margin-bottom: 0.25rem;
-        }
-
-        .summary-value {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--navy);
-        }
-
-        /* Buttons */
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: space-between;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            padding: 0.875rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: var(--orange);
-            color: white;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: var(--orange-light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 98, 36, 0.3);
-        }
-
-        .btn-secondary {
-            background: var(--gray-200);
-            color: var(--gray-700);
-        }
-
-        .btn-secondary:hover:not(:disabled) {
-            background: var(--gray-300);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Alert */
-        .alert {
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .alert-info {
-            background: rgba(59, 130, 246, 0.1);
-            color: #1e40af;
-            border-left: 4px solid #3b82f6;
-        }
-
-        .alert-warning {
-            background: rgba(245, 158, 11, 0.1);
-            color: #92400e;
-            border-left: 4px solid var(--yellow);
-        }
-
-        .alert-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: #065f46;
-            border-left: 4px solid var(--green);
-        }
-
-        /* Loading */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .loading-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            max-width: 400px;
-        }
-
-        .spinner {
-            border: 3px solid var(--gray-200);
-            border-top: 3px solid var(--orange);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Success Modal */
-        .success-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .success-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            text-align: center;
-            max-width: 500px;
-        }
-
-        .success-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .success-title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--green);
-            margin-bottom: 1rem;
-        }
-
-        .success-address {
-            font-family: 'Courier New', monospace;
-            background: var(--gray-100);
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            word-break: break-all;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--navy);
-            color: white;
-            padding: 2rem 0;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            text-align: center;
-        }
-
-        .footer-text {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.875rem;
-        }
-
-        /* Hide steps */
-        .wizard-content {
-            display: none;
-        }
-
-        .wizard-content.active {
-            display: block;
-        }
-
-        .nav-hamburger {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-            z-index: 1100;
-        }
-        .nav-hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--navy);
-            margin: 5px 0;
-            transition: all 0.3s;
-        }
-        .nav-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .nav-hamburger.active span:nth-child(2) { opacity: 0; }
-        .nav-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: fixed;
-                top: 0; left: 0; right: 0; bottom: 0;
-                background: rgba(255,255,255,0.98);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 1.5rem;
-                z-index: 1050;
-                padding: 2rem;
-            }
-            .nav-container { padding: 0.75rem 1rem; }
-            .container { padding: 0 1rem; }
-            .wizard-step { padding: 1.5rem; }
-        }
-    </style>
-    <link rel="stylesheet" href="/src/mobile-menu.css">
+    <link rel="stylesheet" href="/css/equorum.css">
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="/" class="nav-brand">
-                <img src="logo-dark.svg?v=20260130" alt="Equorum" style="height: 32px;">
-                <span>Equorum</span>
-            </a>
-            <button class="nav-hamburger" onclick="toggleMobileMenu()" id="hamburger-btn">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="nav-links" id="nav-links">
-                <a href="/dashboard.html" data-i18n="nav.dashboard">Explore</a>
-                <div class="nav-dropdown">
-                    <a href="#">FAQ</a>
-                    <div class="dropdown-menu">
-                        <a href="/faq-investors.html">For Investors</a>
-                        <a href="/faq-protocols.html">For Protocols</a>
-                        <a href="/faq-help.html">Help</a>
-                    </div>
-                </div>
-                <a href="/create.html" style="color: var(--orange-light);">Create Series</a>
-                
-                <button id="connect-wallet-btn" class="btn btn-primary" data-i18n="nav.connectWallet">Connect Wallet</button>
-                
-                <!-- Language Selector -->
+    <nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+        <div class="nav-links" id="nav-links">
+            <a href="/#how-it-works">How it works</a>
+            <a href="/investors.html">For investors</a>
+            <a href="/dashboard.html">Explore bonds</a>
+            <a href="/buy.html">Buy bonds</a>
+            <a href="/create.html">Create series</a>
+            <a href="/development.html">Status</a>
+            <a href="/contact.html">Contact</a>
+                <button id="connect-wallet-btn" class="btn btn-primary btn-sm btn-inline">Connect Wallet</button>
                 <div class="language-selector">
                     <button class="lang-current" onclick="toggleLanguageDropdown()" id="current-lang">English</button>
                     <div class="lang-dropdown" id="lang-dropdown">
@@ -803,9 +59,27 @@
                         <button class="lang-option" onclick="selectLanguage('zh', '中文')">中文</button>
                     </div>
                 </div>
-            </div>
         </div>
-    </nav>
+        <div class="row">
+            <a href="https://github.com/EquorumProtocol" class="btn btn-secondary btn-sm btn-inline" target="_blank" rel="noopener">GitHub</a>
+            <button class="nav-hamburger" id="hamburger-btn" aria-label="Menu" onclick="toggleMobileMenu()">
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+        </div>
+        <div id="network-warning" class="alert alert-warning" style="display: none; position: fixed; top: 84px; right: 20px; z-index: 1000;">
+            <strong>Wrong network</strong>
+            <p style="margin: 6px 0 10px 0;">Please switch to Arbitrum One.</p>
+            <button id="switch-network-btn" class="btn btn-primary btn-sm">Switch network</button>
+        </div>
+    </div>
+</nav>
+<div class="legacy-banner">
+    <div class="container row" style="justify-content: space-between; gap: 16px;">
+        <span><strong>You are looking at the V2 app.</strong> These bonds run on the 2026 V2 contracts, which are unaudited and have known issues. V3 (Tap Bonds) is in development.</span>
+        <a href="/development.html" class="btn btn-secondary btn-sm btn-inline">What changed in V3</a>
+    </div>
+</div>
+
     <div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
 
     <!-- Header -->
@@ -1100,30 +374,45 @@
     </div>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
+    <div class="container">
         <div class="footer-content">
-            <div class="social-icons">
-                <a href="https://github.com/EquorumProtocol" target="_blank" rel="noopener noreferrer" title="GitHub">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                </a>
-                <a href="https://discord.gg/qAzseSwY" target="_blank" rel="noopener noreferrer" title="Discord">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
-                    </svg>
-                </a>
-                <a href="https://arbiscan.io" target="_blank" rel="noopener noreferrer" title="Arbitrum One">
-                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-                        <path d="M16 0L2 8v16l14 8 14-8V8L16 0z" fill="#213147"/>
-                        <path d="M22.5 11.5l-4.8 8.3c-.2.3-.5.5-.9.5h-1.6c-.4 0-.7-.2-.9-.5l-4.8-8.3c-.2-.3-.2-.7 0-1 .2-.3.5-.5.9-.5h11.2c.4 0 .7.2.9.5.2.3.2.7 0 1z" fill="#12AAFF"/>
-                        <path d="M19.2 16.5l-2.4 4.2c-.2.3-.5.5-.9.5h-.8c-.4 0-.7-.2-.9-.5l-2.4-4.2c-.2-.3-.2-.7 0-1 .2-.3.5-.5.9-.5h5.6c.4 0 .7.2.9.5.2.3.2.7 0 1z" fill="#9DCCED"/>
-                    </svg>
-                </a>
+            <div class="footer-section">
+                <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+                <p class="dim" style="font-size: 13.5px; max-width: 300px;">Revenue bonds for protocols that earn. Built on Arbitrum One.</p>
             </div>
-            <p class="footer-text">© 2026 Equorum Protocol. Built on Arbitrum One.</p>
+            <div class="footer-section">
+                <h4>Protocol</h4>
+                <a href="/#how-it-works">How it works</a>
+                <a href="/development.html">Status &amp; roadmap</a>
+                <a href="/versions.html">V2 (legacy)</a>
+                <a href="/WHITEPAPER.pdf">Whitepaper (PDF)</a>
+            </div>
+            <div class="footer-section">
+                <h4>Learn</h4>
+                <a href="/investors.html">For investors</a>
+                <a href="/faq-protocols.html">FAQ for protocols</a>
+                <a href="/faq-investors.html">FAQ for investors</a>
+                <a href="/blog.html">Blog</a>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <a href="https://github.com/EquorumProtocol" target="_blank" rel="noopener">GitHub</a>
+                <a href="/faq-help.html">Help</a>
+                <a href="/dashboard.html">Explore bonds</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <a href="mailto:leonardomondaine@gmail.com" class="mono" style="font-size: 13px;">leonardomondaine@gmail.com</a>
+                <a href="mailto:suport@equorumprotocol.org" class="mono" style="font-size: 13px;">suport@equorumprotocol.org</a>
+            </div>
         </div>
-    </footer>
+        <div class="footer-text">
+            <span>© 2026 Equorum Protocol</span>
+            <span style="max-width: 720px;">Revenue-linked tokens may be regulated as securities in your jurisdiction. Nothing here is investment advice.</span>
+        </div>
+    </div>
+</footer>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">

@@ -26,278 +26,28 @@
     <meta name="twitter:image" content="https://equorumprotocol.org/og-image.png">
     
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --orange: #FF6224;
-            --orange-light: #FF8C5A;
-            --navy: #000A21;
-            --purple: #6366f1;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            color: #1a1a1a;
-            line-height: 1.8;
-            background: #fff;
-        }
-        .navbar {
-            background: var(--navy);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .navbar img { height: 32px; }
-        
-        .article-header {
-            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
-            padding: 6rem 2rem 4rem;
-            color: white;
-        }
-        .article-header .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .article-category {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-        .article-header h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-        }
-        .article-meta {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-        }
-        
-        .article-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-        .article-content h2 {
-            font-size: 1.75rem;
-            color: var(--navy);
-            margin: 3rem 0 1.5rem;
-            font-weight: 700;
-        }
-        .article-content h3 {
-            font-size: 1.35rem;
-            color: var(--navy);
-            margin: 2rem 0 1rem;
-            font-weight: 600;
-        }
-        .article-content p {
-            margin-bottom: 1.5rem;
-            color: #444;
-            font-size: 1.1rem;
-        }
-        .article-content ul, .article-content ol {
-            margin: 1.5rem 0 1.5rem 2rem;
-            color: #444;
-        }
-        .article-content li {
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-        }
-        .article-content blockquote {
-            border-left: 4px solid var(--purple);
-            padding: 1.5rem 2rem;
-            background: #eef2ff;
-            margin: 2rem 0;
-            font-style: italic;
-            color: #4338ca;
-            font-size: 1.2rem;
-        }
-        .article-content code {
-            background: #f1f5f9;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 0.95rem;
-            color: #6366f1;
-        }
-        
-        .lifecycle-step {
-            background: #f8f9fc;
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border-left: 4px solid var(--purple);
-            position: relative;
-        }
-        .lifecycle-step::before {
-            content: attr(data-step);
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            background: var(--purple);
-            color: white;
-            padding: 0.25rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-        .lifecycle-step h3 {
-            margin-top: 0.5rem;
-            color: var(--purple);
-        }
-        .lifecycle-step .onchain {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-        }
-        .lifecycle-step .onchain-title {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #6b7280;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .control-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            font-size: 0.95rem;
-        }
-        .control-table th, .control-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .control-table th {
-            background: var(--purple);
-            color: white;
-            font-weight: 600;
-        }
-        .control-table .yes {
-            color: #10b981;
-            font-weight: 600;
-        }
-        .control-table .no {
-            color: #ef4444;
-            font-weight: 600;
-        }
-        
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-        .highlight-box h4 {
-            color: var(--purple);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-        
-        .timeline {
-            position: relative;
-            padding: 2rem 0;
-        }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--purple), var(--orange));
-        }
-        .timeline-item {
-            position: relative;
-            padding-left: 60px;
-            margin-bottom: 2rem;
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 12px;
-            top: 4px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: var(--purple);
-            border: 3px solid white;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
-        }
-        .timeline-item h4 {
-            color: var(--navy);
-            margin-bottom: 0.5rem;
-        }
-        .timeline-item p {
-            margin-bottom: 0;
-            color: #666;
-        }
-        
-        .cta-section {
-            background: linear-gradient(135deg, var(--navy) 0%, #0a1628 100%);
-            padding: 4rem 2rem;
-            text-align: center;
-            color: white;
-            margin-top: 4rem;
-        }
-        .cta-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .cta-section p {
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
-            color: white;
-            border-radius: 8px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: transform 0.2s;
-        }
-        .btn:hover { transform: translateY(-2px); }
-        
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--purple);
-            text-decoration: none;
-            font-weight: 600;
-            margin-bottom: 2rem;
-        }
-        .back-link:hover { text-decoration: underline; }
-    </style>
+    <link rel="stylesheet" href="/css/equorum.css">
 </head>
 <body>
     <nav class="navbar">
-        <a href="/">
-            <img src="/logo-orange.svg" alt="Equorum" style="height: 40px;">
-            <span>Equorum</span>
-        </a>
-    </nav>
+    <div class="nav-container">
+        <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+        <div class="nav-links" id="nav-links">
+            <a href="/#how-it-works">How it works</a>
+            <a href="/investors.html">For investors</a>
+            <a href="/dashboard.html">Explore bonds</a>
+            <a href="/development.html">Status</a>
+            <a href="/contact.html">Contact</a>
+        </div>
+        <div class="row">
+            <a href="https://github.com/EquorumProtocol" class="btn btn-secondary btn-sm btn-inline" target="_blank" rel="noopener">GitHub</a>
+            <a href="/contact.html" class="btn btn-primary btn-sm btn-inline">Apply as issuer</a>
+            <button class="nav-hamburger" id="hamburger-btn" aria-label="Menu" onclick="toggleMobileMenu()">
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+        </div>
+    </div>
+</nav>
 
     <header class="article-header">
         <div class="container">
@@ -590,8 +340,44 @@
     </section>
 
     <footer class="footer">
-        <p> 2025 Equorum Protocol. <a href="/blog.html">Back to Blog</a> | <a href="/">Home</a></p>
-    </footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+                <p class="dim" style="font-size: 13.5px; max-width: 300px;">Revenue bonds for protocols that earn. Built on Arbitrum One.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Protocol</h4>
+                <a href="/#how-it-works">How it works</a>
+                <a href="/development.html">Status &amp; roadmap</a>
+                <a href="/versions.html">V2 (legacy)</a>
+                <a href="/WHITEPAPER.pdf">Whitepaper (PDF)</a>
+            </div>
+            <div class="footer-section">
+                <h4>Learn</h4>
+                <a href="/investors.html">For investors</a>
+                <a href="/faq-protocols.html">FAQ for protocols</a>
+                <a href="/faq-investors.html">FAQ for investors</a>
+                <a href="/blog.html">Blog</a>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <a href="https://github.com/EquorumProtocol" target="_blank" rel="noopener">GitHub</a>
+                <a href="/faq-help.html">Help</a>
+                <a href="/dashboard.html">Explore bonds</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <a href="mailto:leonardomondaine@gmail.com" class="mono" style="font-size: 13px;">leonardomondaine@gmail.com</a>
+                <a href="mailto:suport@equorumprotocol.org" class="mono" style="font-size: 13px;">suport@equorumprotocol.org</a>
+            </div>
+        </div>
+        <div class="footer-text">
+            <span>© 2026 Equorum Protocol</span>
+            <span style="max-width: 720px;">Revenue-linked tokens may be regulated as securities in your jurisdiction. Nothing here is investment advice.</span>
+        </div>
+    </div>
+</footer>
 
     <script type="application/ld+json">
     {
@@ -622,5 +408,6 @@
         "keywords": ["revenue bond lifecycle", "bond operations", "DeFi guide", "protocol operations"]
     }
     </script>
+<script src="/src/mobile-menu.js"></script>
 </body>
 </html>
