@@ -3,807 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Protocols - How to Create Revenue Bonds | Equorum Protocol</title>
-    <meta name="description" content="Step-by-step guide for DeFi protocols on how to create revenue bond series and distribute revenue to your community on Arbitrum One.">
-    <meta name="keywords" content="create revenue bonds, DeFi protocol guide, tokenized bonds, Arbitrum, revenue sharing">
+
+    <title>FAQ for protocols — Equorum Protocol</title>
+    <meta name="description" content="How issuing a revenue bond works: how much you can raise, when the capital arrives, what a default means and what it costs.">
+    <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://equorumprotocol.org/faq-protocols.html">
-    <meta property="og:title" content="For Protocols - How to Create Revenue Bonds">
-    <meta property="og:description" content="Step-by-step guide for DeFi protocols on how to create revenue bond series.">
-    <meta property="og:url" content="https://equorumprotocol.org/faq-protocols.html">
-    <meta property="og:type" content="article">
+
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
 
-        :root {
-            --orange: #FF6224;
-            --navy: #000A21;
-        }
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://equorumprotocol.org/faq-protocols.html">
+    <meta property="og:title" content="FAQ for protocols — Equorum Protocol">
+    <meta property="og:description" content="How issuing a revenue bond works: how much you can raise, when the capital arrives, what a default means and what it costs.">
+    <meta property="og:image" content="https://equorumprotocol.org/og-image.png">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            color: #1A1A1A;
-            line-height: 1.6;
-            background: #f9fafb;
-        }
-
-        nav {
-            background: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: var(--navy);
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--navy);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--orange);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .hero {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            color: var(--navy);
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .step {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .step-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .step-number {
-            background: var(--orange);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .step h2 {
-            color: var(--navy);
-            font-size: 1.5rem;
-        }
-
-        .step-content {
-            padding-left: 4rem;
-        }
-
-        .step-content p {
-            color: #666;
-            margin-bottom: 1rem;
-            line-height: 1.8;
-        }
-
-        .screenshot {
-            background: #e5e7eb;
-            border: 2px dashed #d1d5db;
-            border-radius: 12px;
-            padding: 3rem;
-            text-align: center;
-            color: #9ca3af;
-            margin-top: 1.5rem;
-            min-height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-
-        .tip {
-            background: #d1e7dd;
-            border-left: 4px solid #198754;
-            padding: 1rem 1.5rem;
-            margin-top: 1rem;
-            border-radius: 4px;
-        }
-
-        .tip strong {
-            color: #0f5132;
-        }
-
-        .warning {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem 1.5rem;
-            margin-top: 1rem;
-            border-radius: 4px;
-        }
-
-        .warning strong {
-            color: #856404;
-        }
-
-        footer {
-            background: var(--navy);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        .nav-dropdown { position: relative; }
-        .nav-dropdown > a { cursor: pointer; }
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            min-width: 160px;
-            padding: 0.5rem 0;
-            z-index: 1000;
-        }
-        .dropdown-menu a {
-            display: block;
-            padding: 0.75rem 1rem;
-            color: #374151;
-        }
-        .dropdown-menu a:hover { background: #f3f4f6; color: var(--orange); }
-        .nav-dropdown:hover .dropdown-menu { display: block; }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .step-content {
-                padding-left: 0;
-            }
-
-            .nav-links {
-                display: none;
-                position: fixed;
-                top: 0; left: 0; right: 0; bottom: 0;
-                background: rgba(255,255,255,0.98);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 1.5rem;
-                z-index: 1050;
-                padding: 2rem;
-            }
-            .nav-container { padding: 0.75rem 1rem; }
-        }
-
-        .nav-hamburger {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-            z-index: 1100;
-        }
-        .nav-hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--navy);
-            margin: 5px 0;
-            transition: all 0.3s;
-        }
-        .nav-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .nav-hamburger.active span:nth-child(2) { opacity: 0; }
-        .nav-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-    </style>
-    <link rel="stylesheet" href="/src/mobile-menu.css">
+    <link rel="stylesheet" href="/css/equorum.css">
 </head>
 <body>
-    <nav>
-        <div class="nav-container">
-            <a href="/" class="nav-brand">
-                <img src="logo-dark.svg" alt="Equorum" style="height: 32px;">
-                <span>Equorum</span>
-            </a>
-            <button class="nav-hamburger" onclick="toggleMobileMenu()" id="hamburger-btn">
-                <span></span><span></span><span></span>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+        <div class="nav-links" id="nav-links">
+            <a href="/#how-it-works">How it works</a>
+            <a href="/investors.html">For investors</a>
+            <a href="/dashboard.html">Explore bonds</a>
+            <a href="/development.html">Status</a>
+            <a href="/contact.html">Contact</a>
+        </div>
+        <div class="row">
+            <a href="https://github.com/EquorumProtocol" class="btn btn-secondary btn-sm btn-inline" target="_blank" rel="noopener">GitHub</a>
+            <a href="/contact.html" class="btn btn-primary btn-sm btn-inline">Apply as issuer</a>
+            <button class="nav-hamburger" id="hamburger-btn" aria-label="Menu" onclick="toggleMobileMenu()">
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
-            <div class="nav-links" id="nav-links">
-                <a href="/dashboard.html">Explore</a>
-                <a href="/create.html">Create Series</a>
-                <div class="nav-dropdown">
-                    <a href="#" style="color: var(--orange);">FAQ ▾</a>
-                    <div class="dropdown-menu">
-                        <a href="/faq-investors.html">For Investors</a>
-                        <a href="/faq-protocols.html" style="font-weight: 600;">For Protocols</a>
-                        <a href="/faq-help.html">Help</a>
-                    </div>
-                </div>
-            </div>
         </div>
-    </nav>
-    <div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
+    </div>
+</nav>
 
+<header class="hero" style="padding-bottom: 44px;">
     <div class="container">
-        <div class="hero">
-            <h1>For Protocols: How to Create Guaranteed Bonds</h1>
-            <p>Complete step-by-step guide on how to create a revenue bond series with principal protection.</p>
-            <div style="margin-top: 1rem;">
-                <span style="background: #10B981; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; font-size: 0.875rem;">Principal Protected</span>
-            </div>
-        </div>
+        <span class="eyebrow">FAQ · protocols</span>
+        <h1 style="max-width: 820px;">Issuing a bond, question by question.</h1>
+        <p class="muted" style="font-size: 18px; max-width: 640px;">If yours isn't here, mail the issuer inbox and we'll answer it — and add it to this page.</p>
+    </div>
+</header>
 
-        <!-- Step 1 -->
-        <div class="step">
-            <div class="step-header">
-                <div class="step-number">1</div>
-                <h2>Connect Your Protocol Wallet</h2>
+<section class="section">
+    <div class="container">
+        <div class="faq-section" style="margin-top: 24px;">
+            <div class="faq-item">
+                <button class="faq-question">Do I need a token to issue a bond?<span class="faq-icon">+</span></button>
+                <div class="faq-answer" hidden><p>No. The bond is its own ERC-20, minted only against the ETH investors pay. If you already have a token, nothing about it changes: no new supply, no governance change, no unlock.</p></div>
             </div>
-            <div class="step-content">
-                <p>Connect the wallet that controls your protocol. This wallet will be the owner of the revenue bond series and will be responsible for distributing revenue.</p>
-                <p><strong>Important:</strong> Use a secure wallet (preferably a multisig like Gnosis Safe) since this wallet will control the series.</p>
-                
-                <svg viewBox="0 0 800 400" style="width: 100%; border-radius: 12px; border: 2px solid #e5e7eb; margin-top: 1.5rem; background: linear-gradient(135deg, #000A21 0%, #001a3d 100%);">
-                    <text x="40" y="50" font-family="Arial" font-size="28" font-weight="bold" fill="white">Create Revenue Bond Series</text>
-                    <text x="40" y="80" font-family="Arial" font-size="14" fill="rgba(255,255,255,0.7)">Deploy your own revenue sharing series on Arbitrum One</text>
-                    
-                    <!-- Connect Wallet Section -->
-                    <rect x="40" y="110" width="720" height="250" rx="16" fill="white"/>
-                    
-                    <!-- Network Selector -->
-                    <rect x="60" y="130" width="200" height="45" rx="8" fill="#F9FAFB" stroke="#e5e7eb" stroke-width="2"/>
-                    <circle cx="80" cy="152" r="12" fill="#12AAFF"/>
-                    <text x="100" y="158" font-family="Arial" font-size="14" fill="#000A21">Arbitrum One</text>
-                    
-                    <!-- Connect Wallet Button with Arrow -->
-                    <rect x="500" y="130" width="200" height="45" rx="10" fill="#FF6224"/>
-                    <text x="545" y="158" font-family="Arial" font-size="16" font-weight="600" fill="white">Connect Wallet</text>
-                    <path d="M 460 155 L 490 155" stroke="#FF6224" stroke-width="3" marker-end="url(#arrow-p1)"/>
-                    <text x="400" y="160" font-family="Arial" font-size="12" fill="#FF6224" font-weight="bold">Click!</text>
-                    
-                    <!-- Warning Box -->
-                    <rect x="60" y="200" width="680" height="140" rx="12" fill="#FFF3CD" stroke="#FFC107" stroke-width="2"/>
-                    <text x="80" y="230" font-family="Arial" font-size="16" font-weight="600" fill="#856404">🔒 Security Recommendation</text>
-                    <text x="80" y="260" font-family="Arial" font-size="13" fill="#856404">We strongly recommend using a Gnosis Safe multisig wallet</text>
-                    <text x="80" y="280" font-family="Arial" font-size="13" fill="#856404">for protocol operations. This prevents single points of failure</text>
-                    <text x="80" y="300" font-family="Arial" font-size="13" fill="#856404">and ensures secure management of your revenue bond series.</text>
-                    <rect x="80" y="310" width="180" height="35" rx="8" fill="#856404"/>
-                    <text x="105" y="333" font-family="Arial" font-size="13" font-weight="600" fill="white">Learn about Safe →</text>
-                    
-                    <defs><marker id="arrow-p1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#FF6224"/></marker></defs>
-                </svg>
-
-                <div class="tip">
-                    <strong>🔒 Security Tip:</strong> We strongly recommend using a Gnosis Safe multisig wallet for protocol operations. This prevents single points of failure.
-                </div>
+            <div class="faq-item">
+                <button class="faq-question">How much can I raise?<span class="faq-icon">+</span></button>
+                <div class="faq-answer" hidden><p>Whatever investors fund up to the cap you set. What matters more is the coupon: across the term, minimum payments must add up to at least 100% of the raise, so set a number your revenue covers in a bad month.</p></div>
             </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="step">
-            <div class="step-header">
-                <div class="step-number">2</div>
-                <h2>Fill Bond Parameters</h2>
+            <div class="faq-item">
+                <button class="faq-question">When do I actually get the money?<span class="faq-icon">+</span></button>
+                <div class="faq-answer" hidden><p>An initial share on the day the sale closes — you choose how much — and the rest in tranches. Each tranche unlocks after the coupons due so far are paid, so the capital arrives at the pace you prove you can service.</p></div>
             </div>
-            <div class="step-content">
-                <p>Define the parameters for your guaranteed revenue bond:</p>
-                <ul style="margin-left: 2rem; color: #666;">
-                    <li><strong>Token Name:</strong> Descriptive name (e.g., "Acme Protocol Bond")</li>
-                    <li><strong>Token Symbol:</strong> Ticker (e.g., "ACME-RB")</li>
-                    <li><strong>Revenue Share %:</strong> Percentage of revenue to share (max 50%)</li>
-                    <li><strong>Duration:</strong> How long the series will run (30 days to 5 years)</li>
-                    <li><strong>Total Supply:</strong> Number of bond tokens to create</li>
-                    <li><strong>Principal Amount:</strong> ETH to deposit as guarantee (returned to investors at maturity)</li>
-                    <li><strong>Deposit Deadline:</strong> Days to deposit principal after creation (max 90 days)</li>
-                </ul>
-                
-                <svg viewBox="0 0 900 750" style="width: 100%; border-radius: 12px; border: 2px solid #e5e7eb; margin-top: 1.5rem; background: white;">
-                    <text x="40" y="40" font-family="Arial" font-size="24" font-weight="bold" fill="#000A21">Bond Parameters</text>
-                    
-                    <!-- Form Section -->
-                    <rect x="40" y="60" width="500" height="650" rx="12" fill="#F9FAFB" stroke="#e5e7eb" stroke-width="2"/>
-                    
-                    <!-- Token Name -->
-                    <text x="60" y="95" font-family="Arial" font-size="13" fill="#666">Token Name</text>
-                    <rect x="60" y="105" width="460" height="40" rx="8" fill="white" stroke="#d1d5db" stroke-width="2"/>
-                    <text x="75" y="130" font-family="Arial" font-size="14" fill="#000A21">Acme Protocol Bond</text>
-                    
-                    <!-- Symbol -->
-                    <text x="60" y="170" font-family="Arial" font-size="13" fill="#666">Token Symbol</text>
-                    <rect x="60" y="180" width="460" height="40" rx="8" fill="white" stroke="#d1d5db" stroke-width="2"/>
-                    <text x="75" y="205" font-family="Arial" font-size="14" fill="#000A21">ACME-RB</text>
-                    
-                    <!-- Revenue Share Slider -->
-                    <text x="60" y="245" font-family="Arial" font-size="13" fill="#666">Revenue Share (%)</text>
-                    <rect x="60" y="255" width="460" height="50" rx="8" fill="white" stroke="#d1d5db" stroke-width="2"/>
-                    <rect x="75" y="275" width="350" height="8" rx="4" fill="#e5e7eb"/>
-                    <rect x="75" y="275" width="140" height="8" rx="4" fill="#FF6224"/>
-                    <circle cx="215" cy="279" r="10" fill="#FF6224"/>
-                    <text x="450" y="283" font-family="Arial" font-size="18" font-weight="bold" fill="#FF6224">20%</text>
-                    
-                    <!-- Duration -->
-                    <text x="60" y="330" font-family="Arial" font-size="13" fill="#666">Duration (Days)</text>
-                    <rect x="60" y="340" width="220" height="40" rx="8" fill="white" stroke="#d1d5db" stroke-width="2"/>
-                    <text x="75" y="365" font-family="Arial" font-size="14" fill="#000A21">180 days</text>
-                    
-                    <!-- Total Supply -->
-                    <text x="300" y="330" font-family="Arial" font-size="13" fill="#666">Total Supply</text>
-                    <rect x="300" y="340" width="220" height="40" rx="8" fill="white" stroke="#d1d5db" stroke-width="2"/>
-                    <text x="315" y="365" font-family="Arial" font-size="14" fill="#000A21">100,000</text>
-                    
-                    <!-- Principal Guarantee Section -->
-                    <line x1="60" y1="405" x2="500" y2="405" stroke="#10B981" stroke-width="2"/>
-                    <text x="60" y="435" font-family="Arial" font-size="16" font-weight="600" fill="#10B981">Principal Guarantee</text>
-                    
-                    <!-- Principal Amount -->
-                    <text x="60" y="470" font-family="Arial" font-size="13" fill="#10B981">Principal Amount (ETH)</text>
-                    <rect x="60" y="480" width="220" height="40" rx="8" fill="rgba(16, 185, 129, 0.1)" stroke="#10B981" stroke-width="2"/>
-                    <text x="75" y="505" font-family="Arial" font-size="14" font-weight="600" fill="#10B981">10</text>
-                    
-                    <!-- Deposit Deadline -->
-                    <text x="300" y="470" font-family="Arial" font-size="13" fill="#10B981">Deposit Deadline (Days)</text>
-                    <rect x="300" y="480" width="220" height="40" rx="8" fill="rgba(16, 185, 129, 0.1)" stroke="#10B981" stroke-width="2"/>
-                    <text x="315" y="505" font-family="Arial" font-size="14" font-weight="600" fill="#10B981">30</text>
-                    
-                    <!-- Warning -->
-                    <rect x="60" y="540" width="460" height="60" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
-                    <text x="80" y="565" font-family="Arial" font-size="12" fill="#92400E">You must deposit 10 ETH within 30 days after creation.</text>
-                    <text x="80" y="585" font-family="Arial" font-size="12" fill="#92400E">Failure to deposit = series defaults and reputation damage.</text>
-                    
-                    <!-- Gas Estimate -->
-                    <rect x="60" y="615" width="460" height="75" rx="8" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1"/>
-                    <text x="80" y="640" font-family="Arial" font-size="12" font-weight="600" fill="#0369A1">⛽ Estimated Cost</text>
-                    <text x="80" y="660" font-family="Arial" font-size="11" fill="#0369A1">Deploy: ~$5  •  Principal Deposit: 10 ETH</text>
-                    <text x="80" y="680" font-family="Arial" font-size="11" font-weight="600" fill="#0369A1">Total: ~10 ETH + gas</text>
-                    
-                    <!-- Preview Panel -->
-                    <rect x="560" y="60" width="300" height="650" rx="12" fill="#D1FAE5" stroke="#10B981" stroke-width="2"/>
-                    <text x="580" y="95" font-family="Arial" font-size="16" font-weight="600" fill="#065F46">Preview</text>
-                    
-                    <text x="580" y="130" font-family="Arial" font-size="12" fill="#047857">Token Name:</text>
-                    <text x="580" y="150" font-family="Arial" font-size="13" font-weight="600" fill="#065F46">Acme Protocol Bond</text>
-                    
-                    <text x="580" y="180" font-family="Arial" font-size="12" fill="#047857">Symbol:</text>
-                    <text x="580" y="200" font-family="Arial" font-size="14" font-weight="600" fill="#065F46">ACME-RB</text>
-                    
-                    <text x="580" y="230" font-family="Arial" font-size="12" fill="#047857">Revenue Share:</text>
-                    <text x="580" y="250" font-family="Arial" font-size="16" font-weight="bold" fill="#FF6224">20%</text>
-                    
-                    <text x="580" y="280" font-family="Arial" font-size="12" fill="#047857">Duration:</text>
-                    <text x="580" y="300" font-family="Arial" font-size="14" font-weight="600" fill="#065F46">180 days</text>
-                    
-                    <text x="580" y="330" font-family="Arial" font-size="12" fill="#047857">Total Supply:</text>
-                    <text x="580" y="350" font-family="Arial" font-size="14" font-weight="600" fill="#065F46">100,000 tokens</text>
-                    
-                    <rect x="580" y="375" width="260" height="2" fill="#10B981"/>
-                    
-                    <text x="580" y="405" font-family="Arial" font-size="14" font-weight="600" fill="#10B981">Principal Guarantee</text>
-                    
-                    <text x="580" y="435" font-family="Arial" font-size="12" fill="#047857">Principal Amount:</text>
-                    <text x="580" y="455" font-family="Arial" font-size="18" font-weight="bold" fill="#10B981">10 ETH</text>
-                    
-                    <text x="580" y="485" font-family="Arial" font-size="12" fill="#047857">Deposit Deadline:</text>
-                    <text x="580" y="505" font-family="Arial" font-size="14" font-weight="600" fill="#065F46">30 days</text>
-                    
-                    <rect x="580" y="530" width="260" height="1" fill="#10B981"/>
-                    
-                    <text x="580" y="560" font-family="Arial" font-size="11" fill="#047857">At maturity, investors get:</text>
-                    <text x="580" y="580" font-family="Arial" font-size="11" font-weight="600" fill="#065F46">→ Principal back (10 ETH total)</text>
-                    <text x="580" y="600" font-family="Arial" font-size="11" font-weight="600" fill="#065F46">→ All revenue distributed</text>
-                    
-                    <rect x="580" y="630" width="260" height="50" rx="8" fill="#10B981"/>
-                    <text x="640" y="660" font-family="Arial" font-size="13" font-weight="600" fill="white">✓ Ready to Deploy</text>
-                </svg>
-
-                <div class="warning">
-                    <strong>Important:</strong> These parameters are PERMANENT and cannot be changed after deployment. Choose carefully!
-                </div>
+            <div class="faq-item">
+                <button class="faq-question">What happens if I miss a coupon?<span class="faq-icon">+</span></button>
+                <div class="faq-answer" hidden><p>You have a grace period you set at issuance. After it, anyone can trigger the default: the tap closes for good, and bondholders redeem the undrawn capital plus any collateral you posted. Capital you already drew stays with you, and the default is recorded permanently in the registry.</p></div>
             </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="step">
-            <div class="step-header">
-                <div class="step-number">3</div>
-                <h2>Review & Deploy Contract</h2>
+            <div class="faq-item">
+                <button class="faq-question">What does it cost?<span class="faq-icon">+</span></button>
+                <div class="faq-answer" hidden><p>2% of the capital you actually draw, capped at 3% for the life of the protocol. There is no listing fee, no fee on a sale that doesn't fill, and no fee on the coupons you pay.</p></div>
             </div>
-            <div class="step-content">
-                <p>Review all parameters carefully before deploying. The deployment process:</p>
-                <ol style="margin-left: 2rem; color: #666;">
-                    <li>Click "Create Series" button</li>
-                    <li>Review the summary modal</li>
-                    <li>Confirm the transaction in your wallet</li>
-                    <li>Wait for transaction confirmation (~2-5 seconds on Arbitrum)</li>
-                    <li>Your series contract is now deployed!</li>
-                </ol>
-                
-                <svg viewBox="0 0 800 600" style="width: 100%; border-radius: 12px; border: 2px solid #e5e7eb; margin-top: 1.5rem; background: rgba(0,0,0,0.5);">
-                    <!-- Modal -->
-                    <rect x="150" y="80" width="500" height="440" rx="16" fill="white" stroke="#e5e7eb" stroke-width="2"/>
-                    
-                    <text x="180" y="120" font-family="Arial" font-size="22" font-weight="bold" fill="#000A21">Confirm Deployment</text>
-                    <text x="180" y="145" font-family="Arial" font-size="13" fill="#666">Review your series parameters before deploying</text>
-                    
-                    <!-- Parameters Summary -->
-                    <rect x="180" y="165" width="440" height="240" rx="12" fill="#F9FAFB" stroke="#e5e7eb" stroke-width="2"/>
-                    
-                    <text x="200" y="195" font-family="Arial" font-size="13" fill="#666">Series Name:</text>
-                    <text x="200" y="215" font-family="Arial" font-size="14" font-weight="600" fill="#000A21">Uniswap Revenue Bonds Q1 2026</text>
-                    
-                    <text x="200" y="245" font-family="Arial" font-size="13" fill="#666">Symbol:</text>
-                    <text x="200" y="265" font-family="Arial" font-size="14" font-weight="600" fill="#000A21">UNI-RB-Q1</text>
-                    
-                    <text x="200" y="295" font-family="Arial" font-size="13" fill="#666">Revenue Share:</text>
-                    <text x="200" y="315" font-family="Arial" font-size="16" font-weight="bold" fill="#10B981">30%</text>
-                    
-                    <text x="200" y="345" font-family="Arial" font-size="13" fill="#666">Duration:</text>
-                    <text x="200" y="365" font-family="Arial" font-size="14" font-weight="600" fill="#000A21">12 months (365 days)</text>
-                    
-                    <text x="200" y="390" font-family="Arial" font-size="13" fill="#666">Total Supply:</text>
-                    <text x="200" y="410" font-family="Arial" font-size="14" font-weight="600" fill="#000A21">100,000 tokens</text>
-                    
-                    <!-- Gas Cost -->
-                    <rect x="180" y="420" width="440" height="60" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
-                    <text x="200" y="445" font-family="Arial" font-size="13" fill="#92400E">⛽ Estimated Gas Cost</text>
-                    <text x="200" y="465" font-family="Arial" font-size="14" font-weight="600" fill="#92400E">~0.002 ETH ($5.00)</text>
-                    
-                    <!-- Buttons -->
-                    <rect x="180" y="495" width="200" height="45" rx="10" fill="#e5e7eb"/>
-                    <text x="250" y="523" font-family="Arial" font-size="14" font-weight="600" fill="#666">Cancel</text>
-                    
-                    <rect x="400" y="495" width="220" height="45" rx="10" fill="#FF6224"/>
-                    <text x="440" y="523" font-family="Arial" font-size="14" font-weight="600" fill="white">Confirm Deployment</text>
-                    
-                    <!-- Wallet Popup Overlay -->
-                    <rect x="550" y="200" width="220" height="180" rx="12" fill="white" stroke="#e5e7eb" stroke-width="3"/>
-                    <circle cx="660" cy="240" r="20" fill="#F59E0B"/>
-                    <text x="590" y="280" font-family="Arial" font-size="14" font-weight="600" fill="#000A21">MetaMask</text>
-                    <text x="570" y="305" font-family="Arial" font-size="12" fill="#666">Confirm transaction</text>
-                    <text x="570" y="325" font-family="Arial" font-size="12" fill="#666">in your wallet</text>
-                    <rect x="570" y="340" width="180" height="35" rx="8" fill="#FF6224"/>
-                    <text x="615" y="363" font-family="Arial" font-size="13" font-weight="600" fill="white">Confirm</text>
-                </svg>
-
-                <div class="tip">
-                    <strong>Gas Cost:</strong> Deploying a series costs approximately 0.001-0.003 ETH on Arbitrum One (~$2-8). Much cheaper than Ethereum mainnet!
-                </div>
+            <div class="faq-item">
+                <button class="faq-question">Can Equorum touch my bond after it's created?<span class="faq-icon">+</span></button>
+                <div class="faq-answer" hidden><p>No. Terms are immutable and there are no admin functions on a live bond. The multisig can only set the fee for new bonds and pause new creation.</p></div>
             </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="step">
-            <div class="step-header">
-                <div class="step-number">4</div>
-                <h2>Deposit Principal (Critical!)</h2>
+            <div class="faq-item">
+                <button class="faq-question">Do I have to route my protocol revenue through Equorum?<span class="faq-icon">+</span></button>
+                <div class="faq-answer" hidden><p>Today it is your choice: you can pay coupons from any source, and the router is optional. A future release (Locked Revenue) will let you hand your fee-switch admin to a lock contract, which makes the revenue share enforceable rather than voluntary.</p></div>
             </div>
-            <div class="step-content">
-                <p>After deployment, you MUST deposit the principal within the deadline to activate the bond:</p>
-                <ul style="margin-left: 2rem; color: #666;">
-                    <li><strong>Principal is locked</strong> in escrow until maturity</li>
-                    <li><strong>Tokens are minted</strong> to your wallet after deposit</li>
-                    <li><strong>Failure to deposit</strong> = series defaults, reputation damage</li>
-                </ul>
-                
-                <svg viewBox="0 0 800 450" style="width: 100%; border-radius: 12px; border: 2px solid #e5e7eb; margin-top: 1.5rem; background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.1) 100%);">
-                    <text x="400" y="40" font-family="Arial" font-size="24" font-weight="bold" fill="#10B981" text-anchor="middle">Deposit Principal</text>
-                    <text x="400" y="65" font-family="Arial" font-size="14" fill="#047857" text-anchor="middle">Activate your bond by depositing the guaranteed principal</text>
-                    
-                    <!-- Deposit Card -->
-                    <rect x="150" y="90" width="500" height="320" rx="16" fill="white" stroke="#10B981" stroke-width="2"/>
-                    
-                    <text x="200" y="130" font-family="Arial" font-size="14" fill="#6b7280">Series Status</text>
-                    <rect x="350" y="110" width="120" height="28" rx="14" fill="#FEF3C7"/>
-                    <text x="410" y="130" font-family="Arial" font-size="12" font-weight="600" fill="#92400E" text-anchor="middle">⏳ Pending</text>
-                    
-                    <text x="200" y="170" font-family="Arial" font-size="14" fill="#6b7280">Required Principal</text>
-                    <text x="550" y="170" font-family="Arial" font-size="20" font-weight="700" fill="#10B981" text-anchor="end">10 ETH</text>
-                    
-                    <text x="200" y="210" font-family="Arial" font-size="14" fill="#6b7280">Deposit Deadline</text>
-                    <text x="550" y="210" font-family="Arial" font-size="18" font-weight="600" fill="#1a1a1a" text-anchor="end">29 days remaining</text>
-                    
-                    <line x1="200" y1="235" x2="600" y2="235" stroke="#e5e7eb" stroke-width="2"/>
-                    
-                    <text x="200" y="270" font-family="Arial" font-size="14" fill="#6b7280">Your Wallet Balance</text>
-                    <text x="550" y="270" font-family="Arial" font-size="18" font-weight="600" fill="#1a1a1a" text-anchor="end">15.5 ETH</text>
-                    
-                    <!-- Info Box -->
-                    <rect x="200" y="295" width="400" height="50" rx="8" fill="rgba(59, 130, 246, 0.1)" stroke="rgba(59, 130, 246, 0.3)" stroke-width="1"/>
-                    <text x="220" y="325" font-family="Arial" font-size="12" fill="#3B82F6">After deposit: You receive 100,000 tokens to sell to investors</text>
-                    
-                    <!-- Deposit Button -->
-                    <rect x="200" y="360" width="400" height="50" rx="10" fill="#10B981"/>
-                    <text x="400" y="392" font-family="Arial" font-size="16" font-weight="700" fill="white" text-anchor="middle">Deposit 10 ETH</text>
-                </svg>
-
-                <div class="warning">
-                    <strong>Critical:</strong> If you don't deposit within the deadline, anyone can declare your series as defaulted. This damages your protocol's reputation permanently!
-                </div>
-            </div>
-        </div>
-
-        <!-- Step 5 -->
-        <div class="step">
-            <div class="step-header">
-                <div class="step-number">5</div>
-                <h2>Start Sale & Sell Tokens</h2>
-            </div>
-            <div class="step-content">
-                <p>After depositing principal, start the token sale so investors can buy directly:</p>
-                <ol style="margin-left: 2rem; color: #666;">
-                    <li>Call <code>startSale(price, treasury)</code> to enable buying</li>
-                    <li>Set token price (e.g., 0.001 ETH per token)</li>
-                    <li>Investors can now buy on the Buy Bonds page</li>
-                    <li>2% of sales goes to protocol treasury as fee</li>
-                    <li>You can stop sale anytime with <code>stopSale()</code></li>
-                </ol>
-                
-                <svg viewBox="0 0 800 500" style="width: 100%; border-radius: 12px; border: 2px solid #e5e7eb; margin-top: 1.5rem; background: white;">
-                    <text x="400" y="40" font-family="Arial" font-size="24" font-weight="bold" fill="#FF6224" text-anchor="middle">Start Token Sale</text>
-                    <text x="400" y="65" font-family="Arial" font-size="14" fill="#6b7280" text-anchor="middle">Enable investors to buy your bond tokens directly</text>
-                    
-                    <!-- Sale Setup Card -->
-                    <rect x="150" y="90" width="500" height="370" rx="16" fill="white" stroke="#e5e7eb" stroke-width="2"/>
-                    
-                    <!-- Status Badge -->
-                    <rect x="200" y="115" width="120" height="28" rx="14" fill="#D1FAE5"/>
-                    <text x="260" y="134" font-family="Arial" font-size="12" font-weight="600" fill="#10B981" text-anchor="middle">✓ Active</text>
-                    
-                    <!-- Token Price -->
-                    <text x="200" y="175" font-family="Arial" font-size="14" fill="#6b7280">Token Price (ETH)</text>
-                    <rect x="200" y="185" width="400" height="45" rx="8" fill="white" stroke="#d1d5db" stroke-width="2"/>
-                    <text x="220" y="215" font-family="Arial" font-size="18" font-weight="600" fill="#1a1a1a">0.001</text>
-                    <text x="550" y="215" font-family="Arial" font-size="14" fill="#6b7280" text-anchor="end">ETH per token</text>
-                    
-                    <!-- Treasury Address -->
-                    <text x="200" y="260" font-family="Arial" font-size="14" fill="#6b7280">Treasury (receives sale proceeds)</text>
-                    <rect x="200" y="270" width="400" height="45" rx="8" fill="white" stroke="#d1d5db" stroke-width="2"/>
-                    <text x="220" y="300" font-family="Arial" font-size="14" fill="#1a1a1a">0x48CF...2f77</text>
-                    
-                    <!-- Sale Stats -->
-                    <rect x="200" y="335" width="190" height="70" rx="8" fill="#f9fafb"/>
-                    <text x="220" y="360" font-family="Arial" font-size="12" fill="#6b7280">Available</text>
-                    <text x="220" y="385" font-family="Arial" font-size="18" font-weight="700" fill="#1a1a1a">100,000</text>
-                    
-                    <rect x="410" y="335" width="190" height="70" rx="8" fill="rgba(16, 185, 129, 0.1)"/>
-                    <text x="430" y="360" font-family="Arial" font-size="12" fill="#10B981">Protocol Fee (2%)</text>
-                    <text x="430" y="385" font-family="Arial" font-size="18" font-weight="700" fill="#10B981">Equorum</text>
-                    
-                    <!-- Start Sale Button -->
-                    <rect x="200" y="420" width="400" height="50" rx="10" fill="#FF6224"/>
-                    <text x="400" y="452" font-family="Arial" font-size="16" font-weight="700" fill="white" text-anchor="middle">Start Sale</text>
-                </svg>
-
-                <div class="tip">
-                    <strong>� Revenue Stream:</strong> 2% of all token sales goes to Equorum protocol. You receive 98% to your treasury address.</div>
-            </div>
-        </div>
-
-        <!-- Step 6 -->
-        <div class="step">
-            <div class="step-header">
-                <div class="step-number">6</div>
-                <h2>Deposit Revenue Regularly</h2>
-            </div>
-            <div class="step-content">
-                <p>The core function! Deposit your protocol's revenue to the series contract regularly:</p>
-                <ul style="margin-left: 2rem; color: #666;">
-                    <li><strong>Send ETH to router</strong> - Revenue is automatically distributed to holders</li>
-                    <li><strong>Holders claim anytime</strong> - No lock-up, instant withdrawals</li>
-                    <li><strong>Build reputation</strong> - Regular deposits improve your on-chain reputation score</li>
-                    <li><strong>At maturity</strong> - Principal is returned to investors automatically</li>
-                </ul>
-                
-                <svg viewBox="0 0 950 770" style="width: 100%; border-radius: 12px; border: 2px solid #e5e7eb; margin-top: 1.5rem; background: white;">
-                    <!-- Header -->
-                    <text x="50" y="50" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#1a1a1a">Series Management</text>
-                    <text x="50" y="80" font-family="Arial, sans-serif" font-size="15" fill="#6b7280">Monitor and manage your revenue bond series</text>
-                    
-                    <!-- Metrics Cards -->
-                    <rect x="50" y="110" width="200" height="110" rx="8" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
-                    <text x="70" y="140" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">Total Distributed</text>
-                    <text x="70" y="175" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#f97316">12.5 ETH</text>
-                    <text x="70" y="200" font-family="Arial, sans-serif" font-size="12" fill="#10b981">↑ +1.0 this week</text>
-                    
-                    <rect x="270" y="110" width="200" height="110" rx="8" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
-                    <text x="290" y="140" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">Active Holders</text>
-                    <text x="290" y="175" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1a1a1a">342</text>
-                    <text x="290" y="200" font-family="Arial, sans-serif" font-size="12" fill="#10b981">↑ +23 this week</text>
-                    
-                    <rect x="490" y="110" width="200" height="110" rx="8" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
-                    <text x="510" y="140" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">Claim Rate</text>
-                    <text x="510" y="175" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1a1a1a">87%</text>
-                    <text x="510" y="200" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">holders claimed</text>
-                    
-                    <rect x="710" y="110" width="190" height="110" rx="8" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
-                    <text x="730" y="140" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">Time Remaining</text>
-                    <text x="730" y="175" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1a1a1a">8mo</text>
-                    <text x="730" y="200" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">243 days left</text>
-                    
-                    <!-- Revenue History Chart -->
-                    <rect x="50" y="240" width="630" height="280" rx="8" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
-                    <text x="70" y="270" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#1a1a1a">📈 Revenue Distribution History</text>
-                    
-                    <!-- Bar chart with gradient -->
-                    <defs>
-                        <linearGradient id="barGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#fb923c;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    
-                    <rect x="100" y="410" width="55" height="50" rx="4" fill="url(#barGrad)" opacity="0.4"/>
-                    <rect x="175" y="385" width="55" height="75" rx="4" fill="url(#barGrad)" opacity="0.55"/>
-                    <rect x="250" y="360" width="55" height="100" rx="4" fill="url(#barGrad)" opacity="0.7"/>
-                    <rect x="325" y="330" width="55" height="130" rx="4" fill="url(#barGrad)"/>
-                    <rect x="400" y="350" width="55" height="110" rx="4" fill="url(#barGrad)" opacity="0.75"/>
-                    <rect x="475" y="365" width="55" height="95" rx="4" fill="url(#barGrad)" opacity="0.6"/>
-                    <rect x="550" y="340" width="55" height="120" rx="4" fill="url(#barGrad)" opacity="0.85"/>
-                    
-                    <text x="115" y="480" font-family="Arial, sans-serif" font-size="11" fill="#9ca3af">Jan</text>
-                    <text x="190" y="480" font-family="Arial, sans-serif" font-size="11" fill="#9ca3af">Feb</text>
-                    <text x="265" y="480" font-family="Arial, sans-serif" font-size="11" fill="#9ca3af">Mar</text>
-                    <text x="340" y="480" font-family="Arial, sans-serif" font-size="11" fill="#9ca3af">Apr</text>
-                    <text x="415" y="480" font-family="Arial, sans-serif" font-size="11" fill="#9ca3af">May</text>
-                    <text x="490" y="480" font-family="Arial, sans-serif" font-size="11" fill="#9ca3af">Jun</text>
-                    <text x="565" y="480" font-family="Arial, sans-serif" font-size="11" fill="#9ca3af">Jul</text>
-                    
-                    <!-- Top Holders -->
-                    <rect x="700" y="240" width="200" height="280" rx="8" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
-                    <text x="720" y="270" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#1a1a1a">👥 Top Holders</text>
-                    
-                    <text x="720" y="310" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">1. <tspan fill="#9ca3af">0x1a2b...</tspan> <tspan font-weight="700" fill="#1a1a1a">8,500</tspan></text>
-                    <text x="720" y="340" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">2. <tspan fill="#9ca3af">0x3c4d...</tspan> <tspan font-weight="700" fill="#1a1a1a">7,200</tspan></text>
-                    <text x="720" y="370" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">3. <tspan fill="#9ca3af">0x5e6f...</tspan> <tspan font-weight="700" fill="#1a1a1a">6,100</tspan></text>
-                    <text x="720" y="400" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">4. <tspan fill="#9ca3af">0x7g8h...</tspan> <tspan font-weight="700" fill="#1a1a1a">5,300</tspan></text>
-                    <text x="720" y="430" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">5. <tspan fill="#9ca3af">0x9i0j...</tspan> <tspan font-weight="700" fill="#1a1a1a">4,800</tspan></text>
-                    
-                    <line x1="720" y1="450" x2="880" y2="450" stroke="#e5e7eb" stroke-width="1"/>
-                    <text x="720" y="475" font-family="Arial, sans-serif" font-size="11" fill="#9ca3af">Other 337 holders</text>
-                    <text x="720" y="500" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#1a1a1a">68,100 tokens</text>
-                    
-                    <!-- Action Buttons -->
-                    <rect x="50" y="540" width="380" height="50" rx="8" fill="#10b981"/>
-                    <text x="165" y="570" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="white">Deposit Revenue</text>
-                    
-                    <rect x="450" y="540" width="450" height="50" rx="8" fill="white" stroke="#ef4444" stroke-width="2"/>
-                    <text x="595" y="570" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#ef4444">Pause Series</text>
-                    
-                    <!-- Warning Box -->
-                    <rect x="50" y="610" width="850" height="130" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
-                    <text x="70" y="645" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#92400e">Important</text>
-                    <text x="70" y="675" font-family="Arial, sans-serif" font-size="13" fill="#92400e">Deposit revenue regularly as promised. Irregular deposits damage</text>
-                    <text x="70" y="700" font-family="Arial, sans-serif" font-size="13" fill="#92400e">trust and token value. All deposits are transparent on Arbiscan.</text>
-                </svg>
-
-                <div class="tip">
-                    <strong>Transparency:</strong> All deposits are on-chain and verifiable on Arbiscan. This builds trust with your community.
-                </div>
-            </div>
-        </div>
-
-        <!-- Step 7 -->
-        <div class="step">
-            <div class="step-header">
-                <div class="step-number">7</div>
-                <h2>Series Expiration & Renewal</h2>
-            </div>
-            <div class="step-content">
-                <p>When your series reaches its end date:</p>
-                <ul style="margin-left: 2rem; color: #666;">
-                    <li>You stop depositing revenue to that series</li>
-                    <li>Holders can still claim any unclaimed revenue</li>
-                    <li>Tokens remain tradeable but have no future revenue rights</li>
-                    <li>You can create a NEW series with updated terms</li>
-                </ul>
-                
-                <svg viewBox="0 0 870 540" style="width: 100%; border-radius: 12px; border: 2px solid #e5e7eb; margin-top: 1.5rem; background: white;">
-                    <!-- Header with Expired Badge -->
-                    <rect x="70" y="60" width="160" height="36" rx="18" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
-                    <text x="100" y="83" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#991b1b">⏱️ Series Expired</text>
-                    
-                    <text x="70" y="130" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#1a1a1a">Uniswap Revenue Bonds Q1 2026</text>
-                    <text x="70" y="160" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">This series has completed its 12-month duration</text>
-                    
-                    <!-- Final Statistics Container -->
-                    <rect x="70" y="190" width="730" height="200" rx="12" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
-                    <text x="95" y="225" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#1a1a1a">📊 Final Statistics</text>
-                    
-                    <!-- Total Revenue Card -->
-                    <rect x="95" y="245" width="330" height="120" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1.5"/>
-                    <text x="115" y="275" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">Total Revenue Distributed</text>
-                    <text x="115" y="315" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#f97316">45.8 ETH</text>
-                    <text x="115" y="340" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af">~$114,500 over 12 months</text>
-                    <text x="115" y="358" font-family="Arial, sans-serif" font-size="12" fill="#10b981">✓ All distributions completed</text>
-                    
-                    <!-- Final Holder Count Card -->
-                    <rect x="445" y="245" width="330" height="120" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1.5"/>
-                    <text x="465" y="275" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">Final Holder Count</text>
-                    <text x="465" y="315" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1a1a1a">567</text>
-                    <text x="465" y="340" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af">Peak: 612 holders</text>
-                    <text x="465" y="358" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">Avg claim rate: 91%</text>
-                    
-                    <!-- What's Next Box -->
-                    <rect x="70" y="410" width="730" height="100" rx="12" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
-                    <text x="95" y="445" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#1e40af">ℹ️ What's Next?</text>
-                    <text x="95" y="470" font-family="Arial, sans-serif" font-size="13" fill="#1e40af">This series has ended. Holders can still claim any unclaimed revenue.</text>
-                    <text x="95" y="492" font-family="Arial, sans-serif" font-size="13" fill="#1e40af">Create a new series with updated terms to continue revenue sharing.</text>
-                    
-                    <!-- Create New Series Button -->
-                    <rect x="590" y="430" width="190" height="50" rx="8" fill="#10b981"/>
-                    <text x="610" y="460" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="white">+ Create New Series</text>
-                </svg>
-
-                <div class="tip">
-                    <strong>🔄 Renewal Strategy:</strong> Many protocols create Series A, B, C with different terms. This allows you to adjust revenue share % and duration based on performance.
-                </div>
+            <div class="faq-item">
+                <button class="faq-question">Is this debt? Do I owe it on my balance sheet?<span class="faq-icon">+</span></button>
+                <div class="faq-answer" hidden><p>Economically it behaves like an amortizing obligation: you receive capital and pay it back with a premium. How it is treated legally and in accounting depends on your jurisdiction and structure — talk to a lawyer before issuing.</p></div>
             </div>
         </div>
     </div>
+</section>
+<section class="cta-section">
+    <div class="container">
+        <h2 style="font-size: clamp(26px, 3.2vw, 36px);">Still deciding?</h2>
+        <p class="muted" style="max-width: 560px; margin: 0 auto 24px auto;">Send us what you'd raise and on what revenue. We model the schedule with you before anything is deployed.</p>
+        <div class="cta-buttons" style="justify-content: center;">
+            <a href="/contact.html" class="btn btn-primary">Talk to the team</a>
+            <a href="/investors.html" class="btn btn-secondary">See the investor side</a>
+        </div>
+    </div>
+</section>
 
-    <footer>
-        <p>© 2026 Equorum Protocol. Built on Arbitrum One.</p>
-    </footer>
-    <script src="/src/mobile-menu.js"></script>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+                <p class="dim" style="font-size: 13.5px; max-width: 300px;">Revenue bonds for protocols that earn. Built on Arbitrum One.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Protocol</h4>
+                <a href="/#how-it-works">How it works</a>
+                <a href="/development.html">Status &amp; roadmap</a>
+                <a href="/versions.html">V2 (legacy)</a>
+                <a href="/WHITEPAPER.pdf">Whitepaper (PDF)</a>
+            </div>
+            <div class="footer-section">
+                <h4>Learn</h4>
+                <a href="/investors.html">For investors</a>
+                <a href="/faq-protocols.html">FAQ for protocols</a>
+                <a href="/faq-investors.html">FAQ for investors</a>
+                <a href="/blog.html">Blog</a>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <a href="https://github.com/EquorumProtocol" target="_blank" rel="noopener">GitHub</a>
+                <a href="/faq-help.html">Help</a>
+                <a href="/dashboard.html">Explore bonds</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <a href="mailto:leonardomondaine@gmail.com" class="mono" style="font-size: 13px;">leonardomondaine@gmail.com</a>
+                <a href="mailto:suport@equorumprotocol.org" class="mono" style="font-size: 13px;">suport@equorumprotocol.org</a>
+            </div>
+        </div>
+        <div class="footer-text">
+            <span>© 2026 Equorum Protocol</span>
+            <span style="max-width: 720px;">Revenue-linked tokens may be regulated as securities in your jurisdiction. Nothing here is investment advice.</span>
+        </div>
+    </div>
+</footer>
+
+<script src="/src/mobile-menu.js"></script>
+<script>
+document.querySelectorAll('.faq-question').forEach(function (q) {
+    q.addEventListener('click', function () {
+        var a = q.nextElementSibling;
+        var open = !a.hidden;
+        a.hidden = open;
+        q.querySelector('.faq-icon').textContent = open ? '+' : '−';
+    });
+});
+</script>
 </body>
 </html>

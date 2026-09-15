@@ -28,237 +28,28 @@
     <meta name="twitter:image" content="https://equorumprotocol.org/og-image.png">
     
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --orange: #FF6224;
-            --orange-light: #FF8C5A;
-            --navy: #000A21;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            color: #1a1a1a;
-            line-height: 1.8;
-            background: #fff;
-        }
-        .navbar {
-            background: var(--navy);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .navbar img { height: 32px; }
-        
-        .article-header {
-            background: linear-gradient(135deg, var(--navy) 0%, #0a1628 100%);
-            padding: 6rem 2rem 4rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        .article-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 98, 36, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .article-header .container {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        .article-category {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: rgba(255, 98, 36, 0.2);
-            color: var(--orange);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-        .article-header h1 {
-            font-size: 2.75rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-        }
-        .article-meta {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.95rem;
-        }
-        
-        .article-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-        .article-content h2 {
-            font-size: 1.75rem;
-            color: var(--navy);
-            margin: 3rem 0 1.5rem;
-            font-weight: 700;
-        }
-        .article-content h3 {
-            font-size: 1.35rem;
-            color: var(--navy);
-            margin: 2rem 0 1rem;
-            font-weight: 600;
-        }
-        .article-content p {
-            margin-bottom: 1.5rem;
-            color: #444;
-            font-size: 1.1rem;
-        }
-        .article-content ul, .article-content ol {
-            margin: 1.5rem 0 1.5rem 2rem;
-            color: #444;
-        }
-        .article-content li {
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-        }
-        .article-content blockquote {
-            border-left: 4px solid var(--orange);
-            padding: 1.5rem 2rem;
-            background: linear-gradient(135deg, rgba(255, 98, 36, 0.08) 0%, rgba(255, 140, 90, 0.05) 100%);
-            margin: 2rem 0;
-            font-style: italic;
-            color: #333;
-            font-size: 1.25rem;
-            font-weight: 500;
-            border-radius: 0 12px 12px 0;
-        }
-        .article-content .highlight-box {
-            background: linear-gradient(135deg, rgba(255, 98, 36, 0.1) 0%, rgba(255, 140, 90, 0.1) 100%);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 1px solid rgba(255, 98, 36, 0.2);
-        }
-        .article-content .highlight-box h4 {
-            color: var(--orange);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-        .article-content .problem-box {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-            border-left: 4px solid #ef4444;
-            border-radius: 0 12px 12px 0;
-            padding: 1.5rem 2rem;
-            margin: 1.5rem 0;
-        }
-        .article-content .problem-box h4 {
-            color: #dc2626;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-        .article-content .problem-box p {
-            margin-bottom: 0;
-            color: #7f1d1d;
-        }
-        .article-content .solution-box {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border-left: 4px solid #10b981;
-            border-radius: 0 12px 12px 0;
-            padding: 1.5rem 2rem;
-            margin: 1.5rem 0;
-        }
-        .article-content .solution-box h4 {
-            color: #059669;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-        .article-content .solution-box p {
-            margin-bottom: 0;
-            color: #14532d;
-        }
-        .article-content .audience-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        @media (max-width: 600px) {
-            .article-content .audience-grid { grid-template-columns: 1fr; }
-        }
-        .article-content .audience-card {
-            background: #f8f9fc;
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid #e5e7eb;
-        }
-        .article-content .audience-card h4 {
-            color: var(--navy);
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-        }
-        .article-content .audience-card p {
-            margin-bottom: 0;
-            font-size: 1rem;
-        }
-        
-        .cta-section {
-            background: linear-gradient(135deg, var(--navy) 0%, #0a1628 100%);
-            padding: 4rem 2rem;
-            text-align: center;
-            color: white;
-            margin-top: 4rem;
-        }
-        .cta-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .cta-section p {
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
-            color: white;
-            border-radius: 8px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: transform 0.2s;
-        }
-        .btn:hover { transform: translateY(-2px); }
-        
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--orange);
-            text-decoration: none;
-            font-weight: 600;
-            margin-bottom: 2rem;
-        }
-        .back-link:hover { text-decoration: underline; }
-    </style>
+    <link rel="stylesheet" href="/css/equorum.css">
 </head>
 <body>
     <nav class="navbar">
-        <a href="/">
-            <img src="/logo-orange.svg" alt="Equorum" style="height: 40px;">
-            <span>Equorum</span>
-        </a>
-    </nav>
+    <div class="nav-container">
+        <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+        <div class="nav-links" id="nav-links">
+            <a href="/#how-it-works">How it works</a>
+            <a href="/investors.html">For investors</a>
+            <a href="/dashboard.html">Explore bonds</a>
+            <a href="/development.html">Status</a>
+            <a href="/contact.html">Contact</a>
+        </div>
+        <div class="row">
+            <a href="https://github.com/EquorumProtocol" class="btn btn-secondary btn-sm btn-inline" target="_blank" rel="noopener">GitHub</a>
+            <a href="/contact.html" class="btn btn-primary btn-sm btn-inline">Apply as issuer</a>
+            <button class="nav-hamburger" id="hamburger-btn" aria-label="Menu" onclick="toggleMobileMenu()">
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+        </div>
+    </div>
+</nav>
 
     <header class="article-header">
         <div class="container">
@@ -374,8 +165,44 @@
     </section>
 
     <footer class="footer">
-        <p> 2025 Equorum Protocol. <a href="/blog.html">Back to Blog</a> | <a href="/">Home</a></p>
-    </footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+                <p class="dim" style="font-size: 13.5px; max-width: 300px;">Revenue bonds for protocols that earn. Built on Arbitrum One.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Protocol</h4>
+                <a href="/#how-it-works">How it works</a>
+                <a href="/development.html">Status &amp; roadmap</a>
+                <a href="/versions.html">V2 (legacy)</a>
+                <a href="/WHITEPAPER.pdf">Whitepaper (PDF)</a>
+            </div>
+            <div class="footer-section">
+                <h4>Learn</h4>
+                <a href="/investors.html">For investors</a>
+                <a href="/faq-protocols.html">FAQ for protocols</a>
+                <a href="/faq-investors.html">FAQ for investors</a>
+                <a href="/blog.html">Blog</a>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <a href="https://github.com/EquorumProtocol" target="_blank" rel="noopener">GitHub</a>
+                <a href="/faq-help.html">Help</a>
+                <a href="/dashboard.html">Explore bonds</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <a href="mailto:leonardomondaine@gmail.com" class="mono" style="font-size: 13px;">leonardomondaine@gmail.com</a>
+                <a href="mailto:suport@equorumprotocol.org" class="mono" style="font-size: 13px;">suport@equorumprotocol.org</a>
+            </div>
+        </div>
+        <div class="footer-text">
+            <span>© 2026 Equorum Protocol</span>
+            <span style="max-width: 720px;">Revenue-linked tokens may be regulated as securities in your jurisdiction. Nothing here is investment advice.</span>
+        </div>
+    </div>
+</footer>
 
     <script type="application/ld+json">
     {
@@ -406,5 +233,6 @@
         "keywords": ["DeFi fundraising", "revenue bonds", "protocol economics", "tokenomics"]
     }
     </script>
+<script src="/src/mobile-menu.js"></script>
 </body>
 </html>

@@ -1,2174 +1,383 @@
 <!DOCTYPE html>
-<html lang="en" id="html-root">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Primary Meta Tags -->
-    <title id="page-title">Equorum Protocol - Revenue Bonds for DeFi | Share Protocol Revenue On-Chain</title>
-    <meta name="title" content="Equorum Protocol - Revenue Bonds for DeFi | Share Protocol Revenue On-Chain" id="meta-title">
-    <meta name="description" content="Equorum enables DeFi protocols to tokenize revenue as ERC-20 bonds on Arbitrum One. Create revenue-backed bonds with principal protection. Align users, builders, and capital through transparent on-chain revenue sharing." id="meta-description">
-    <meta name="keywords" content="DeFi revenue bonds, protocol revenue sharing, tokenized bonds, Arbitrum DeFi, ERC-20 bonds, principal protection, on-chain revenue, DeFi yield, revenue-backed securities, Web3 bonds, crypto bonds, blockchain revenue, DeFi investment, Equorum Protocol" id="meta-keywords">
+
+    <title>Equorum Protocol — Raise capital on your protocol's revenue</title>
+    <meta name="description" content="Equorum Tap Bonds let a protocol raise capital against future revenue without selling tokens. Investors fund an escrow; the issuer draws it in tranches as coupons are paid. On Arbitrum One.">
+    <meta name="keywords" content="revenue bonds, DeFi financing, non-dilutive capital, protocol revenue, Arbitrum, tap bond, revenue-based financing, on-chain bonds">
     <meta name="author" content="Equorum Protocol">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="canonical" href="https://equorumprotocol.org">
-    <meta name="google-site-verification" content="your-verification-code-here">
-    <meta name="msvalidate.01" content="your-bing-verification-code-here">
-    
-    <!-- Favicon -->
+
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    
-    <!-- Open Graph / Facebook -->
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://equorumprotocol.org">
-    <meta property="og:title" content="Equorum Protocol - Revenue Bonds for DeFi on Arbitrum One" id="og-title">
-    <meta property="og:description" content="Create revenue-backed bonds with principal protection. Equorum enables protocols to share revenue transparently on-chain. Built on Arbitrum One." id="og-description">
+    <meta property="og:title" content="Equorum Protocol — Raise capital on your protocol's revenue">
+    <meta property="og:description" content="Investors fund an escrow. You draw the capital in tranches as you pay. Miss a payment and the rest goes back to them — enforced by the contract, not by trust.">
     <meta property="og:image" content="https://equorumprotocol.org/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Equorum Protocol - DeFi Revenue Bonds">
     <meta property="og:site_name" content="Equorum Protocol">
-    <meta property="og:locale" content="en_US" id="og-locale">
-    
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://equorumprotocol.org">
-    <meta property="twitter:title" content="Equorum Protocol - Revenue Bonds for DeFi on Arbitrum" id="twitter-title">
-    <meta property="twitter:description" content="Tokenize protocol revenue as ERC-20 bonds with principal protection. Transparent on-chain revenue sharing on Arbitrum One." id="twitter-description">
+    <meta property="twitter:title" content="Equorum Protocol — Raise capital on your protocol's revenue">
+    <meta property="twitter:description" content="Non-dilutive financing for protocols that earn. Tap Bonds on Arbitrum One.">
     <meta property="twitter:image" content="https://equorumprotocol.org/og-image.png">
-    <meta property="twitter:image:alt" content="Equorum Protocol - DeFi Revenue Bonds">
-    <meta property="twitter:site" content="@EquorumProtocol">
-    <meta property="twitter:creator" content="@EquorumProtocol">
-    
-    <!-- Additional SEO -->
-    <meta name="theme-color" content="#FF6224">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="/css/equorum.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --orange: #FF6224;
-            --orange-light: #FF8C5A;
-            --navy: #000A21;
-            --navy-dark: #001a3d;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            color: #1A1A1A;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Hero Section - Aave/Cardano Style */
-        .hero {
-            min-height: 85vh;
-            display: flex;
-            align-items: center;
-            padding: 6rem 2rem 3rem;
-            background: linear-gradient(135deg, var(--navy) 0%, #0a1628 50%, #0d1f3c 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Grid pattern overlay */
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(255, 98, 36, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 98, 36, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-        }
-
-        /* Gradient orb top-right */
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(255, 98, 36, 0.25) 0%, rgba(255, 98, 36, 0.05) 40%, transparent 60%);
-            border-radius: 50%;
-            filter: blur(80px);
-            animation: float 12s ease-in-out infinite;
-        }
-
-        /* Second orb bottom-left */
-        .orb-2 {
-            position: absolute;
-            bottom: -30%;
-            left: -15%;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 50%);
-            border-radius: 50%;
-            filter: blur(100px);
-            animation: float 15s ease-in-out infinite reverse;
-            pointer-events: none;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, -30px); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes countUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-text {
-            text-align: left;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .hero-visual {
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Network Globe Visual */
-        .network-globe {
-            position: absolute;
-            right: -15%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 85%;
-            max-width: 900px;
-            pointer-events: none;
-        }
-
-        #globeCanvas {
-            width: 100%;
-            height: auto;
-        }
-
-        @media (max-width: 900px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-text { text-align: center; }
-            .network-globe { display: none; }
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 98, 36, 0.15);
-            color: var(--orange);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            margin-bottom: 1.5rem;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-        }
-
-        h1 .highlight {
-            background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            animation: countUp 0.6s ease-out both;
-        }
-
-        .stat-card:nth-child(1) { animation-delay: 0.3s; }
-        .stat-card:nth-child(2) { animation-delay: 0.4s; }
-        .stat-card:nth-child(3) { animation-delay: 0.5s; }
-        .stat-card:nth-child(4) { animation-delay: 0.6s; }
-
-        .stat-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 98, 36, 0.3);
-            transform: translateY(-4px);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--orange);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(135deg, #FF6224 0%, #FF8C5A 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1.0625rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 98, 36, 0.3);
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background: linear-gradient(135deg, #FF8C5A 0%, #FF6224 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 98, 36, 0.5);
-        }
-
-        .btn-outline {
-            background: white !important;
-            color: var(--orange) !important;
-            border: 2px solid var(--orange) !important;
-            box-shadow: 0 4px 15px rgba(255, 98, 36, 0.15) !important;
-        }
-
-        .btn-outline:hover {
-            background: var(--orange) !important;
-            color: white !important;
-            border-color: var(--orange) !important;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 98, 36, 0.4) !important;
-        }
-
-        /* Features Section - Aave Style */
-        .features-section {
-            padding: 6rem 2rem;
-            background: #fff;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .features-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            max-width: 1100px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Animated floating elements */
-        .float-element {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.6;
-            pointer-events: none;
-        }
-
-        .float-1 {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #FF6224 0%, #FF8C5A 100%);
-            top: 15%;
-            left: 5%;
-            animation: floatBounce 6s ease-in-out infinite;
-        }
-
-        .float-2 {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
-            top: 60%;
-            right: 8%;
-            animation: floatBounce 8s ease-in-out infinite reverse;
-        }
-
-        .float-3 {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            bottom: 20%;
-            left: 10%;
-            animation: floatBounce 7s ease-in-out infinite 1s;
-        }
-
-        .float-4 {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            top: 10%;
-            right: 5%;
-            animation: floatBounce 9s ease-in-out infinite 0.5s;
-        }
-
-        .float-5 {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
-            bottom: 30%;
-            right: 15%;
-            animation: floatBounce 5s ease-in-out infinite 2s;
-        }
-
-        @keyframes floatBounce {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-20px) rotate(5deg); }
-            50% { transform: translateY(0) rotate(0deg); }
-            75% { transform: translateY(20px) rotate(-5deg); }
-        }
-
-        @media (max-width: 768px) {
-            .features-grid { grid-template-columns: 1fr; }
-            .features-title { font-size: 2rem; }
-        }
-
-        .feature-card {
-            background: #f8f9fc;
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-            min-height: 220px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .feature-card h3 {
-            color: var(--navy);
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-card p {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        /* Abstract visuals for each card */
-        .feature-visual {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 160px;
-            height: 140px;
-        }
-
-        .feature-card:nth-child(1) .feature-visual {
-            background: 
-                radial-gradient(circle at 80% 20%, #a5b4fc 0%, #a5b4fc 35%, transparent 35%),
-                radial-gradient(circle at 40% 60%, #c4b5fd 0%, #c4b5fd 45%, transparent 45%),
-                linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
-            border-radius: 0 20px 0 60px;
-        }
-
-        .feature-card:nth-child(2) .feature-visual {
-            background: 
-                radial-gradient(circle at 70% 30%, #fdba74 0%, #fdba74 30%, transparent 30%),
-                linear-gradient(180deg, #f97316 0%, #ea580c 100%);
-            border-radius: 0 20px 0 50px;
-        }
-
-        .feature-card:nth-child(3) .feature-visual {
-            background: 
-                radial-gradient(circle at 60% 70%, #a5b4fc 0%, #a5b4fc 40%, transparent 40%),
-                radial-gradient(circle at 30% 30%, #c4b5fd 0%, #c4b5fd 35%, transparent 35%),
-                linear-gradient(45deg, #818cf8 0%, #a78bfa 100%);
-            border-radius: 0 20px 0 80px;
-        }
-
-        .feature-card:nth-child(4) .feature-visual {
-            background: 
-                radial-gradient(circle at 50% 60%, #fde68a 0%, #fde68a 35%, transparent 35%),
-                radial-gradient(circle at 80% 30%, #fcd34d 0%, #fcd34d 25%, transparent 25%),
-                linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            border-radius: 0 20px 0 70px;
-        }
-
-        /* Blog Section - Aave Style */
-        .blog-section {
-            padding: 6rem 2rem;
-            background: #fff;
-        }
-
-        .blog-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .blog-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--navy);
-        }
-
-        .blog-link {
-            color: var(--navy);
-            text-decoration: underline;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: color 0.2s;
-        }
-        .blog-link:hover { color: var(--orange); }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            max-width: 1200px;
-        }
-
-        @media (max-width: 900px) {
-            .blog-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .blog-grid { grid-template-columns: 1fr; }
-            .blog-title { font-size: 2rem; }
-        }
-
-        .blog-card {
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-        }
-        .blog-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.1);
-        }
-
-        .blog-card-image {
-            height: 160px;
-            position: relative;
-            overflow: hidden;
-        }
-        .blog-card-image.strategy {
-            background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%);
-        }
-        .blog-card-image.trust {
-            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
-        }
-        .blog-card-image.technical {
-            background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
-        }
-
-        .blog-card-image .illustration {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            width: 100px;
-            height: 100px;
-        }
-        .blog-card-image .illustration svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .blog-card-content {
-            padding: 1.25rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .blog-card-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 0.5rem;
-            line-height: 1.3;
-        }
-        .blog-card-excerpt {
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            flex: 1;
-        }
-        .blog-card-category {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.35rem 0.75rem;
-            background: #f3f4f6;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: #6b7280;
-            width: fit-content;
-        }
-
+        .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 64px; align-items: center; }
+        .hero-chart { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px; }
+        .chart-legend { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--text-muted); }
+        .legend-key { width: 18px; height: 3px; border-radius: 2px; display: block; }
+        .trust-line { display: flex; flex-wrap: wrap; gap: 14px; color: var(--text-dim); font-size: 13.5px; margin-top: 8px; }
+        .steps-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+        .step-col { display: flex; flex-direction: column; gap: 12px; }
+        .step-rule { display: flex; align-items: center; gap: 12px; }
+        .step-rule .line { flex-grow: 1; height: 1px; background: var(--line); display: block; }
+        .proof-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; align-items: center; }
+        .example-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 56px; align-items: center; }
+        .ledger { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+        .ledger-row { display: grid; grid-template-columns: 1.1fr 1fr 1fr 1.4fr; padding: 14px 22px; border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: 14px; }
+        .ledger-row:last-child { border-bottom: 0; }
+        .ledger-head { background: var(--orange-tint); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange-light); }
+        .ledger-row .right { text-align: right; }
+        .ledger-peak { background: rgba(255, 98, 36, 0.05); color: var(--text-strong); }
+        .investor-band { display: flex; align-items: center; justify-content: space-between; gap: 40px; border: 1px solid var(--line-strong); border-radius: var(--r-lg); padding: 34px 38px; background: linear-gradient(100deg, rgba(16,185,129,0.07), rgba(255,98,36,0.05)); }
         @media (max-width: 1024px) {
-            .steps-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (max-width: 600px) {
-            .steps-grid { grid-template-columns: 1fr; }
-        }
-
-        .step-card {
-            text-align: center;
-            padding: 2rem 1.5rem;
-        }
-
-        .step-number {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: white;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 8px 24px rgba(255, 98, 36, 0.3);
-        }
-
-        .step-card h3 {
-            color: var(--navy);
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .step-card p {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* FAQ Section */
-        .faq-section {
-            padding: 6rem 2rem;
-            background: #f8f9fc;
-        }
-
-        .faq-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--navy);
-            margin-bottom: 3rem;
-            text-align: left;
-        }
-
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            border-color: rgba(255, 98, 36, 0.3);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .faq-question {
-            width: 100%;
-            padding: 1.5rem 2rem;
-            background: none;
-            border: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            text-align: left;
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--navy);
-            transition: all 0.2s;
-        }
-
-        .faq-question:hover {
-            color: var(--orange);
-        }
-
-        .faq-icon {
-            color: var(--orange);
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-            margin-left: 1rem;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            padding: 0 2rem;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-            padding: 0 2rem 1.5rem 2rem;
-        }
-
-        .faq-answer p {
-            color: #666;
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-
-        .faq-cta {
-            text-align: center;
-            margin: 3rem 0 2rem 0;
-        }
-
-        .faq-link {
-            color: var(--orange);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: opacity 0.2s;
-        }
-
-        .faq-link:hover {
-            opacity: 0.8;
-        }
-
-        .faq-actions {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin: 3rem 0 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: white;
-            color: var(--navy);
-            padding: 1rem 2.5rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s;
-            border: 2px solid var(--navy);
-        }
-
-        .btn-primary:hover {
-            background: var(--navy);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--navy);
-            padding: 1rem 2.5rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s;
-            border: 2px solid var(--navy);
-        }
-
-        .btn-secondary:hover {
-            background: var(--navy);
-            color: white;
-        }
-
-        .faq-links {
-            display: flex;
-            gap: 3rem;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .faq-links a {
-            color: #666;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .faq-links a:hover {
-            color: var(--orange);
-        }
-
-        /* Section Titles */
-        .section-title {
-            font-size: 2.75rem;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--navy);
-            letter-spacing: -0.02em;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #666;
-            font-size: 1.15rem;
-            margin-bottom: 0;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Footer */
-        footer {
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, #000A21 0%, #001a3d 100%);
-            color: white;
-            text-align: center;
-            position: relative;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(255, 98, 36, 0.5) 50%, transparent 100%);
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 1rem;
-        }
-
-        /* Navbar */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 98, 36, 0.1);
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-        }
-
-        .nav-brand img {
-            width: 40px;
-            height: 40px;
-        }
-
-        .nav-brand span {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--navy);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #666;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9375rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--orange);
-        }
-
-        /* Language Selector Dropdown */
-        .language-selector {
-            position: relative;
-            margin-left: 1rem;
-            padding-left: 1rem;
-            border-left: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .lang-current {
-            background: white;
-            border: 2px solid #000;
-            color: #000;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 0.5rem 2rem 0.5rem 0.75rem;
-            transition: all 0.2s;
-            position: relative;
-            border-radius: 8px;
-        }
-
-        .lang-current:hover {
-            background: #f5f5f5;
-            border-color: #000;
-        }
-
-        .lang-current::after {
-            content: '▼';
-            position: absolute;
-            right: 0.5rem;
-            font-size: 0.6rem;
-            transition: transform 0.2s;
-        }
-
-        .lang-current.active::after {
-            transform: rotate(180deg);
-        }
-
-        .lang-dropdown {
-            position: absolute;
-            top: calc(100% + 0.5rem);
-            right: 0;
-            background: white;
-            border: 1px solid #e1e4e8;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-            min-width: 180px;
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .lang-dropdown.show {
-            max-height: 400px;
-            opacity: 1;
-        }
-
-        .lang-option {
-            display: block;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            text-align: left;
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border-bottom: 1px solid #f6f8fa;
-        }
-
-        .lang-option:last-child {
-            border-bottom: none;
-        }
-
-        .lang-option:hover {
-            background: rgba(255, 98, 36, 0.05);
-            color: var(--orange);
-        }
-
-        .lang-option.active {
-            background: rgba(255, 98, 36, 0.1);
-            color: var(--orange);
-            font-weight: 600;
-        }
-
-        /* Footer expandido */
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-            text-align: left;
-        }
-
-        @media (min-width: 768px) {
-            .footer-grid {
-                grid-template-columns: 2fr 1fr 1fr 1fr;
-            }
-        }
-
-        .footer-section h4 {
-            color: var(--orange);
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-section ul li a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-section ul li a:hover {
-            color: var(--orange);
-        }
-
-        .footer-brand p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.7;
-            margin-top: 1rem;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 2rem;
-            text-align: center;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-icons a {
-            color: rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .social-icons a:hover {
-            color: var(--orange);
-            transform: translateY(-2px);
-        }
-
-        .social-icons svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        /* FAQ Dropdown Menu */
-        .nav-dropdown {
-            position: relative;
-        }
-
-        .nav-dropdown > a {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .nav-dropdown > a::after {
-            content: '▼';
-            font-size: 0.6rem;
-            transition: transform 0.2s;
-        }
-
-        .nav-dropdown:hover > a::after {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            margin-top: 0.5rem;
-        }
-
-        .nav-dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 0.75rem 1.25rem;
-            color: var(--navy);
-            text-decoration: none;
-            transition: all 0.2s;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .dropdown-menu a:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: #f9fafb;
-            color: var(--orange);
-            padding-left: 1.5rem;
-        }
-
-        .dropdown-menu a:first-child {
-            border-radius: 8px 8px 0 0;
-        }
-
-        .dropdown-menu a:last-child {
-            border-radius: 0 0 8px 8px;
-        }
-
-        /* ========== MOBILE RESPONSIVENESS ========== */
-        @media (max-width: 768px) {
-            .hero {
-                min-height: auto;
-                padding: 6rem 0 3rem;
-            }
-            .hero-content {
-                gap: 2rem;
-                padding: 0 1rem;
-            }
-            h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .cta-buttons {
-                flex-direction: row;
-                gap: 0.75rem;
-            }
-            .cta-buttons a {
-                padding: 0.875rem 1.5rem;
-                font-size: 0.9rem;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.75rem;
-            }
-            .stat-number { font-size: 1.5rem; }
-            .stat-label { font-size: 0.75rem; }
-            .stat-card { padding: 1rem; }
-            .container { padding: 0 1rem; }
-            section { padding: 3rem 0; }
-            .section-title { font-size: 1.75rem; }
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            nav { padding: 0.5rem 0; }
-            .nav-container { padding: 0 1rem; }
-        }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 1.75rem; }
-            .hero p { font-size: 0.9rem; }
-            .badge { font-size: 0.65rem; }
-            .stat-number { font-size: 1.25rem; }
-            .cta-buttons {
-                flex-direction: column;
-            }
-            .cta-buttons a {
-                width: 100%;
-                text-align: center;
-            }
+            .hero-grid, .example-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+            .steps-grid, .proof-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 760px) {
+            .steps-grid, .proof-strip { grid-template-columns: minmax(0, 1fr); }
+            .investor-band { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .ledger-row { grid-template-columns: 0.8fr 1fr 1fr 1.2fr; padding: 12px 14px; font-size: 13px; }
         }
     </style>
-    <link rel="stylesheet" href="/src/mobile-menu.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="nav-brand">
-                <img src="logo-dark.svg?v=20260130" alt="Equorum" style="height: 32px;">
-                <span>Equorum</span>
-            </a>
-            <button class="nav-hamburger" onclick="toggleMobileMenu()" id="hamburger-btn">
-                <span></span><span></span><span></span>
+
+<!-- NAV -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="nav-brand">
+            <img src="/logo-orange.svg" alt="Equorum" class="logo">
+            <span>Equorum</span>
+        </a>
+        <div class="nav-links" id="nav-links">
+            <a href="#how-it-works">How it works</a>
+            <a href="#guarantees">Guarantees</a>
+            <a href="/investors.html">For investors</a>
+            <a href="/dashboard.html">Explore bonds</a>
+            <a href="/development.html">Status</a>
+            <a href="/contact.html">Contact</a>
+        </div>
+        <div class="row">
+            <a href="https://github.com/EquorumProtocol" class="btn btn-secondary btn-sm btn-inline" target="_blank" rel="noopener">GitHub</a>
+            <a href="/contact.html" class="btn btn-primary btn-sm btn-inline">Apply as issuer</a>
+            <button class="nav-hamburger" id="hamburger-btn" aria-label="Menu" onclick="toggleMobileMenu()">
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
-            <div class="nav-links" id="nav-links">
-                <a href="/dashboard.html">Explore</a>
-                <a href="/buy.html">Buy Bonds</a>
-                <a href="/create.html">Create Series</a>
-                <div class="nav-dropdown">
-                    <a href="#">FAQ</a>
-                    <div class="dropdown-menu">
-                        <a href="/faq-investors.html">For Investors</a>
-                        <a href="/faq-protocols.html">For Protocols</a>
-                        <a href="/faq-help.html">Help</a>
-                    </div>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="container hero-grid">
+        <div class="stack" style="gap: 24px;">
+            <span class="status-pill"><span class="status-dot"></span> V3 Tap Bonds · testnet next · unaudited</span>
+            <h1 style="max-width: 640px;">Raise capital on the revenue you already earn.<br><span style="color: var(--orange);">Without selling a single token.</span></h1>
+            <p style="font-size: 19px; color: var(--text-muted); max-width: 560px;">
+                Investors fund an escrow. You draw the capital in tranches, and each tranche only unlocks
+                after you pay what you owe. Miss a payment and the rest goes back to them — enforced by
+                the contract, not by trust.
+            </p>
+            <div class="cta-buttons">
+                <a href="/contact.html" class="btn btn-primary">Apply as an issuer</a>
+                <a href="#how-it-works" class="btn btn-secondary">See how the tap works</a>
+            </div>
+            <div class="trust-line">
+                <span>Non-custodial</span><span>·</span>
+                <span>Terms immutable once created</span><span>·</span>
+                <span>Arbitrum One</span>
+            </div>
+        </div>
+
+        <div class="hero-chart">
+            <div class="row" style="justify-content: space-between; margin-bottom: 14px;">
+                <span class="mono" style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);">100 ETH raise · 12 months</span>
+                <span class="mono" style="font-size: 11px; color: var(--text-dim);">ETH</span>
+            </div>
+            <svg viewBox="0 0 470 290" width="100%" style="height:auto;" role="img" aria-label="Capital drawn against coupons paid over twelve months">
+                <g stroke="rgba(232,236,245,0.08)" stroke-width="1">
+                    <line x1="38" y1="20" x2="452" y2="20"/><line x1="38" y1="75" x2="452" y2="75"/>
+                    <line x1="38" y1="130" x2="452" y2="130"/><line x1="38" y1="185" x2="452" y2="185"/>
+                    <line x1="38" y1="240" x2="452" y2="240"/>
+                </g>
+                <g fill="#5D6A82" font-size="10" font-family="IBM Plex Mono, monospace">
+                    <text x="10" y="24">120</text><text x="16" y="79">90</text><text x="16" y="134">60</text>
+                    <text x="16" y="189">30</text><text x="22" y="244">0</text>
+                </g>
+                <path d="M38 240 L72 221 L107 203 L141 185 L175 166 L210 148 L244 130 L279 111 L313 93 L348 75 L382 56 L417 38 L452 20" stroke="#10B981" stroke-width="2.5" fill="none"/>
+                <path d="M38 194 L107 194 L107 148 L175 148 L175 102 L244 102 L452 102" stroke="#FF6224" stroke-width="2.5" fill="none"/>
+                <path d="M38 194 L107 194 L107 148 L175 148 L175 102 L244 102 L452 102 L452 20 L417 38 L382 56 L348 75 L313 93 L279 111 L244 130 L210 148 L175 166 L141 185 L107 203 L72 221 L38 240 Z" fill="rgba(255,98,36,0.10)"/>
+                <circle cx="244" cy="102" r="4" fill="#FF6224"/>
+                <line x1="244" y1="102" x2="244" y2="130" stroke="rgba(255,98,36,0.5)" stroke-width="1" stroke-dasharray="3 3"/>
+                <circle cx="244" cy="130" r="3.5" fill="#10B981"/>
+                <g fill="#5D6A82" font-size="10" font-family="IBM Plex Mono, monospace">
+                    <text x="34" y="262">m0</text><text x="168" y="262">m3</text><text x="237" y="262">m6</text>
+                    <text x="376" y="262">m10</text><text x="438" y="262">m12</text>
+                </g>
+            </svg>
+            <div class="chart-legend">
+                <span class="row" style="gap: 8px;"><span class="legend-key" style="background: var(--orange);"></span> Capital you drew</span>
+                <span class="row" style="gap: 8px;"><span class="legend-key" style="background: var(--green);"></span> Coupons you paid</span>
+                <span class="row" style="gap: 8px;"><span class="legend-key" style="background: rgba(255,98,36,0.25); height: 12px; width: 12px; border-radius: 3px;"></span> What you still owe</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- PROBLEM -->
+<section class="section">
+    <div class="container">
+        <h2 style="max-width: 640px;">Every way you fund a protocol today costs you the protocol.</h2>
+        <div class="grid grid-3" style="margin-top: 36px;">
+            <div class="card">
+                <span class="eyebrow">Token sale</span>
+                <h3>You pay with dilution</h3>
+                <p class="muted">New supply, permanent sell pressure, and a holder base that judges you by a chart instead of a product.</p>
+            </div>
+            <div class="card">
+                <span class="eyebrow">VC round</span>
+                <h3>You pay with control</h3>
+                <p class="muted">Months of term sheets, a jurisdiction to pick, a board to answer to — for capital you needed last quarter.</p>
+            </div>
+            <div class="card">
+                <span class="eyebrow">Treasury swap</span>
+                <h3>You pay with conviction</h3>
+                <p class="muted">Selling the asset you tell everyone to hold, at the exact moment you least want to sell it.</p>
+            </div>
+        </div>
+        <p style="font-size: 20px; color: var(--text); margin-top: 36px; max-width: 760px;">
+            A revenue bond costs you none of the three. You sell a slice of what you earn, for a fixed
+            term, and when the term ends the slice comes back to you.
+        </p>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-alt" id="how-it-works">
+    <div class="container">
+        <span class="eyebrow">How it works</span>
+        <h2 style="max-width: 700px;">The capital arrives through a tap, not a faucet.</h2>
+        <div class="steps-grid" style="margin-top: 40px;">
+            <div class="step-col">
+                <div class="step-rule"><span class="step-number">01</span><span class="line"></span></div>
+                <h3>You set the terms</h3>
+                <p class="muted" style="font-size: 14.5px;">Amount, term, minimum coupon, how much you draw on day one. Once the bond is created, nobody can change any of it — not you, not us.</p>
+            </div>
+            <div class="step-col">
+                <div class="step-rule"><span class="step-number">02</span><span class="line"></span></div>
+                <h3>Investors fund the escrow</h3>
+                <p class="muted" style="font-size: 14.5px;">They buy ERC-20 bonds at a fixed price. The ETH stays in the contract, not in your wallet and never in ours.</p>
+            </div>
+            <div class="step-col">
+                <div class="step-rule"><span class="step-number">03</span><span class="line"></span></div>
+                <h3>You draw as you pay</h3>
+                <p class="muted" style="font-size: 14.5px;">Each tranche unlocks only after the coupons due so far are paid. Pay early and you keep the schedule; stop paying and the tap stops with you.</p>
+            </div>
+            <div class="step-col">
+                <div class="step-rule"><span class="step-number">04</span><span class="line"></span></div>
+                <h3>The term ends, or it doesn't</h3>
+                <p class="muted" style="font-size: 14.5px;">Pay through the term and the bond closes. Miss a coupon past the grace period and anyone can end it: holders take back the undrawn capital and your collateral.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GUARANTEES -->
+<section class="section" id="guarantees">
+    <div class="container grid grid-2" style="gap: 56px;">
+        <div>
+            <h2>What the contract enforces</h2>
+            <div class="stack" style="gap: 18px; margin-top: 24px;">
+                <div class="feature-item">
+                    <span class="feature-icon" style="color: var(--green);">
+                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 11.3l2.8 2.8 5.6-5.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <p><strong>Undrawn capital belongs to holders.</strong> On default it can only move to them, plus whatever collateral you posted.</p>
                 </div>
-                <a href="WHITEPAPER.pdf" download>Whitepaper</a>
-                <a href="/buy.html" class="mobile-menu-cta">Buy Bonds Now</a>
-                <div class="language-selector">
-                    <button class="lang-current" onclick="toggleLanguageDropdown()" id="current-lang">English</button>
-                    <div class="lang-dropdown" id="lang-dropdown">
-                        <button class="lang-option active" onclick="selectLanguage('en', 'English')">English</button>
-                        <button class="lang-option" onclick="selectLanguage('pt', 'Português')">Português</button>
-                        <button class="lang-option" onclick="selectLanguage('es', 'Español')">Español</button>
-                        <button class="lang-option" onclick="selectLanguage('ja', '日本語')">日本語</button>
-                        <button class="lang-option" onclick="selectLanguage('zh', '中文')">中文</button>
-                    </div>
+                <div class="feature-item">
+                    <span class="feature-icon" style="color: var(--green);">
+                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 11.3l2.8 2.8 5.6-5.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <p><strong>You can't outrun your payment record.</strong> The tap reads it directly; there is no manual override anywhere in the system.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon" style="color: var(--green);">
+                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 11.3l2.8 2.8 5.6-5.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <p><strong>Minimum payments cover the principal.</strong> A bond that runs its full term returns at least 100% of what was raised.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon" style="color: var(--green);">
+                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 11.3l2.8 2.8 5.6-5.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <p><strong>No admin keys over live bonds.</strong> The multisig can set the protocol fee for new bonds and pause new ones. That is all it can do.</p>
                 </div>
             </div>
         </div>
-    </nav>
-    <div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
-    <script src="/src/mobile-menu.js"></script>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="orb-2"></div>
-        <div class="container">
-            <div class="hero-content">
-                <!-- Left: Text -->
-                <div class="hero-text">
-                    <span class="badge">LIVE ON ARBITRUM ONE</span>
-                    <h1 data-i18n="hero.title">Protocols That Share Revenue<br><span class="highlight">Earn Trust.</span></h1>
-                    <p data-i18n="hero.subtitle">Equorum enables revenue-backed bonds that align users, builders, and capital.</p>
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <a href="/buy.html" class="btn">Buy Bonds</a>
-                        <a href="/create.html" class="btn btn-outline" style="background: transparent !important; border-color: rgba(255,255,255,0.3) !important; color: white !important;">Create Series</a>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <!-- Network Globe Visual - Full Size -->
-            <div class="network-globe">
-                <canvas id="globeCanvas" width="900" height="900"></canvas>
+        <div class="highlight-box">
+            <h2>What it doesn't</h2>
+            <p class="dim" style="font-size: 14.5px;">The three things a marketing page usually hides.</p>
+            <div class="stack" style="gap: 16px; margin-top: 20px;">
+                <p><strong>Yield isn't guaranteed.</strong> A bond pays what the issuer pays. The escrow protects the part not yet drawn, nothing more.</p>
+                <p><strong>Drawn capital carries credit risk.</strong> Beyond posted collateral, an issuer that stops paying leaves holders with what they already received.</p>
+                <p><strong>V3 is not audited yet.</strong> The code is public and tested, and the first external audit is scheduled for <span class="keyword">[AUDIT DATE]</span>.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Features Section -->
-    <section class="features-section" id="features">
-        <div class="float-element float-1"></div>
-        <div class="float-element float-2"></div>
-        <div class="float-element float-3"></div>
-        <div class="float-element float-4"></div>
-        <div class="float-element float-5"></div>
-        <div class="container">
-            <h2 class="features-title">Your revenue, your choice.</h2>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-visual"></div>
-                    <h3>Principal Protected</h3>
-                    <p>Investment held in escrow and returned at maturity.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-visual"></div>
-                    <h3>Real Revenue</h3>
-                    <p>Yield from actual protocol earnings. No inflation.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-visual"></div>
-                    <h3>Fully On-Chain</h3>
-                    <p>Every transaction verifiable on Arbiscan.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-visual"></div>
-                    <h3>Open Source</h3>
-                    <p>All code public on GitHub. Audit it, fork it.</p>
-                </div>
+<!-- WORKED EXAMPLE -->
+<section class="section section-alt">
+    <div class="container example-grid">
+        <div>
+            <span class="eyebrow">Worked example</span>
+            <h2>100 ETH raised. 120 ETH returned over a year.</h2>
+            <p class="muted" style="font-size: 16px;">
+                You draw 25 ETH on day one and the rest over the first quarter, one tranche per coupon paid.
+                From month four you are paying down. If you stop at month two, holders recover the 50 ETH
+                still in escrow plus your collateral — and keep the 20 ETH you already paid.
+            </p>
+            <p class="dim" style="font-size: 15px; margin-top: 16px;">
+                Protocol fee: 2% of the capital you actually draw. Nothing on what you don't.
+            </p>
+        </div>
+        <div class="ledger">
+            <div class="ledger-row ledger-head">
+                <span>Month</span><span>Drawn</span><span>Paid</span><span class="right">Open exposure</span>
+            </div>
+            <div class="ledger-row"><span>0</span><span style="color: var(--orange-light);">25</span><span style="color: var(--green);">0</span><span class="right">25 ETH</span></div>
+            <div class="ledger-row"><span>1</span><span style="color: var(--orange-light);">50</span><span style="color: var(--green);">10</span><span class="right">40 ETH</span></div>
+            <div class="ledger-row ledger-peak"><span>3</span><span style="color: var(--orange-light);">100</span><span style="color: var(--green);">30</span><span class="right">70 ETH · peak</span></div>
+            <div class="ledger-row"><span>6</span><span style="color: var(--orange-light);">100</span><span style="color: var(--green);">60</span><span class="right">40 ETH</span></div>
+            <div class="ledger-row"><span>12</span><span style="color: var(--orange-light);">100</span><span style="color: var(--green);">120</span><span class="right" style="color: var(--green);">settled</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- PROOF -->
+<section class="section">
+    <div class="container proof-strip">
+        <div><div class="hero-stat-value">82</div><div class="hero-stat-label">tests on the V3 contracts</div></div>
+        <div><div class="hero-stat-value">10</div><div class="hero-stat-label">V2 issues found, fixed and reproduced</div></div>
+        <div><div class="hero-stat-value">0</div><div class="hero-stat-label">admin keys over a live bond</div></div>
+        <div class="stack" style="gap: 8px;">
+            <span style="font-size: 14.5px;">Every line is public, including the audit of our own V2.</span>
+            <a href="https://github.com/EquorumProtocol/Equorum-Revenue-Bonds" target="_blank" rel="noopener">Read the code on GitHub →</a>
+        </div>
+    </div>
+</section>
+
+<!-- INVESTORS -->
+<section class="section" style="border-top: 0; padding-top: 0;">
+    <div class="container">
+        <div class="investor-band">
+            <div style="max-width: 720px;">
+                <h3>Buying, not issuing?</h3>
+                <p class="muted">See what a bond pays, what happens on default, and how to read an issuer's payment history before you put a single wei in.</p>
+            </div>
+            <a href="/investors.html" class="btn btn-secondary btn-inline">For investors</a>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+    <div class="container">
+        <h2>Questions issuers actually ask</h2>
+        <div class="grid grid-3" style="margin-top: 30px;">
+            <div style="border-top: 1px solid var(--line-strong); padding-top: 18px;">
+                <h3>Do I need a token?</h3>
+                <p class="muted" style="font-size: 14.5px;">No. The bond is its own ERC-20. If you have a token, nothing about it changes — no supply, no governance, no unlock.</p>
+            </div>
+            <div style="border-top: 1px solid var(--line-strong); padding-top: 18px;">
+                <h3>What if my revenue drops?</h3>
+                <p class="muted" style="font-size: 14.5px;">You keep paying the minimum coupon from wherever you like, or you default. Set a coupon you can cover on a bad quarter, not a good one.</p>
+            </div>
+            <div style="border-top: 1px solid var(--line-strong); padding-top: 18px;">
+                <h3>What does it cost?</h3>
+                <p class="muted" style="font-size: 14.5px;">2% of the capital you draw, capped at 3% forever. No listing fee, no fee on a sale that doesn't fill, no fee on coupons.</p>
             </div>
         </div>
-    </section>
+        <p style="margin-top: 26px;"><a href="/faq-protocols.html">All questions for protocols →</a></p>
+    </div>
+</section>
 
-    <!-- Blog Section -->
-    <section class="blog-section" id="blog">
-        <div class="container">
-            <div class="blog-header">
-                <h2 class="blog-title">Latest from Equorum.</h2>
-                <a href="/blog.html" class="blog-link">View the blog →</a>
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container">
+        <h2 style="font-size: clamp(30px, 4vw, 44px); max-width: 820px; margin: 0 auto 16px auto;">If your protocol earns, it can raise.</h2>
+        <p class="muted" style="font-size: 17.5px; max-width: 620px; margin: 0 auto 26px auto;">
+            Tell us what you'd raise and on what revenue. We'll model the schedule with you before a single
+            contract is deployed.
+        </p>
+        <div class="cta-buttons" style="justify-content: center;">
+            <a href="/contact.html" class="btn btn-primary">Apply as an issuer</a>
+            <a href="mailto:leonardomondaine@gmail.com" class="btn btn-secondary">Talk to the team</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="/" class="nav-brand"><img src="/logo-orange.svg" alt="Equorum" class="logo"><span>Equorum</span></a>
+                <p class="dim" style="font-size: 13.5px; max-width: 300px;">Revenue bonds for protocols that earn. Built on Arbitrum One.</p>
             </div>
-            
-            <div class="blog-grid">
-                <a href="/blog/why-protocols-should-sell-revenue.html" class="blog-card">
-                    <div class="blog-card-image strategy">
-                        <div class="illustration">
-                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Token being crossed out -->
-                                <circle cx="35" cy="40" r="18" fill="rgba(239,68,68,0.3)" stroke="#ef4444" stroke-width="2"/>
-                                <text x="35" y="45" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">$</text>
-                                <line x1="22" y1="27" x2="48" y2="53" stroke="#ef4444" stroke-width="3"/>
-                                <!-- Arrow pointing to Revenue -->
-                                <path d="M55 40 L65 40" stroke="#FF6224" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M62 36 L68 40 L62 44" stroke="#FF6224" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <!-- Revenue chart going up -->
-                                <rect x="58" y="50" width="30" height="35" rx="4" fill="rgba(16,185,129,0.2)" stroke="#10B981" stroke-width="1.5"/>
-                                <path d="M63 78 L70 70 L77 74 L83 62" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="83" cy="62" r="3" fill="#10B981"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="blog-card-content">
-                        <h3 class="blog-card-title">Why Protocols Should Sell Revenue, Not Tokens</h3>
-                        <p class="blog-card-excerpt">The DeFi fundraising model is broken. Stop selling dreams, start selling cash flows.</p>
-                        <span class="blog-card-category">The DeFi Paradigm Shift</span>
-                    </div>
-                </a>
-
-                <a href="/blog/principal-protection-changes-defi-trust.html" class="blog-card">
-                    <div class="blog-card-image trust">
-                        <div class="illustration">
-                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Vault/Safe with lock -->
-                                <rect x="25" y="30" width="50" height="45" rx="6" fill="rgba(255,255,255,0.15)" stroke="#10B981" stroke-width="2"/>
-                                <circle cx="50" cy="52" r="12" fill="rgba(16,185,129,0.3)" stroke="#10B981" stroke-width="2"/>
-                                <rect x="47" y="48" width="6" height="10" rx="1" fill="#10B981"/>
-                                <circle cx="50" cy="46" r="5" stroke="#10B981" stroke-width="2" fill="none"/>
-                                <!-- Money inside protected -->
-                                <rect x="32" y="60" width="8" height="5" rx="1" fill="#10B981" opacity="0.6"/>
-                                <rect x="42" y="60" width="8" height="5" rx="1" fill="#10B981" opacity="0.6"/>
-                                <rect x="60" y="60" width="8" height="5" rx="1" fill="#10B981" opacity="0.6"/>
-                                <!-- Checkmark badge -->
-                                <circle cx="70" cy="35" r="10" fill="#10B981"/>
-                                <path d="M65 35L68 38L75 31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="blog-card-content">
-                        <h3 class="blog-card-title">How Principal Protection Changes DeFi Trust</h3>
-                        <p class="blog-card-excerpt">Yield without trust is speculation. Revenue with guarantees is finance.</p>
-                        <span class="blog-card-category">Trust & Security</span>
-                    </div>
-                </a>
-
-                <a href="/blog/lifecycle-of-revenue-bond-series.html" class="blog-card">
-                    <div class="blog-card-image technical">
-                        <div class="illustration">
-                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Timeline/Lifecycle steps -->
-                                <line x1="20" y1="50" x2="80" y2="50" stroke="rgba(165,180,252,0.5)" stroke-width="2"/>
-                                <!-- Step 1: Deploy -->
-                                <circle cx="25" cy="50" r="8" fill="#6366f1"/>
-                                <text x="25" y="54" text-anchor="middle" fill="white" font-size="10" font-weight="bold">1</text>
-                                <text x="25" y="38" text-anchor="middle" fill="#a5b4fc" font-size="7">Deploy</text>
-                                <!-- Step 2: Deposit -->
-                                <circle cx="43" cy="50" r="8" fill="#6366f1"/>
-                                <text x="43" y="54" text-anchor="middle" fill="white" font-size="10" font-weight="bold">2</text>
-                                <text x="43" y="65" text-anchor="middle" fill="#a5b4fc" font-size="7">Deposit</text>
-                                <!-- Step 3: Invest -->
-                                <circle cx="61" cy="50" r="8" fill="#6366f1"/>
-                                <text x="61" y="54" text-anchor="middle" fill="white" font-size="10" font-weight="bold">3</text>
-                                <text x="61" y="38" text-anchor="middle" fill="#a5b4fc" font-size="7">Invest</text>
-                                <!-- Step 4: Earn (highlighted) -->
-                                <circle cx="79" cy="50" r="10" fill="#FF6224"/>
-                                <text x="79" y="54" text-anchor="middle" fill="white" font-size="10" font-weight="bold">4</text>
-                                <text x="79" y="65" text-anchor="middle" fill="#FF6224" font-size="7" font-weight="bold">Earn</text>
-                                <!-- Clock icon -->
-                                <circle cx="75" cy="28" r="10" stroke="#a5b4fc" stroke-width="1.5" fill="rgba(99,102,241,0.2)"/>
-                                <line x1="75" y1="28" x2="75" y2="23" stroke="#a5b4fc" stroke-width="1.5" stroke-linecap="round"/>
-                                <line x1="75" y1="28" x2="79" y2="30" stroke="#a5b4fc" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="blog-card-content">
-                        <h3 class="blog-card-title">The Lifecycle of a Revenue Bond Series</h3>
-                        <p class="blog-card-excerpt">From deployment to maturity: a step-by-step operational guide.</p>
-                        <span class="blog-card-category">Technical Guide</span>
-                    </div>
-                </a>
+            <div class="footer-section">
+                <h4>Protocol</h4>
+                <a href="#how-it-works">How it works</a>
+                <a href="/development.html">Status &amp; roadmap</a>
+                <a href="/versions.html">V2 (legacy)</a>
+                <a href="/WHITEPAPER.pdf">Whitepaper (PDF)</a>
+            </div>
+            <div class="footer-section">
+                <h4>Learn</h4>
+                <a href="/investors.html">For investors</a>
+                <a href="/faq-protocols.html">FAQ for protocols</a>
+                <a href="/faq-investors.html">FAQ for investors</a>
+                <a href="/blog.html">Blog</a>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <a href="https://github.com/EquorumProtocol" target="_blank" rel="noopener">GitHub</a>
+                <a href="/faq-help.html">Help</a>
+                <a href="/dashboard.html">Explore bonds</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <a href="mailto:leonardomondaine@gmail.com" class="mono" style="font-size: 13px;">leonardomondaine@gmail.com</a>
+                <a href="mailto:suport@equorumprotocol.org" class="mono" style="font-size: 13px;">suport@equorumprotocol.org</a>
             </div>
         </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <div class="container">
-            <h2 class="faq-title">FAQs</h2>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>What is Equorum?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Equorum is a DeFi protocol on Arbitrum One that enables protocols to share revenue with their community through tokenized bonds. Instead of diluting token holders, protocols can raise capital by selling future revenue streams as ERC-20 bonds.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>How are Revenue Bonds different from tokens?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Revenue Bonds represent a claim on future protocol revenue, not governance or ownership. They're non-dilutive fundraising instruments that align incentives between protocols and investors through actual cash flows rather than token price speculation.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Does Equorum have risks?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes. All DeFi protocols carry smart contract risk. Additionally, bond holders face revenue risk (if the protocol generates no revenue, distributions are zero) and protocol default risk. Hybrid Series with escrow protection mitigate principal risk but don't eliminate revenue uncertainty.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>What is the difference between Soft and Hybrid bonds?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Soft Bonds rely on protocol reputation and on-chain payment history. Hybrid Bonds include principal protection through escrow—the protocol deposits the full principal amount before selling bonds, guaranteeing investors get their capital back at maturity regardless of protocol performance.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="faq-cta">
-                <a href="/help.html" class="faq-link">See More →</a>
-            </div>
-
-            <div class="faq-actions">
-                <a href="/buy.html" class="btn btn-primary">Buy Bonds</a>
-                <a href="/create.html" class="btn btn-secondary">Create Series</a>
-            </div>
-
-            <div class="faq-links">
-                <a href="https://github.com/EquorumProtocol/Equorum-Revenue-Bonds" target="_blank">View on GitHub →</a>
-                <a href="https://arbiscan.io/address/0x8afA0318363FfBc29Cc28B3C98d9139C08Af737b" target="_blank">Verify on Arbiscan →</a>
-            </div>
+        <div class="footer-text">
+            <span>© 2026 Equorum Protocol</span>
+            <span style="max-width: 720px;">Revenue-linked tokens may be regulated as securities in your jurisdiction. Nothing here is investment advice.</span>
         </div>
-    </section>
+    </div>
+</footer>
 
-    <!-- Footer -->
-    <footer id="community">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-section footer-brand">
-                    <img src="logo-white.svg" alt="Equorum" style="width: 80px; height: 80px; margin-bottom: 1rem; filter: brightness(0) invert(1);">
-                    <p><strong>Equorum Protocol</strong></p>
-                    <p data-i18n="footer.desc">On-chain revenue sharing on Arbitrum One. Share revenue with your community through tokenized bonds.</p>
-                </div>
-
-                <div class="footer-section">
-                    <h4 data-i18n="footer.protocol.title">Protocol</h4>
-                    <ul>
-                        <li><a href="/blog.html">Blog</a></li>
-                        <li><a href="WHITEPAPER.pdf" download>Whitepaper (PDF)</a></li>
-                        <li><a href="https://github.com/EquorumProtocol/Equorum-Revenue-Bonds" target="_blank" data-i18n="footer.protocol.docs">Documentation</a></li>
-                        <li><a href="/development.html">Development</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4 data-i18n="footer.community.title">Community</h4>
-                    <ul>
-                        <li><a href="https://discord.gg/qAzseSwY" target="_blank">Discord</a></li>
-                        <li><a href="https://twitter.com/EquorumProtocol" target="_blank">Twitter</a></li>
-                        <li><a href="https://github.com/EquorumProtocol" target="_blank">GitHub</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4 data-i18n="footer.contracts.title">Contracts</h4>
-                    <ul>
-                        <li><a href="https://arbiscan.io/address/0x8afA0318363FfBc29Cc28B3C98d9139C08Af737b" target="_blank">Factory</a></li>
-                        <li><a href="https://arbiscan.io/address/0xBa69aEd75E8562f9D23064aEBb21683202c5279B" target="_blank">Treasury</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <div class="social-icons">
-                    <a href="https://github.com/EquorumProtocol" target="_blank" rel="noopener noreferrer" title="GitHub">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                    </a>
-                    <a href="https://discord.gg/qAzseSwY" target="_blank" rel="noopener noreferrer" title="Discord">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
-                        </svg>
-                    </a>
-                    <a href="https://arbiscan.io" target="_blank" rel="noopener noreferrer" title="Arbitrum One">
-                        <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-                            <path d="M16 0L2 8v16l14 8 14-8V8L16 0z" fill="#213147"/>
-                            <path d="M22.5 11.5l-4.8 8.3c-.2.3-.5.5-.9.5h-1.6c-.4 0-.7-.2-.9-.5l-4.8-8.3c-.2-.3-.2-.7 0-1 .2-.3.5-.5.9-.5h11.2c.4 0 .7.2.9.5.2.3.2.7 0 1z" fill="#12AAFF"/>
-                            <path d="M19.2 16.5l-2.4 4.2c-.2.3-.5.5-.9.5h-.8c-.4 0-.7-.2-.9-.5l-2.4-4.2c-.2-.3-.2-.7 0-1 .2-.3.5-.5.9-.5h5.6c.4 0 .7.2.9.5.2.3.2.7 0 1z" fill="#9DCCED"/>
-                        </svg>
-                    </a>
-                </div>
-                <p data-i18n="footer.copyright"> 2025 Equorum Protocol. Built on <strong>Arbitrum One</strong></p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // SEO Meta Tags Translations
-        const seoTranslations = {
-            en: {
-                title: 'Equorum Protocol - Share Revenue with Your Community | DeFi Revenue Bonds',
-                description: 'Revenue Bonds Protocol enables DeFi protocols to share revenue with their community through tokenized ERC-20 bonds on Arbitrum One. Create revenue bond series that automatically distribute earnings to holders.',
-                keywords: 'DeFi, Revenue Bonds, Arbitrum, ERC-20, Revenue Sharing, Tokenized Bonds, Blockchain, Cryptocurrency, Web3, Smart Contracts, Equorum',
-                ogTitle: 'Equorum Protocol - Share Revenue with Your Community',
-                ogDescription: 'Revenue Bonds Protocol enables DeFi protocols to share revenue with their community through tokenized ERC-20 bonds on Arbitrum One.',
-                locale: 'en_US'
-            },
-            pt: {
-                title: 'Equorum Protocol - Compartilhe Receita com sua Comunidade | DeFi Revenue Bonds',
-                description: 'Revenue Bonds Protocol permite que protocolos DeFi compartilhem receita com sua comunidade através de bonds tokenizados ERC-20 na Arbitrum One. Crie séries de revenue bonds que distribuem automaticamente ganhos para os holders.',
-                keywords: 'DeFi, Revenue Bonds, Arbitrum, ERC-20, Compartilhamento de Receita, Bonds Tokenizados, Blockchain, Criptomoeda, Web3, Smart Contracts, Equorum',
-                ogTitle: 'Equorum Protocol - Compartilhe Receita com sua Comunidade',
-                ogDescription: 'Revenue Bonds Protocol permite que protocolos DeFi compartilhem receita com sua comunidade através de bonds tokenizados ERC-20 na Arbitrum One.',
-                locale: 'pt_BR'
-            },
-            es: {
-                title: 'Equorum Protocol - Comparte Ingresos con tu Comunidad | DeFi Revenue Bonds',
-                description: 'Revenue Bonds Protocol permite a los protocolos DeFi compartir ingresos con su comunidad a través de bonos tokenizados ERC-20 en Arbitrum One. Crea series de bonos de ingresos que distribuyen automáticamente ganancias a los holders.',
-                keywords: 'DeFi, Revenue Bonds, Arbitrum, ERC-20, Compartir Ingresos, Bonos Tokenizados, Blockchain, Criptomoneda, Web3, Smart Contracts, Equorum',
-                ogTitle: 'Equorum Protocol - Comparte Ingresos con tu Comunidad',
-                ogDescription: 'Revenue Bonds Protocol permite a los protocolos DeFi compartir ingresos con su comunidad a través de bonos tokenizados ERC-20 en Arbitrum One.',
-                locale: 'es_ES'
-            },
-            ja: {
-                title: 'Equorum Protocol - コミュニティと収益を共有 | DeFi Revenue Bonds',
-                description: 'Revenue Bonds Protocolは、DeFiプロトコルがArbitrum Oneでトークン化されたERC-20ボンドを通じてコミュニティと収益を共有できるようにします。ホルダーに自動的に収益を分配する収益ボンドシリーズを作成します。',
-                keywords: 'DeFi, Revenue Bonds, Arbitrum, ERC-20, 収益共有, トークン化ボンド, ブロックチェーン, 暗号通貨, Web3, スマートコントラクト, Equorum',
-                ogTitle: 'Equorum Protocol - コミュニティと収益を共有',
-                ogDescription: 'Revenue Bonds Protocolは、DeFiプロトコルがArbitrum Oneでトークン化されたERC-20ボンドを通じてコミュニティと収益を共有できるようにします。',
-                locale: 'ja_JP'
-            },
-            zh: {
-                title: 'Equorum Protocol - 与您的社区分享收入 | DeFi Revenue Bonds',
-                description: 'Revenue Bonds协议使DeFi协议能够通过Arbitrum One上的代币化ERC-20债券与其社区分享收入。创建自动向持有者分配收益的收入债券系列。',
-                keywords: 'DeFi, Revenue Bonds, Arbitrum, ERC-20, 收入共享, 代币化债券, 区块链, 加密货币, Web3, 智能合约, Equorum',
-                ogTitle: 'Equorum Protocol - 与您的社区分享收入',
-                ogDescription: 'Revenue Bonds协议使DeFi协议能够通过Arbitrum One上的代币化ERC-20债券与其社区分享收入。',
-                locale: 'zh_CN'
-            }
-        };
-
-        // Translation system
-        const translations = {
-            en: {
-                'nav.home': 'Home',
-                'nav.how': 'How it Works',
-                'nav.community': 'Community',
-                'hero.title': 'Protocols That Share Revenue<br><span class="highlight">Earn Trust.</span>',
-                'hero.subtitle': 'Equorum enables revenue-backed bonds that align users, builders, and capital.',
-                'hero.description': 'Create revenue bond series that automatically distribute a percentage of your revenue to holders.',
-                'hero.cta': 'Launch App →',
-                'how.title': 'How it Works?',
-                'how.subtitle': 'Three simple steps to share revenue',
-                'how.step1.title': 'Create a Series',
-                'how.step1.desc': 'Define name, symbol, revenue % and series duration.',
-                'how.step1.link': 'View Documentation →',
-                'how.step2.title': 'Distribute Tokens',
-                'how.step2.desc': 'Send series tokens to your community.',
-                'how.step2.link': 'Launch App →',
-                'how.step3.title': 'Share Revenue',
-                'how.step3.desc': 'Send revenue and holders claim automatically.',
-                'how.step3.link': 'View Contracts →',
-                'distribution.title': 'Automatic Distribution',
-                'distribution.desc': 'Revenue is distributed proportionally to holders in a fully on-chain manner. Each holder can claim their share at any time.',
-                'cta.title': 'Ready to Start?',
-                'cta.desc': 'Create your first revenue bond series',
-                'cta.button': 'Launch App →',
-                'footer.desc': 'On-chain revenue sharing on Arbitrum One. Share revenue with your community through tokenized bonds.',
-                'footer.protocol.title': 'Protocol',
-                'footer.protocol.how': 'How it Works',
-                'footer.protocol.docs': 'Documentation',
-                'footer.protocol.app': 'Application',
-                'footer.community.title': 'Community',
-                'footer.contracts.title': 'Contracts',
-                'footer.copyright': '© 2026 Equorum Protocol. Built on <strong>Arbitrum One</strong>'
-            },
-            pt: {
-                'nav.home': 'Home',
-                'nav.how': 'Como Funciona',
-                'nav.community': 'Comunidade',
-                'hero.title': 'Protocolos Que Compartilham Receita<br><span class="highlight">Ganham Confiança.</span>',
-                'hero.subtitle': 'Equorum permite bonds lastreados em receita que alinham usuários, construtores e capital.',
-                'hero.description': 'Crie séries de revenue bonds que distribuem automaticamente uma porcentagem da sua receita para os holders.',
-                'hero.cta': 'Acessar Aplicação →',
-                'how.title': 'Como funciona?',
-                'how.subtitle': 'Três passos simples para compartilhar receita',
-                'how.step1.title': 'Crie uma Série',
-                'how.step1.desc': 'Defina nome, símbolo, % de receita e duração da série.',
-                'how.step1.link': 'Ver Documentação →',
-                'how.step2.title': 'Distribua Tokens',
-                'how.step2.desc': 'Envie os tokens da série para sua comunidade.',
-                'how.step2.link': 'Acessar App →',
-                'how.step3.title': 'Compartilhe Receita',
-                'how.step3.desc': 'Envie receita e holders fazem claim automaticamente.',
-                'how.step3.link': 'Ver Contratos →',
-                'distribution.title': 'Distribuição Automática',
-                'distribution.desc': 'Revenue é distribuída proporcionalmente aos holders de forma totalmente on-chain. Cada holder pode fazer claim da sua parte a qualquer momento.',
-                'cta.title': 'Pronto para começar?',
-                'cta.desc': 'Crie sua primeira série de revenue bonds',
-                'cta.button': 'Acessar Aplicação →',
-                'footer.desc': 'Revenue sharing on-chain na Arbitrum One. Compartilhe receita com sua comunidade através de bonds tokenizados.',
-                'footer.protocol.title': 'Protocolo',
-                'footer.protocol.how': 'Como Funciona',
-                'footer.protocol.docs': 'Documentação',
-                'footer.protocol.app': 'Aplicação',
-                'footer.community.title': 'Comunidade',
-                'footer.contracts.title': 'Contratos',
-                'footer.copyright': '© 2025 Equorum Protocol. Construído na <strong>Arbitrum One</strong>'
-            },
-            es: {
-                'nav.home': 'Inicio',
-                'nav.how': 'Cómo Funciona',
-                'nav.community': 'Comunidad',
-                'hero.title': 'Los Protocolos Que Comparten Ingresos<br><span class="highlight">Ganan Confianza.</span>',
-                'hero.subtitle': 'Equorum permite bonos respaldados por ingresos que alinean usuarios, constructores y capital.',
-                'hero.description': 'Crea series de revenue bonds que distribuyen automáticamente un porcentaje de tus ingresos a los holders.',
-                'hero.cta': 'Lanzar App →',
-                'how.title': '¿Cómo funciona?',
-                'how.subtitle': 'Tres pasos simples para compartir ingresos',
-                'how.step1.title': 'Crear una Serie',
-                'how.step1.desc': 'Define nombre, símbolo, % de ingresos y duración.',
-                'how.step1.link': 'Ver Documentación →',
-                'how.step2.title': 'Distribuir Tokens',
-                'how.step2.desc': 'Envía tokens de la serie a tu comunidad.',
-                'how.step2.link': 'Lanzar App →',
-                'how.step3.title': 'Compartir Ingresos',
-                'how.step3.desc': 'Envía ingresos y los holders reclaman automáticamente.',
-                'how.step3.link': 'Ver Contratos →',
-                'distribution.title': 'Distribución Automática',
-                'distribution.desc': 'Los ingresos se distribuyen proporcionalmente a los holders de forma totalmente on-chain. Cada holder puede reclamar su parte en cualquier momento.',
-                'cta.title': '¿Listo para comenzar?',
-                'cta.desc': 'Crea tu primera serie de revenue bonds',
-                'cta.button': 'Lanzar App →',
-                'footer.desc': 'Compartir ingresos on-chain en Arbitrum One. Comparte ingresos con tu comunidad a través de bonds tokenizados.',
-                'footer.protocol.title': 'Protocolo',
-                'footer.protocol.how': 'Cómo Funciona',
-                'footer.protocol.docs': 'Documentación',
-                'footer.protocol.app': 'Aplicación',
-                'footer.community.title': 'Comunidad',
-                'footer.contracts.title': 'Contratos',
-                'footer.copyright': '© 2025 Equorum Protocol. Construido en <strong>Arbitrum One</strong>'
-            },
-            ja: {
-                'nav.home': 'ホーム',
-                'nav.how': '使い方',
-                'nav.community': 'コミュニティ',
-                'hero.title': '収益を共有するプロトコルは<br><span class="highlight">信頼を得る。</span>',
-                'hero.subtitle': 'Equorumは、ユーザー、ビルダー、資本を調整する収益担保型ボンドを可能にします。',
-                'hero.description': 'ホルダーに自動的に収益の一部を分配するレベニューボンドシリーズを作成します。',
-                'hero.cta': 'アプリを起動 →',
-                'how.title': '使い方',
-                'how.subtitle': '収益を共有する3つの簡単なステップ',
-                'how.step1.title': 'シリーズを作成',
-                'how.step1.desc': '名前、シンボル、収益%、期間を定義します。',
-                'how.step1.link': 'ドキュメント →',
-                'how.step2.title': 'トークンを配布',
-                'how.step2.desc': 'コミュニティにシリーズトークンを送信します。',
-                'how.step2.link': 'アプリを起動 →',
-                'how.step3.title': '収益を共有',
-                'how.step3.desc': '収益を送信すると、ホルダーが自動的にクレームします。',
-                'how.step3.link': 'コントラクトを表示 →',
-                'distribution.title': '自動配分',
-                'distribution.desc': '収益はホルダーに比例配分されます。各ホルダーはいつでも請求できます。',
-                'cta.title': '始める準備はできましたか？',
-                'cta.desc': '最初のレベニューボンドシリーズを作成',
-                'cta.button': 'アプリを起動 →',
-                'footer.desc': 'Arbitrum Oneでのオンチェーン収益共有。',
-                'footer.protocol.title': 'プロトコル',
-                'footer.protocol.how': '仕組み',
-                'footer.protocol.docs': 'ドキュメント',
-                'footer.protocol.app': 'アプリ',
-                'footer.community.title': 'コミュニティ',
-                'footer.contracts.title': 'コントラクト',
-                'footer.copyright': '© 2025 Equorum Protocol. <strong>Arbitrum One</strong>で構築'
-            },
-            zh: {
-                'nav.home': '首页',
-                'nav.how': '如何运作',
-                'nav.community': '社区',
-                'hero.title': '分享收入的协议<br><span class="highlight">赢得信任。</span>',
-                'hero.subtitle': 'Equorum实现收入支持的债券，协调用户、建设者和资本。',
-                'hero.description': '创建自动分配收入百分比给持有者的收入债券系列。',
-                'hero.cta': '启动应用 →',
-                'how.title': '如何运作？',
-                'how.subtitle': '分享收入的三个简单步骤',
-                'how.step1.title': '创建系列',
-                'how.step1.desc': '定义名称、符号、收入%和持续时间。',
-                'how.step1.link': '查看文档 →',
-                'how.step2.title': '分发代币',
-                'how.step2.desc': '将系列代币发送给您的社区。',
-                'how.step2.link': '启动应用 →',
-                'how.step3.title': '分享收入',
-                'how.step3.desc': '发送收入，持有者自动领取。',
-                'how.step3.link': '查看合约 →',
-                'distribution.title': '自动分配',
-                'distribution.desc': '收入按比例分配给持有者，完全在链上进行。每个持有者可以随时领取他们的份额。',
-                'cta.title': '准备开始？',
-                'cta.desc': '创建您的第一个收入债券系列',
-                'cta.button': '启动应用 →',
-                'footer.desc': '在 Arbitrum One 上进行链上收入共享。通过代币化债券与您的社区分享收入。',
-                'footer.protocol.title': '协议',
-                'footer.protocol.how': '如何运作',
-                'footer.protocol.docs': '文档',
-                'footer.protocol.app': '应用',
-                'footer.community.title': '社区',
-                'footer.contracts.title': '合约',
-                'footer.copyright': '© 2025 Equorum Protocol. 构建于 <strong>Arbitrum One</strong>'
-            },
-            es: {
-                'nav.home': 'Inicio',
-                'nav.how': 'Cómo Funciona',
-                'nav.community': 'Comunidad',
-                'hero.title': 'Comparte Ingresos con tu Comunidad',
-                'hero.subtitle': 'Revenue Bonds Protocol permite a los protocolos DeFi compartir ingresos con su comunidad a través de bonos tokenizados ERC-20.',
-                'hero.description': 'Crea series de bonos de ingresos que distribuyen automáticamente un porcentaje de tus ingresos a los holders.',
-                'hero.cta': 'Lanzar App →',
-                'how.title': '¿Cómo funciona?',
-                'how.subtitle': 'Tres pasos simples para compartir ingresos',
-                'how.step1.title': 'Crear una Serie',
-                'how.step1.desc': 'Define nombre, símbolo, % de ingresos y duración.',
-                'how.step1.link': 'Ver Documentación →',
-                'how.step2.title': 'Distribuir Tokens',
-                'how.step2.desc': 'Envía tokens de la serie a tu comunidad.',
-                'how.step2.link': 'Lanzar App →',
-                'how.step3.title': 'Compartir Ingresos',
-                'how.step3.desc': 'Envía ingresos y los holders reclaman automáticamente.',
-                'how.step3.link': 'Ver Contratos →',
-                'distribution.title': 'Distribución Automática',
-                'distribution.desc': 'Los ingresos se distribuyen proporcionalmente a los holders de forma totalmente on-chain. Cada holder puede reclamar su parte en cualquier momento.',
-                'cta.title': '¿Listo para comenzar?',
-                'cta.desc': 'Crea tu primera serie de bonos de ingresos',
-                'cta.button': 'Lanzar App →',
-                'footer.desc': 'Compartir ingresos on-chain en Arbitrum One. Comparte ingresos con tu comunidad a través de bonos tokenizados.',
-                'footer.protocol.title': 'Protocolo',
-                'footer.protocol.how': 'Cómo Funciona',
-                'footer.protocol.docs': 'Documentación',
-                'footer.protocol.app': 'Aplicación',
-                'footer.community.title': 'Comunidad',
-                'footer.contracts.title': 'Contratos',
-                'footer.copyright': '© 2025 Equorum Protocol. Construido en <strong>Arbitrum One</strong>'
-            },
-            ja: {
-                'nav.home': 'ホーム',
-                'nav.how': '仕組み',
-                'nav.community': 'コミュニティ',
-                'hero.title': 'コミュニティと収益を共有',
-                'hero.subtitle': 'Revenue Bonds Protocolは、DeFiプロトコルがトークン化されたERC-20ボンドを通じてコミュニティと収益を共有できるようにします。',
-                'hero.description': '収益の一定割合をホルダーに自動的に分配する収益ボンドシリーズを作成します。',
-                'hero.cta': 'アプリを起動 →',
-                'how.title': '仕組みは？',
-                'how.subtitle': '収益を共有する3つの簡単なステップ',
-                'how.step1.title': 'シリーズを作成',
-                'how.step1.desc': '名前、シンボル、収益%、期間を定義します。',
-                'how.step1.link': 'ドキュメントを見る →',
-                'how.step2.title': 'トークンを配布',
-                'how.step2.desc': 'シリーズトークンをコミュニティに送信します。',
-                'how.step2.link': 'アプリを起動 →',
-                'how.step3.title': '収益を共有',
-                'how.step3.desc': '収益を送信すると、ホルダーが自動的に請求します。',
-                'how.step3.link': 'コントラクトを見る →',
-                'distribution.title': '自動配布',
-                'distribution.desc': '収益は完全にオンチェーンでホルダーに比例配分されます。各ホルダーはいつでも自分の分を請求できます。',
-                'cta.title': '始める準備はできましたか？',
-                'cta.desc': '最初の収益ボンドシリーズを作成',
-                'cta.button': 'アプリを起動 →',
-                'footer.desc': 'Arbitrum Oneでのオンチェーン収益共有。トークン化されたボンドを通じてコミュニティと収益を共有します。',
-                'footer.protocol.title': 'プロトコル',
-                'footer.protocol.how': '仕組み',
-                'footer.protocol.docs': 'ドキュメント',
-                'footer.protocol.app': 'アプリケーション',
-                'footer.community.title': 'コミュニティ',
-                'footer.contracts.title': 'コントラクト',
-                'footer.copyright': '© 2025 Equorum Protocol. <strong>Arbitrum One</strong>上に構築'
-            }
-        };
-
-        // Language names mapping
-        const languageNames = {
-            'en': 'English',
-            'pt': 'Português',
-            'es': 'Español',
-            'ja': '日本語',
-            'zh': '中文'
-        };
-
-        function toggleLanguageDropdown() {
-            const dropdown = document.getElementById('lang-dropdown');
-            const currentBtn = document.getElementById('current-lang');
-            dropdown.classList.toggle('show');
-            currentBtn.classList.toggle('active');
-        }
-
-        function selectLanguage(lang, name) {
-            // Update current language display
-            document.getElementById('current-lang').textContent = name;
-            
-            // Close dropdown
-            document.getElementById('lang-dropdown').classList.remove('show');
-            document.getElementById('current-lang').classList.remove('active');
-            
-            // Update active state
-            document.querySelectorAll('.lang-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Apply translations
-            setLanguage(lang);
-        }
-
-        function setLanguage(lang) {
-            // Save preference
-            localStorage.setItem('language', lang);
-            
-            // Update HTML lang attribute for SEO
-            document.documentElement.setAttribute('lang', lang);
-            
-            // Update SEO Meta Tags
-            if (seoTranslations[lang]) {
-                const seo = seoTranslations[lang];
-                
-                // Update title
-                document.getElementById('page-title').textContent = seo.title;
-                document.getElementById('meta-title').setAttribute('content', seo.title);
-                
-                // Update description
-                document.getElementById('meta-description').setAttribute('content', seo.description);
-                
-                // Update keywords
-                document.getElementById('meta-keywords').setAttribute('content', seo.keywords);
-                
-                // Update Open Graph
-                document.getElementById('og-title').setAttribute('content', seo.ogTitle);
-                document.getElementById('og-description').setAttribute('content', seo.ogDescription);
-                document.getElementById('og-locale').setAttribute('content', seo.locale);
-                
-                // Update Twitter Cards
-                document.getElementById('twitter-title').setAttribute('content', seo.ogTitle);
-                document.getElementById('twitter-description').setAttribute('content', seo.ogDescription);
-            }
-            
-            // Update all elements with data-i18n
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    element.innerHTML = translations[lang][key];
-                }
-            });
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const selector = document.querySelector('.language-selector');
-            if (selector && !selector.contains(event.target)) {
-                document.getElementById('lang-dropdown').classList.remove('show');
-                document.getElementById('current-lang').classList.remove('active');
-            }
-        });
-
-        // Load saved language or default to English
-        const savedLang = localStorage.getItem('language') || 'en';
-        const savedLangName = languageNames[savedLang] || 'English';
-        document.getElementById('current-lang').textContent = savedLangName;
-        
-        // Set active option
-        document.querySelectorAll('.lang-option').forEach(opt => {
-            const langCode = opt.getAttribute('onclick').match(/'([^']+)'/)[1];
-            if (langCode === savedLang) {
-                opt.classList.add('active');
-            }
-        });
-        
-        setLanguage(savedLang);
-    </script>
-
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Equorum Protocol",
-        "alternateName": "Equorum Revenue Bonds",
-        "url": "https://equorumprotocol.org",
-        "description": "DeFi protocol enabling revenue-backed bonds on Arbitrum One. Tokenize protocol revenue as ERC-20 bonds with principal protection.",
-        "inLanguage": ["en", "pt", "es", "ja", "zh"],
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": "https://equorumprotocol.org/?s={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Equorum Protocol",
-        "url": "https://equorumprotocol.org",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://equorumprotocol.org/logo-orange.svg",
-            "width": 512,
-            "height": 512
-        },
-        "description": "DeFi Revenue Bonds Protocol on Arbitrum One. Create revenue-backed bonds with principal protection.",
-        "foundingDate": "2025",
-        "sameAs": [
-            "https://twitter.com/EquorumProtocol",
-            "https://github.com/EquorumProtocol",
-            "https://github.com/EquorumProtocol/Equorum-Revenue-Bonds",
-            "https://discord.gg/qAzseSwY",
-            "https://arbiscan.io/address/0x8afA0318363FfBc29Cc28B3C98d9139C08Af737b"
-        ],
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "contactType": "Customer Support",
-            "availableLanguage": ["English", "Portuguese", "Spanish", "Japanese", "Chinese"],
-            "url": "https://discord.gg/qAzseSwY"
-        },
-        "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "Decentralized"
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Equorum Revenue Bonds Protocol",
-        "applicationCategory": "FinanceApplication",
-        "operatingSystem": "Web3, Ethereum, Arbitrum",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock"
-        },
-        "description": "Create and trade revenue-backed bonds on Arbitrum One. Protocols can tokenize revenue as ERC-20 bonds with principal protection. Transparent on-chain revenue distribution.",
-        "url": "https://equorumprotocol.org",
-        "screenshot": "https://equorumprotocol.org/og-image.png",
-        "featureList": [
-            "ERC-20 Revenue Bonds",
-            "Principal Protection",
-            "Automatic Revenue Distribution",
-            "On-Chain Transparency",
-            "Arbitrum One Integration"
-        ],
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "5",
-            "ratingCount": "1"
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FinancialProduct",
-        "name": "Revenue Bonds",
-        "description": "Tokenized revenue-backed bonds with principal protection on Arbitrum One",
-        "provider": {
-            "@type": "Organization",
-            "name": "Equorum Protocol"
-        },
-        "category": "DeFi Investment Product",
-        "feesAndCommissionsSpecification": "2% protocol fee on bond purchases"
-    }
-    </script>
-
-    <script>
-    // Network Globe Animation - Cardano Style
-    (function() {
-        const canvas = document.getElementById('globeCanvas');
-        if (!canvas) return;
-        
-        const ctx = canvas.getContext('2d');
-        const width = canvas.width;
-        const height = canvas.height;
-        const centerX = width / 2;
-        const centerY = height / 2;
-        const radius = 380;
-        
-        // Node colors
-        const colors = {
-            orange: '#FF6224',
-            orangeLight: '#FF8C5A',
-            white: '#ffffff',
-            green: '#10B981'
-        };
-        
-        // Generate nodes on sphere surface
-        const nodes = [];
-        const nodeCount = 120;
-        
-        for (let i = 0; i < nodeCount; i++) {
-            const phi = Math.acos(-1 + (2 * i) / nodeCount);
-            const theta = Math.sqrt(nodeCount * Math.PI) * phi;
-            
-            nodes.push({
-                x: Math.cos(theta) * Math.sin(phi),
-                y: Math.sin(theta) * Math.sin(phi),
-                z: Math.cos(phi),
-                size: 2 + Math.random() * 4,
-                color: [colors.orange, colors.orangeLight, colors.white, colors.green][Math.floor(Math.random() * 4)],
-                pulse: Math.random() * Math.PI * 2
-            });
-        }
-        
-        let rotation = 0;
-        
-        function projectNode(node, rot) {
-            const cosR = Math.cos(rot);
-            const sinR = Math.sin(rot);
-            
-            const x = node.x * cosR - node.z * sinR;
-            const z = node.x * sinR + node.z * cosR;
-            const y = node.y;
-            
-            const scale = (z + 2) / 3;
-            const projX = centerX + x * radius * scale;
-            const projY = centerY + y * radius * scale;
-            
-            return { x: projX, y: projY, z: z, scale: scale };
-        }
-        
-        function draw() {
-            ctx.clearRect(0, 0, width, height);
-            
-            // Draw globe outline glow
-            const gradient = ctx.createRadialGradient(centerX, centerY, radius * 0.8, centerX, centerY, radius * 1.3);
-            gradient.addColorStop(0, 'rgba(255, 98, 36, 0.05)');
-            gradient.addColorStop(0.5, 'rgba(255, 98, 36, 0.02)');
-            gradient.addColorStop(1, 'transparent');
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, radius * 1.3, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Draw latitude/longitude lines
-            ctx.strokeStyle = 'rgba(255, 98, 36, 0.08)';
-            ctx.lineWidth = 0.5;
-            
-            for (let i = 0; i < 8; i++) {
-                const angle = (i / 8) * Math.PI;
-                ctx.beginPath();
-                for (let j = 0; j <= 50; j++) {
-                    const phi = (j / 50) * Math.PI * 2;
-                    const node = {
-                        x: Math.cos(phi) * Math.sin(angle),
-                        y: Math.cos(angle),
-                        z: Math.sin(phi) * Math.sin(angle)
-                    };
-                    const proj = projectNode(node, rotation);
-                    if (j === 0) ctx.moveTo(proj.x, proj.y);
-                    else ctx.lineTo(proj.x, proj.y);
-                }
-                ctx.stroke();
-            }
-            
-            // Sort nodes by z for proper rendering
-            const projectedNodes = nodes.map((node, i) => ({
-                ...projectNode(node, rotation),
-                node: node,
-                index: i
-            })).sort((a, b) => a.z - b.z);
-            
-            // Draw connections
-            ctx.lineWidth = 0.3;
-            for (let i = 0; i < projectedNodes.length; i++) {
-                const p1 = projectedNodes[i];
-                if (p1.z < -0.2) continue;
-                
-                for (let j = i + 1; j < projectedNodes.length; j++) {
-                    const p2 = projectedNodes[j];
-                    if (p2.z < -0.2) continue;
-                    
-                    const dx = p1.x - p2.x;
-                    const dy = p1.y - p2.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (dist < 80) {
-                        const opacity = (1 - dist / 80) * 0.3 * Math.min(p1.z + 1, 1) * Math.min(p2.z + 1, 1);
-                        ctx.strokeStyle = `rgba(255, 98, 36, ${opacity})`;
-                        ctx.beginPath();
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            
-            // Draw nodes
-            const time = Date.now() / 1000;
-            for (const p of projectedNodes) {
-                if (p.z < -0.3) continue;
-                
-                const opacity = Math.max(0.3, (p.z + 1) / 2);
-                const pulse = 1 + Math.sin(time * 2 + p.node.pulse) * 0.2;
-                const size = p.node.size * p.scale * pulse;
-                
-                // Glow
-                const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size * 3);
-                glow.addColorStop(0, p.node.color.replace(')', `, ${opacity * 0.5})`).replace('rgb', 'rgba').replace('#FF6224', 'rgba(255, 98, 36').replace('#FF8C5A', 'rgba(255, 140, 90').replace('#ffffff', 'rgba(255, 255, 255').replace('#10B981', 'rgba(16, 185, 129'));
-                glow.addColorStop(1, 'transparent');
-                ctx.fillStyle = glow;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, size * 3, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Node
-                ctx.fillStyle = p.node.color;
-                ctx.globalAlpha = opacity;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.globalAlpha = 1;
-            }
-            
-            rotation += 0.003;
-            requestAnimationFrame(draw);
-        }
-        
-        draw();
-    })();
-
-    // FAQ Accordion functionality
-    document.querySelectorAll('.faq-question').forEach(button => {
-        button.addEventListener('click', () => {
-            const faqItem = button.parentElement;
-            const isActive = faqItem.classList.contains('active');
-            
-            // Close all FAQ items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Open clicked item if it wasn't active
-            if (!isActive) {
-                faqItem.classList.add('active');
-            }
-        });
-    });
-    </script>
+<script src="/src/mobile-menu.js"></script>
 </body>
 </html>
